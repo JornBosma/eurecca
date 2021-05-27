@@ -3,7 +3,7 @@ close all
 % clear
 clc
 
-startup
+eurecca_init
 
 %% Particle size distribution
 % sieve = xlsread('GrainSize','Sheet2','B3:B24'); % grain size axis [mu]

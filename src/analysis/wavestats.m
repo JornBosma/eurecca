@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-startup
+eurecca_init
 
 %% Wave statistics
 waves = 'waveStats_solo1_11-30-2020_140000_12-04-2020_155000.nc'; % -0.985 m+NAP

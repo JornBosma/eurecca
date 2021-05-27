@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-startup
+eurecca_init
 
 % Jan De Nul: topo- & bathymetry
 z_UTD_realisatie = JDN_xyz('UTD_realisatie.pts', 1, inf); % +bathy

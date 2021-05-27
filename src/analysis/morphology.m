@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-startup
+eurecca_init
 
 % Jan De Nul
 % UTDrealisatie = importfile2("UTDrealisatie.pts", [1, Inf]); % load drone + bathy data
