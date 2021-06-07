@@ -1,7 +1,25 @@
 # exclude compiled binaries and external models
-/bin
+/bin/external/*
 
-# exclude data from source control by default
-/data/temp
-/data/processed
-/data/raw
+# exclude data and results from source control by default
+/data/*
+/data/elevation/*
+/data/sediment/*
+/data/water/*
+/results/figures/*
+/results/output/*
+
+# keep unfinished written material out of public sight
+/docs/*
+/docs/manuscript/*
+/docs/reports/*
+
+# +----------------------------+-------------------------------+
+# | To keep an empty directory, add a .gitkeep file to it      |
+# | and ignore the directory with a wildcard:                  |
+# |                                                            |
+# |     /path/to/dir/*                                         |
+# |                                                            |
+# | this will ignore the content but not the directory itself. |
+# +------------------------------------------------------------+
+!/**/.gitkeep
