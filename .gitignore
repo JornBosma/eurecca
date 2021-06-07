@@ -2,7 +2,6 @@
 /bin/external/*
 
 # exclude data and results from source control by default
-/data/*
 /data/elevation/*
 /data/sediment/*
 /data/water/*
@@ -10,7 +9,6 @@
 /results/output/*
 
 # keep unfinished written material out of public sight
-/docs/*
 /docs/manuscript/*
 /docs/reports/*
 
