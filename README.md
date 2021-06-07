@@ -1,6 +1,6 @@
 # EURECCA WP2
 
-Version 0.1.0
+Version 0.1.1
 
 Analysis of grain-size controls on planform nourishment evolution.
 

@@ -5,12 +5,21 @@ clc
 
 eurecca_init
 
-% processed topo files
+% Jan De Nul: topo- & bathymetry
+z_UTD_realisatie = JDN_xyz('UTD_realisatie.pts', 1, inf); % +bathy
+z_2019_Q4 = JDN_xyz('2019_Q4.pts', 1, inf);
+z_2020_Q1 = JDN_xyz('2020_Q1.pts', 1, inf);
+z_2020_Q2 = JDN_xyz('2020_Q2.pts', 1, inf);
+z_2020_Q3 = JDN_xyz('2020_Q3.pts', 1, inf); % +bathy
+z_2020_Q4 = JDN_xyz('2020_Q4.xyz', 1, inf);
+z_2021_Q1 = JDN_xyz('2021_Q1.xyz', 1, inf);
+
+% processed topo data
 load('zSounding.mat')
 load('zProfiles_20201016.mat')
 load('diffMap_Q3_2020-UTD.mat')
 
-% processed sedi files
+% processed sedi data
 load('JDN_samples.mat')
 load('sedSamplesGPS.mat')
 
