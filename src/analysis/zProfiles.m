@@ -12,7 +12,7 @@ load('diffMap_Q3_2020-UTD.mat')
 
 % processed sedi files
 load('JDN_samples.mat')
-load('sedSamplesGPS.mat')
+load('sampleGPS.mat')
 
 data = {z_UTD_realisatie, z_2019_Q4, z_2020_Q1, z_2020_Q2, z_2020_Q3, zProfiles_20201016};
 names = {'UTD realisatie', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', 'zProfiles 2020-10-16'};
@@ -31,7 +31,7 @@ for n = 1:numel(data)
     c = colorbar;
     c.Label.String = 'm +NAP';
     caxis([-5 5]);
-    colormap(brewermap([], '*RdBu'))
+    colormap(brewermap([], '*PuOr'))
     set(gca, 'Color', [.8 .8 .8])
 %     legend(p(2), 'NAP -1.6m', 'Location', 'northwest')
     grid on
@@ -39,6 +39,7 @@ for n = 1:numel(data)
 end
 set(ax, 'XLim', [114800, 118400]);
 set(ax, 'YLim', [557500, 560800]);
+linkaxes(ax)
 
 %% Visualisation: topo-/bathymetric difference map
 figure2('Name', 'Q3 2020 - Q3 2019')
