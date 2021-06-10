@@ -59,6 +59,8 @@ for n = 5
     ylabel('yRD (m)')
     c = colorbar;
     c.Label.String = 'm +NAP';
+    c.Label.Interpreter = 'latex';
+    c.TickLabelInterpreter = 'latex';
     caxis([-5 5]);
     colormap(brewermap([], '*PuOr'))
     set(gca, 'Color', [.8 .8 .8])
@@ -70,6 +72,7 @@ for n = 5
 end
 
 %% Visualisation: actual sampling locations
+figure2('Name', 'Sampling overview')
 tl = tiledlayout('flow', 'TileSpacing', 'Compact');
 
 ax1 = nexttile;
@@ -96,10 +99,11 @@ ylabel('yRD (m)')
 c = colorbar;
 c.Label.String = 'm +NAP';
 c.Label.Interpreter = 'latex';
+c.TickLabelInterpreter = 'latex';
 caxis([-5 5]);
 colormap(brewermap([], '*PuOr'))
 set(gca, 'Color', [.8 .8 .8])
-text(117100, 558200, 'Jan De Nul', 'FontSize', 16)
+text(117100, 558200, '23 Apr 2019 \newline (Jan De Nul)', 'FontSize', 16)
 legend([p(1) p(2) p(3)], {'Shell layer','Dune layer','Armor layer'}, 'Location', 'northwest')
 grid on
 axis equal
@@ -118,6 +122,7 @@ ylabel('yRD (m)')
 c = colorbar;
 c.Label.String = 'm +NAP';
 c.Label.Interpreter = 'latex';
+c.TickLabelInterpreter = 'latex';
 caxis([-5 5]);
 colormap(brewermap([], '*PuOr'))
 set(gca, 'Color', [.8 .8 .8])
@@ -145,6 +150,7 @@ ylabel('yRD (m)')
 c = colorbar;
 c.Label.String = 'm +NAP';
 c.Label.Interpreter = 'latex';
+c.TickLabelInterpreter = 'latex';
 caxis([-5 5]);
 colormap(brewermap([], '*PuOr'))
 set(gca, 'Color', [.8 .8 .8])
@@ -153,7 +159,53 @@ legend([p(2) p(3)], {'Sample','Sample$_i$'}, 'Location', 'northwest')
 grid on
 axis equal
 
-set([ax1, ax2, ax3], 'XLim', [114800, 118400]);
-set([ax1, ax2, ax3], 'YLim', [557500, 560800]);
-linkaxes([ax1, ax2, ax3]);
+ax4 = nexttile;
+p(1) = scatter(data{5}.xRD, data{5}.yRD, [], data{5}.z, '.'); hold on
+p(2) = plot(sampleData1.xRD, sampleData1.yRD, 'o',...
+'LineWidth',2,...
+'MarkerSize',5,...
+ 'MarkerEdgeColor',[0, .8, 0],...
+'MarkerFaceColor','k');
+xticks(114000:1e3:118000)
+yticks(558000:1e3:561000) 
+xlabel('xRD (m)')
+ylabel('yRD (m)')
+c = colorbar;
+c.Label.String = 'm +NAP';
+c.Label.Interpreter = 'latex';
+c.TickLabelInterpreter = 'latex';
+caxis([-5 5]);
+colormap(brewermap([], '*PuOr'))
+set(gca, 'Color', [.8 .8 .8])
+text(117100, 558200, '8 Apr 2021', 'FontSize', 16)
+legend(p(2), 'Sample', 'Location', 'northwest')
+grid on
+axis equal
+
+ax5 = nexttile;
+p(1) = scatter(data{5}.xRD, data{5}.yRD, [], data{5}.z, '.'); hold on
+p(2) = plot(sampleData1.xRD, sampleData1.yRD, 'o',...
+'LineWidth',2,...
+'MarkerSize',5,...
+ 'MarkerEdgeColor',[0, .8, 0],...
+'MarkerFaceColor','k');
+xticks(114000:1e3:118000)
+yticks(558000:1e3:561000) 
+xlabel('xRD (m)')
+ylabel('yRD (m)')
+c = colorbar;
+c.Label.String = 'm +NAP';
+c.Label.Interpreter = 'latex';
+c.TickLabelInterpreter = 'latex';
+caxis([-5 5]);
+colormap(brewermap([], '*PuOr'))
+set(gca, 'Color', [.8 .8 .8])
+text(117100, 558200, '6 June 2021 (iPhone)', 'FontSize', 16)
+legend(p(2), 'Sample', 'Location', 'northwest')
+grid on
+axis equal
+
+set([ax1, ax2, ax3, ax4, ax5], 'XLim', [114800, 118400]);
+set([ax1, ax2, ax3, ax4, ax5], 'YLim', [557500, 560800]);
+linkaxes([ax1, ax2, ax3, ax4, ax5]);
 

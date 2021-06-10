@@ -18,6 +18,7 @@ data = {z_UTD_realisatie, z_2019_Q4, z_2020_Q1, z_2020_Q2, z_2020_Q3, zProfiles_
 names = {'UTD realisatie', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', 'zProfiles 2020-10-16'};
 
 %% Visualisation: topo-/bathymetric maps
+figure2('Name', 'Elevation maps')
 tiledlayout('flow', 'TileSpacing', 'Compact');
 for n = 1:numel(data)
     ax(n) = nexttile;
@@ -30,6 +31,8 @@ for n = 1:numel(data)
     ylabel('yRD (m)')
     c = colorbar;
     c.Label.String = 'm +NAP';
+    c.Label.Interpreter = 'latex';
+    c.TickLabelInterpreter = 'latex';
     caxis([-5 5]);
     colormap(brewermap([], '*PuOr'))
     set(gca, 'Color', [.8 .8 .8])
@@ -51,7 +54,9 @@ yticks(558000:1e3:561000)
 xlabel('xRD (m)')
 ylabel('yRD (m)')
 c = colorbar;
-c.Label.String = '< Erosion (m)                           Accretion (m) >';
+c.Label.String = ['$<$ Erosion (m) $', repmat('\ ', 1, 50), '$ Accretion (m) $>$'];
+c.Label.Interpreter = 'latex';
+c.TickLabelInterpreter = 'latex';
 caxis([-2 2]);
 colormap(brewermap([], '*RdBu'))
 set(gca, 'Color', [.8 .8 .8])
