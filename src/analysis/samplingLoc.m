@@ -208,4 +208,3 @@ axis equal
 set([ax1, ax2, ax3, ax4, ax5], 'XLim', [114800, 118400]);
 set([ax1, ax2, ax3, ax4, ax5], 'YLim', [557500, 560800]);
 linkaxes([ax1, ax2, ax3, ax4, ax5]);
-
