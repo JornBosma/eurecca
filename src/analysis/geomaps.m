@@ -17,18 +17,30 @@ lon_PHZD = 4.8050;
 
 %% Nederland
 figure('Name', 'The Netherlands')
-gx1 = geoaxes;
-geolimits(gx1, [50.6532 53.6832], [2.2160 8.3687])
-% geobasemap(gx, 'topographic')
+gx(1) = geoaxes;
+geolimits(gx(1), [50.6532 53.6832], [2.2160 8.3687])
+% gx(1).LatitudeLabel.Interpreter = 'latex';
+% gx(1).LongitudeLabel.Interpreter = 'latex';
+gx(1).LatitudeLabel.String = [];
 
 %% Texel
 figure('Name', 'Texel')
-gx2 = geoaxes;
-geolimits(gx2, [52.7267 53.2999], [4.2279 5.4140])
-% geobasemap(gx2, 'topographic')
+gx(2) = geoaxes;
+geolimits(gx(2), [52.7267 53.2999], [4.2279 5.4140])
+% gx(2).LatitudeLabel.Interpreter = 'latex';
+% gx(2).LongitudeLabel.Interpreter = 'latex';
+gx(2).LatitudeLabel.String = [];
+gx(2).LongitudeLabel.String = [];
 
 %% Prins Hendrikzanddijk
 figure('Name', 'Prins Hendrikzanddijk')
-gx3 = geoaxes;
-geolimits(gx3, [52.9939 53.0404], [4.7617 4.8578])
-% geobasemap(gx3, 'topographic')
+gx(3) = geoaxes;
+geolimits(gx(3), [52.9939 53.0404], [4.7617 4.8578])
+% gx(3).LatitudeLabel.Interpreter = 'latex';
+% gx(3).LongitudeLabel.Interpreter = 'latex';
+gx(3).LongitudeLabel.String = '';
+
+%% Collective map settings
+set(gx, 'FontSize', 55)
+set(gx, 'LabelFontSizeMultiplier', 1.3)
+% set(gx, 'Basemap', 'topographic')

@@ -17,14 +17,15 @@ eurecca_init
 % save([basePath 'data' filesep 'sediment' filesep 'temp' filesep fileName],...
 %     'sampleShell', 'sampleDune', 'sampleArmor')
 
-% TUD + UU: sediment samples
-sampleData1 = importSampleGPS("Loc_2020-16-10.txt", [2, Inf]); % load iphone-gps data of 16/10/2020
-sampleData2 = importSampleGPS("PHZDsed1.txt", [2, Inf]); % load rtk-gps data of 02/12/2020
-sampleData3 = importSampleGPS("PHZDsed2.txt", [2, Inf]); % load rtk-gps data of 03/12/2020
-% sampleData = [sampleData1; sampleData2; sampleData3]; % concatenate tables
-fileName = 'sampleGPS.mat';
-save([basePath 'data' filesep 'sediment' filesep 'temp' filesep fileName],...
-    'sampleData1', 'sampleData2', 'sampleData3')
+% % TUD + UU: sediment samples
+% sampleData1 = importSampleGPS("Loc_2020-16-10.txt", [2, Inf]); % load iphone-gps data of 16/10/2020
+% sampleData2 = importSampleGPS("Loc_2020-02-12.txt", [2, Inf]); % load rtk-gps data of 02/12/2020
+% sampleData3 = importSampleGPS("Loc_2020-03-12.txt", [2, Inf]); % load rtk-gps data of 03/12/2020
+% sampleData4 = importSampleGPS("Loc_2021-04-08.txt", [2, Inf]); % load rtk-gps data of 08/04/2021
+% % sampleData = [sampleData1; sampleData2; sampleData3]; % concatenate tables
+% fileName = 'sampleGPS.mat';
+% save([basePath 'data' filesep 'sediment' filesep 'temp' filesep fileName],...
+%     'sampleData1', 'sampleData2', 'sampleData3', 'sampleData4')
 
 % % TUD + UU: topo- & bathymetry
 % zProfiles_20201016 = importfile("PHZD01.txt", [2, Inf]); % load rtk-gps data
@@ -45,9 +46,11 @@ save([basePath 'data' filesep 'sediment' filesep 'temp' filesep fileName],...
 % save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
 %     'z_UTD_realisatie', 'z_2019_Q4', 'z_2020_Q1', 'z_2020_Q2',...
 %     'z_2020_Q3', 'z_2020_Q4', 'z_2021_Q1')
-% 
-% %% Calculations
-% % difference maps
+
+%% Difference maps
+load('zSounding.mat')
+
+% 2020 Q3 - 2019 Q3
 % z_UTD_realisatie_2 = table(z_2020_Q3.xRD, z_2020_Q3.yRD,...
 %     griddata(z_UTD_realisatie.xRD, z_UTD_realisatie.yRD, z_UTD_realisatie.z, z_2020_Q3.xRD, z_2020_Q3.yRD),...
 %     'VariableNames',{'xRD','yRD','z'});
@@ -56,3 +59,13 @@ save([basePath 'data' filesep 'sediment' filesep 'temp' filesep fileName],...
 % fileName = 'diffMap_Q3_2020-UTD.mat';
 % save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
 %     'diffMap')
+
+% 2021 Q1 - 2020 Q1
+z_2021_Q1_2 = table(z_2020_Q1.xRD, z_2020_Q1.yRD,...
+    griddata(z_2021_Q1.xRD, z_2021_Q1.yRD, z_2021_Q1.z, z_2020_Q1.xRD, z_2020_Q1.yRD),...
+    'VariableNames',{'xRD','yRD','z'});
+diffMap = table(z_2020_Q1.xRD, z_2020_Q1.yRD, z_2021_Q1_2.z - z_2020_Q1.z,...
+    'VariableNames',{'xRD','yRD','z'});
+fileName = 'diffMap_Q1_21-20.mat';
+save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
+    'diffMap')

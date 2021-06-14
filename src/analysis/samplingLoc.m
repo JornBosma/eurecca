@@ -12,8 +12,8 @@ load('zSounding.mat')
 load('JDN_samples.mat')
 load('sampleGPS.mat')
 
-data = {z_UTD_realisatie, z_2019_Q4, z_2020_Q1, z_2020_Q2, z_2020_Q3};
-names = {'UTD realisatie', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3'};
+data = {z_UTD_realisatie, z_2019_Q4, z_2020_Q1, z_2020_Q2, z_2020_Q3, z_2020_Q4, z_2021_Q1};
+names = {'UTD realisatie', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', '2020 Q4', '2021 Q1'};
 
 %% Visualisation: proposed sampling locations
 a = [116542; 116557; 116572]; % reference x-coordinates

@@ -1,0 +1,86 @@
+***********************************************************
+*                                                         *
+*            Sandy, Version 1_76 Feb 01 2017              *
+*                  date: 11/06/2021 00:37:40              *
+*                                                         *
+*                       Diagnostic file                   *
+*                                                         *
+***********************************************************
+
+***********************************************************
+* Sandy has recognized several folders, for this reason a *
+*                  "multi-analysis" will run.             *
+***********************************************************
+
+->->-> Reviewing if the folder .git has one txt file (input file)...
+->->-> One problem was found in the folder .git 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> One problem was found in the folder .git 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> Reviewing if the folder bin has one txt file (input file)...
+->->-> One problem was found in the folder bin 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> One problem was found in the folder bin 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> Reviewing if the folder config has one txt file (input file)...
+->->-> One problem was found in the folder config 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> One problem was found in the folder config 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> Reviewing if the folder data has one txt file (input file)...
+->->-> One problem was found in the folder data 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> One problem was found in the folder data 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> Reviewing if the folder docs has one txt file (input file)...
+->->-> One problem was found in the folder docs 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> One problem was found in the folder docs 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> Reviewing if the folder results has one txt file (input file)...
+->->-> One problem was found in the folder results 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> One problem was found in the folder results 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> Reviewing if the folder src has one txt file (input file)...
+->->-> One problem was found in the folder src 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+->->-> One problem was found in the folder src 
+       Analysis will not done because Sandy could not find 
+       the input file. 
+
+
+
+***********************************************************
+* ...                                                     *
+*    ... Finished  Sandy                                  *
+*                  date: 11/06/2021 00:37:40              *
+*                                                         *
+***********************************************************
+

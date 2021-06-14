@@ -1,17 +1,17 @@
-function Sandy1_75
+function Sandy1_76
 % _____________________________________________________
 %% 
 % SANDY
 %
 % Instructions:
 % 1. SANDY© requires two input parameters for computing the sediment size 
-%    distribution: nominal sieve openings and cumulative mass of material
+%    distribution: nominal sieve openings and mass of material
 %    retained on each sieve. This information is provided to the program 
 %    through a plain text file (*.txt) arranged in two columns, which 
 %    should be separated by a tab space and must be located in subfolder. 
 %    This subfolder should be in the same folder where the SANDY© script is. 
 %    The data in the first column correspond to the nominal sieve openings 
-%    (in mm) and the second column must refer to the cumulative mass of 
+%    (in mm) and the second column must refer to the mass of 
 %    material retained on each sieve (in grams). The data must be sorted 
 %    in descending order, following the nominal sieve openings.
 % 2. In order to perform the sieve analysis of one or several samples of sand,
@@ -41,7 +41,7 @@ function Sandy1_75
 %
 % Copyright, 2010, Gabriel Ruiz-Martinez.
 %
-% Last modification : 01-02-17. v_1_75
+% Last modification : 01-02-17. v_1_76
 % Please, report any bug to matgarlab@yahoo.com
 % _____________________________________________________
 
@@ -65,7 +65,7 @@ fecha = datestr(datevec(now),'dd/mm/yyyy HH:MM:SS');
 fid = fopen('diag_Sandy.log','w');
 fprintf(fid,'***********************************************************\r\n');
 fprintf(fid,'*                                                         *\r\n');
-fprintf(fid,'*            Sandy, Version 1_75 Feb 01 2017              *\r\n');
+fprintf(fid,'*            Sandy, Version 1_76 Feb 01 2017              *\r\n');
 fprintf(fid,'*                  date: %19s              *\r\n',fecha);
 fprintf(fid,'*                                                         *\r\n');
 fprintf(fid,'*                       Diagnostic file                   *\r\n');
@@ -396,7 +396,7 @@ if cgra == 2 || isempty(data) == 0
             elseif Mean_grain_size_mm >= 19.1 && Mean_grain_size_mm <= 75
                     resulchar.Clasif_ASTM = 'Coarse gravel';
             else
-                    resulchar.Clasif_ASTM = 'Out of the range';
+                    resulchar.Clasif_ASTM = 'Out of range';
         end
         if Mean_grain_size_mm >= 0.0625 && Mean_grain_size_mm < 0.126
                     resulchar.Clasif_Wentworth = 'Very fine sand';
@@ -413,11 +413,11 @@ if cgra == 2 || isempty(data) == 0
             elseif Mean_grain_size_mm >= 4.77 && Mean_grain_size_mm < 8
                     resulchar.Clasif_Wentworth = 'Small pebble';             
             elseif Mean_grain_size_mm >= 8 && Mean_grain_size_mm < 16
-                    resulchar.Clasif_Wentworth = 'Cantos medios'; 
+                    resulchar.Clasif_Wentworth = 'Medium Pebble'; 
             elseif Mean_grain_size_mm >= 16 && Mean_grain_size_mm <= 19.03
                     resulchar.Clasif_Wentworth = 'Large pebble';
              else
-                    resulchar.Clasif_Wentworth = 'Out of the range';
+                    resulchar.Clasif_Wentworth = 'Out of range';
         end
         gravel(r,1) = 0;     
         for i = 1 : r  
