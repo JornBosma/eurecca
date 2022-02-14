@@ -16,7 +16,7 @@ addpath(genpath([basePath 'bin']))
 addpath(genpath([basePath 'docs']))
 
 % set default settings
-set(groot, 'DefaultAxesFontSize', 25)
+set(groot, 'DefaultAxesFontSize', 20)
 set(groot, 'DefaultTextInterpreter', 'latex')
 set(groot, 'DefaultAxesTickLabelInterpreter', 'latex')
 set(groot, 'DefaultLegendInterpreter', 'latex')

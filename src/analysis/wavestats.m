@@ -50,20 +50,20 @@ ax(1) = nexttile; plot(tAx, Hm0, 'LineWidth', 2)
 yline(mean(Hm0, 'omitnan'), '--');
 text(tAx(end), mean(Hm0, 'omitnan')+0.08, [num2str(mean(Hm0, 'omitnan'),...
     '%.2f'),' m'], 'FontSize', 14)
-ylabel('H_{m0} (m)')
+ylabel('H$_{m0}$ (m)')
 
 ax(2) = nexttile; plot(tAx, Tp, 'LineWidth', 2)
 yline(mean(Tp, 'omitnan'), '--');
 text(tAx(end), mean(Tp, 'omitnan')+1.1, [num2str(mean(Tp, 'omitnan'),...
     '%.2f'),' s'], 'FontSize', 14)
-ylabel('T_p (s)')
+ylabel('T$_p$ (s)')
 
 ax(3) = nexttile; plot(tAx_c, sqrt(mean(u).^2 + mean(v).^2), 'LineWidth', 2)
-ylabel('|u| (m s^{-1})')
+ylabel('$|u|$ (m s$^{-1}$)')
 
 ax(4) = nexttile; plot(tAx, zsmean, 'LineWidth', 2); hold on
 plot(tAx_c, zsmean_c, '--', 'LineWidth', 2)
-ylabel('\zeta_{tide} (m+NAP)')
+ylabel('$\zeta_{tide}$ (m+NAP)')
 
 title(tl, 'December 2020 pilot campaign', 'FontSize', 18)
 % datetick('x','dd mmm','keepticks')

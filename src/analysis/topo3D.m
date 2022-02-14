@@ -5,9 +5,8 @@ clc
 
 eurecca_init
 
-% Jan De Nul
-% UTDrealisatie = importfile2("UTDrealisatie.pts", [1, Inf]); % load drone + bathy data
-Q32020 = importfile2("Q32020.pts", [1, Inf]); % load drone data
+% processed topo files
+load('zSounding.mat')
 
 % tidal datums (slotgemiddelden 2011): HHNK & Witteveen+Bos, 2016
 DHW = 2.95; % decennial (1/10y) high water level [m+NAP]
@@ -22,11 +21,11 @@ res = 2000; % resolution
 x = linspace(114850, 118400, res);
 y = linspace(557680, 560600, res);
 [X, Y] = meshgrid(x, y);
-Z = griddata(Q32020.xRD, Q32020.yRD, Q32020.z, X, Y);
+Z = griddata(z_2020_Q3.xRD, z_2020_Q3.yRD, z_2020_Q3.z, X, Y);
 
 %% Visualisation: topo-/bathymetric map
-figure2('Name', 'Q32020')
-scatter(Q32020.xRD, Q32020.yRD, [], Q32020.z, '.')
+figure2('Name', 'z_2020_Q3')
+scatter(z_2020_Q3.xRD, z_2020_Q3.yRD, [], z_2020_Q3.z, '.')
 xlim([114800 118400])
 ylim([557500 560800])
 xticks(114000:1e3:118000)
@@ -42,7 +41,7 @@ grid on
 axis equal
 
 %% Visualisation: topo-/bathymetric map
-figure2('Name', 'Q32020')
+figure2('Name', 'z_2020_Q3')
 surf(X, Y, Z); hold on
 [~, c1] = contour3(X, Y, Z, [AHW AHW], 'LineWidth', 1, 'LineColor', 'm');
 [~, c2] = contour3(X, Y, Z, [MHW MHW], 'LineWidth', 1, 'LineColor', 'r');
