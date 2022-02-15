@@ -18,6 +18,11 @@ names = {'2019 Q3', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', '2020 Q4', '2021
 
 % other settings
 fontsize = 25;
+<<<<<<< HEAD
+=======
+xl = [11693 11759];
+yl = [559650 560250];
+>>>>>>> b6f39c6f924e86f22d914b896eccdd287dd9376a
 
 %% Visualisation: topo-/bathymetric maps
 % figure2('Name', 'Elevation maps')
@@ -40,13 +45,18 @@ fontsize = 25;
 % %     set(gca, 'Color', [.8 .8 .8])
 % %     legend(p(2), 'NAP -1.6m', 'Location', 'northwest')
 %     grid on
+<<<<<<< HEAD
 % %     axis([1.1695e5 1.1765e5 5.5976e5 5.6040e5])
+=======
+% %     axis equal
+>>>>>>> b6f39c6f924e86f22d914b896eccdd287dd9376a
 % end
 % set(ax, 'XLim', [114800, 118400]);
 % set(ax, 'YLim', [557500, 560800]);
 % linkaxes(ax)
 
 %% Visualisation: topo-/bathymetric difference map
+<<<<<<< HEAD
 load('diffMap_Q3_2020-UTD.mat')
 diffMap1 = diffMap;
 
@@ -71,6 +81,35 @@ axis square
 % diffMap2 = diffMap;
 % clear diffMap
 
+=======
+% load('diffMap_Q3_2020-UTD.mat')
+% 
+% % figure('Name', 'Q3 2020 - Q3 2019')
+% figure2
+% scatter(diffMap.xRD, diffMap.yRD, [], diffMap.z, '.')
+% % xlim([114800 118400])
+% % ylim([557500 560800])
+% xlim([xl(1) xl(2)])
+% ylim([yl(1) yl(2)])
+% % xticks(114000:1e3:118000)
+% % yticks(558000:1e3:561000) 
+% xlabel('xRD (m)')
+% ylabel('yRD (m)')
+% c = colorbar;
+% c.Label.Interpreter = 'latex';
+% c.TickLabelInterpreter = 'latex';
+% c.Label.String = ['$<$ Erosion (m) $', repmat('\ ', 1, 30), '$ Accretion (m) $>$'];
+% c.FontSize = fontsize;
+% caxis([-2 2]);
+% colormap(brewermap([], '*RdBu'))
+% % set(gca, 'Color', [.8 .8 .8])
+% % title('Q3 2020 - Q3 2019')
+% grid on
+% axis equal
+
+% load('diffMap_Q1_21-20.mat')
+% 
+>>>>>>> b6f39c6f924e86f22d914b896eccdd287dd9376a
 % figure2('Name', 'Q1 2021 - Q1 2020')
 % scatter(diffMap2.xRD, diffMap2.yRD, [], diffMap2.z, '.')
 % xlabel('xRD (m)')
@@ -87,7 +126,7 @@ axis square
 % axis([1.1695e5 1.1765e5 5.5976e5 5.6040e5])
 % axis square
 
-% %% Visualisation: cross-shore profiles
+%% Visualisation: cross-shore profiles
 % transect_end = [find(diff(zProfiles_20201016.Time)>minutes(1)); length(zProfiles_20201016.Time)];
 % transect_start = [1; transect_end(1:end-1)+1];
 % 
