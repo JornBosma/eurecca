@@ -1,4 +1,4 @@
-function sampleData = importSampleGPS(filename, dataLines)
+function GS_yyyymmdd_gps = importSampleGPS(filename, dataLines)
 %IMPORTFILE Import data from a text file
 %  LOC20201610 = IMPORTFILE(FILENAME) reads data from text file FILENAME
 %  for the default selection.  Returns the data as a table.
@@ -9,7 +9,7 @@ function sampleData = importSampleGPS(filename, dataLines)
 %  integers for dis-contiguous row intervals.
 %
 %  Example:
-%  sampleData = importSampleGPS("~\eurecca-wp2\data\sediment\raw\Loc_2020-16-10.txt", [2, Inf]);
+%  GS_20201016_gps = importSampleGPS("GPS_2020-10-16.txt", [2, Inf]);
 %
 %  See also READTABLE.
 %
@@ -42,6 +42,6 @@ opts = setvaropts(opts, "Sample", "WhitespaceRule", "preserve");
 opts = setvaropts(opts, "Sample", "EmptyFieldRule", "auto");
 
 % Import the data
-sampleData = readtable(filename, opts);
+GS_yyyymmdd_gps = readtable(filename, opts);
 
 end
