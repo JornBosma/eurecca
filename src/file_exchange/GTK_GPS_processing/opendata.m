@@ -9,7 +9,6 @@
 % 5. rotate xy data of trendline to y coord.
 % 6. save all variables (raw, 3D and 2D lines)
 
-
 % Specify the folder where the files live.
 clear
 close all
@@ -477,20 +476,20 @@ L6_2D(:,2,i)= L6_3D(:,3,i);
 end
 
 %% save all variables
-
-%save profiles per day
-save('Profiles_day', 'Profiles_0913', 'Profiles_0914', 'Profiles_0915', 'Profiles_0916', 'Profiles_0917',...
-'Profiles_0918', 'Profiles_0919', 'Profiles_0923', 'Profiles_0926', 'Profiles_0930', 'Profiles_1002',...
-'Profiles_1003', 'Profiles_1005', 'Profiles_1006', 'Profiles_1007', 'Profiles_1010', 'Profiles_1011'...
-, 'Profiles_1013', 'Profiles_1015', 'Profiles_1018');
-
-% save per profile in struct form
-save('Profiles_struct_raw','L1_struct_raw','L2_struct_raw','L3_struct_raw','L4_struct_raw','L5_struct_raw','L6_struct_raw');
-% save per profile in cell form (+ fieldnames)
-save('Profiles_3D_raw','L1_3D_raw','L2_3D_raw','L3_3D_raw','L4_3D_raw','L5_3D_raw','L6_3D_raw','names'); 
-% save per profile on trendline 3D
-save('Profiles_3D','L1_3D','L2_3D','L3_3D','L4_3D','L5_3D','L6_3D');
-% save per profile 2D
-save('Profiles_2D','L1_2D','L2_2D','L3_2D','L4_2D','L5_2D','L6_2D');
-
-save('Fieldnames','names');
+% 
+% %save profiles per day
+% save('Profiles_day', 'Profiles_0913', 'Profiles_0914', 'Profiles_0915', 'Profiles_0916', 'Profiles_0917',...
+% 'Profiles_0918', 'Profiles_0919', 'Profiles_0923', 'Profiles_0926', 'Profiles_0930', 'Profiles_1002',...
+% 'Profiles_1003', 'Profiles_1005', 'Profiles_1006', 'Profiles_1007', 'Profiles_1010', 'Profiles_1011'...
+% , 'Profiles_1013', 'Profiles_1015', 'Profiles_1018');
+% 
+% % save per profile in struct form
+% save('Profiles_struct_raw','L1_struct_raw','L2_struct_raw','L3_struct_raw','L4_struct_raw','L5_struct_raw','L6_struct_raw');
+% % save per profile in cell form (+ fieldnames)
+% save('Profiles_3D_raw','L1_3D_raw','L2_3D_raw','L3_3D_raw','L4_3D_raw','L5_3D_raw','L6_3D_raw','names'); 
+% % save per profile on trendline 3D
+% save('Profiles_3D','L1_3D','L2_3D','L3_3D','L4_3D','L5_3D','L6_3D');
+% % save per profile 2D
+% save('Profiles_2D','L1_2D','L2_2D','L3_2D','L4_2D','L5_2D','L6_2D');
+% 
+% save('Fieldnames','names');

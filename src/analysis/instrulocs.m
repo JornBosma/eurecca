@@ -70,7 +70,7 @@ c.Label.String = 'm +NAP';
 c.Label.Interpreter = 'latex';
 c.TickLabelInterpreter = 'latex';
 c.FontSize = fontsize;
-caxis([-5, 5]);
+clim([-5, 5]);
 
 colormap(brewermap([], '*PuOr'))
 
@@ -108,7 +108,7 @@ c.Label.String = 'm +NAP';
 c.Label.Interpreter = 'latex';
 c.TickLabelInterpreter = 'latex';
 c.FontSize = fontsize;
-caxis([-5, 5]);
+clim([-5, 5]);
 
 colormap(brewermap([], '*PuOr'))
 

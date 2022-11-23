@@ -17,9 +17,9 @@ addpath(genpath([basePath 'docs']))
 
 % set default settings
 set(groot, 'DefaultAxesFontSize', 22)
-set(groot, 'DefaultTextInterpreter', 'latex')
-set(groot, 'DefaultAxesTickLabelInterpreter', 'latex')
-set(groot, 'DefaultLegendInterpreter', 'latex')
+% set(groot, 'DefaultTextInterpreter', 'latex')
+% set(groot, 'DefaultAxesTickLabelInterpreter', 'latex')
+% set(groot, 'DefaultLegendInterpreter', 'latex')
 set(groot, 'DefaultLegendLocation', 'northwest')
 set(groot, 'DefaultLegendBox', 'off')
 set(groot, 'DefaultAxesBox', 'off')

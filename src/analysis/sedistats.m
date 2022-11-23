@@ -181,7 +181,7 @@ scatter(ax1, z_2019_Q4.xRD(z_2019_Q4.z>0), z_2019_Q4.yRD(z_2019_Q4.z>0), [], z_2
 % s2 = scatter(z_2019_Q4.xRD(z_2019_Q4.z>-0.05 & z_2019_Q4.z<0.05),...
 %     z_2019_Q4.yRD(z_2019_Q4.z>-0.05 & z_2019_Q4.z<0.05), 4, 'g', 'filled');
 % legend([s1, s2], '', 'MSL', 'Location', 'west')
-scatter(ax2, sampleArmor.Easting(ref_20190128), sampleArmor.Northing(ref_20190128), 300, mean(D50_20190128), 'filled')
+scatter(ax2, sampleArmor.Easting(ref_20190128), sampleArmor.Northing(ref_20190128), 400, mean(D50_20190128), 'filled')
 text(sampleArmor.Easting(ref_20190128)+80, sampleArmor.Northing(ref_20190128)-80, num2cell(1:length(ref_20190128)), 'FontSize', fontsize)
 
 ax2.SortMethod = 'childorder';
@@ -220,8 +220,8 @@ cb2.FontSize = fontsize;
 xlabel([ax1, ax2], 'easting - RD (m)')
 ylabel([ax1, ax2], 'northing - RD (m)')
 
-caxis(ax1, [-5, 5])
-caxis(ax2, [0.3, 1.0])
+clim(ax1, [-5, 5])
+clim(ax2, [0.3, 1.0])
 
 axis([ax1, ax2], [xl(1), xl(2), yl(1), yl(2)]) 
 axis([ax1, ax2], 'equal')
@@ -236,7 +236,7 @@ scatter(ax1, z_2020_Q4.xRD(z_2020_Q4.z>0), z_2020_Q4.yRD(z_2020_Q4.z>0), [], z_2
 % s2 = scatter(z_2020_Q4.xRD(z_2020_Q4.z>-0.05 & z_2020_Q4.z<0.05),...
 %     z_2020_Q4.yRD(z_2020_Q4.z>-0.05 & z_2020_Q4.z<0.05), 4, 'g', 'filled');
 % legend([s1, s2], '', 'MSL', 'Location', 'west')
-scatter(ax2, GS_20201016_gps.xRD(ref_20201016), GS_20201016_gps.yRD(ref_20201016), 300, mean(D50_20201016), 'filled')
+scatter(ax2, GS_20201016_gps.xRD(ref_20201016), GS_20201016_gps.yRD(ref_20201016), 400, mean(D50_20201016), 'filled')
 text(GS_20201016_gps.xRD(ref_20201016)+80, GS_20201016_gps.yRD(ref_20201016)-80, num2cell(length(ref_20201016):-1:1), 'FontSize', fontsize)
 
 ax2.SortMethod = 'childorder';
@@ -275,8 +275,8 @@ cb2.FontSize = fontsize;
 xlabel([ax1, ax2], 'easting - RD (m)')
 ylabel([ax1, ax2], 'northing - RD (m)')
 
-caxis(ax1, [-5, 5])
-caxis(ax2, [0.3, 1.0])
+clim(ax1, [-5, 5])
+clim(ax2, [0.3, 1.0])
 
 axis([ax1, ax2], [xl(1), xl(2), yl(1), yl(2)]) 
 axis([ax1, ax2], 'equal')
@@ -291,8 +291,8 @@ scatter(ax1, z_2020_Q4.xRD(z_2020_Q4.z>0), z_2020_Q4.yRD(z_2020_Q4.z>0), [], z_2
 % s2 = scatter(z_2020_Q4.xRD(z_2020_Q4.z>-0.05 & z_2020_Q4.z<0.05),...
 %     z_2020_Q4.yRD(z_2020_Q4.z>-0.05 & z_2020_Q4.z<0.05), 4, 'g', 'filled');
 % legend([s1, s2], '', 'MSL', 'Location', 'west')
-scatter(ax2, GS_20201202_gps.xRD(ref_20201202), GS_20201202_gps.yRD(ref_20201202), 300, mean(D50_20201202), 'filled')
-text(GS_20201202_gps.xRD(ref_20201202)+80, GS_20201202_gps.yRD(ref_20201202)-80, num2cell(length(ref_20201202):-1:1), 'FontSize', fontsize)
+scatter(ax2, GS_20201202_gps.xRD(ref_20201202), GS_20201202_gps.yRD(ref_20201202), 400, mean(D50_20201202), 'filled')
+text(GS_20201202_gps.xRD(ref_20201202)+80, GS_20201202_gps.yRD(ref_20201202)-80, num2cell(1:length(ref_20201202)), 'FontSize', fontsize)
 
 ax2.SortMethod = 'childorder';
 
@@ -330,8 +330,8 @@ cb2.FontSize = fontsize;
 xlabel([ax1, ax2], 'easting - RD (m)')
 ylabel([ax1, ax2], 'northing - RD (m)')
 
-caxis(ax1, [-5, 5])
-caxis(ax2, [0.3, 1.0])
+clim(ax1, [-5, 5])
+clim(ax2, [0.3, 1.0])
 
 axis([ax1, ax2], [xl(1), xl(2), yl(1), yl(2)]) 
 axis([ax1, ax2], 'equal')
@@ -341,7 +341,7 @@ set([ax1, ax2], 'Color', [.8 .8 .8])
 %% Visualisation: 2 Dec 2020 (no elevation map)
 % figure2('Name', '02-12-2020')
 % ax = axes;
-% scatter(ax, GS_20201202_gps.xRD(ref_20201202), GS_20201202_gps.yRD(ref_20201202), 300, mean(D50_20201202), 'filled')
+% scatter(ax, GS_20201202_gps.xRD(ref_20201202), GS_20201202_gps.yRD(ref_20201202), 400, mean(D50_20201202), 'filled')
 % text(GS_20201202_gps.xRD(ref_20201202)+80, GS_20201202_gps.yRD(ref_20201202)-80, num2cell(length(ref_20201202):-1:1), 'FontSize', fontsize)
 % 
 % ax.Visible = 'off';
@@ -361,7 +361,7 @@ set([ax1, ax2], 'Color', [.8 .8 .8])
 % xlabel(ax, 'easting - RD (m)')
 % ylabel(ax, 'northing - RD (m)')
 % 
-% caxis(ax, [0.3, 1.0])
+% clim(ax, [0.3, 1.0])
 % 
 % axis(ax, [xl(1), xl(2), yl(1), yl(2)]) 
 % axis(ax, 'equal')
@@ -389,7 +389,7 @@ plot(mean(D10_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor
 plot(mean(D50_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
 plot(mean(D90_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
 plot(mean(sort_20201202), 'ro:', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-ylabel('grain-size percentile ($mm$)', 'FontSize', fontsize)
+ylabel('grain size ($mm$)', 'FontSize', fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(1:10))
@@ -409,7 +409,7 @@ scatter(ax1, z_2021_09.xRD(z_2021_09.z>0), z_2021_09.yRD(z_2021_09.z>0), [], z_2
 % s2 = scatter(z_2021_09.xRD(z_2021_09.z>-0.05 & z_2021_09.z<0.05),...
 %     z_2021_09.yRD(z_2021_09.z>-0.05 & z_2021_09.z<0.05), 4, 'g', 'filled');
 % legend([s1, s2], '', 'MSL', 'Location', 'west')
-scatter(ax2, GS_20210921_gps.xRD(ref_20210921), GS_20210921_gps.yRD(ref_20210921), 300, mean(D50_20210921), 'filled')
+scatter(ax2, GS_20210921_gps.xRD(ref_20210921), GS_20210921_gps.yRD(ref_20210921), 400, mean(D50_20210921), 'filled')
 text(GS_20210921_gps.xRD(ref_20210921)+80, GS_20210921_gps.yRD(ref_20210921)-80, num2cell(1:length(ref_20210921)), 'FontSize', fontsize)
 
 ax2.SortMethod = 'childorder';
@@ -448,8 +448,8 @@ cb2.FontSize = fontsize;
 xlabel([ax1, ax2], 'easting - RD (m)')
 ylabel([ax1, ax2], 'northing - RD (m)')
 
-caxis(ax1, [-5, 5])
-caxis(ax2, [0.3, 1.0])
+clim(ax1, [-5, 5])
+clim(ax2, [0.3, 1.0])
 
 axis([ax1, ax2], [xl(1), xl(2), yl(1), yl(2)]) 
 axis([ax1, ax2], 'equal')
@@ -464,7 +464,7 @@ scatter(ax1, z_2021_09.xRD(z_2021_09.z>0), z_2021_09.yRD(z_2021_09.z>0), [], z_2
 % s2 = scatter(z_2021_09.xRD(z_2021_09.z>-0.05 & z_2021_09.z<0.05),...
 %     z_2021_09.yRD(z_2021_09.z>-0.05 & z_2021_09.z<0.05), 4, 'g', 'filled');
 % legend([s1, s2], '', 'MSL', 'Location', 'west')
-scatter(ax2, GS_20210928_gps.xRD(ref_20210928), GS_20210928_gps.yRD(ref_20210928), 300, mean(D50_20210928), 'filled')
+scatter(ax2, GS_20210928_gps.xRD(ref_20210928), GS_20210928_gps.yRD(ref_20210928), 400, mean(D50_20210928), 'filled')
 text(GS_20210928_gps.xRD(ref_20210928)+80, GS_20210928_gps.yRD(ref_20210928)-80, num2cell(1:length(ref_20210928)), 'FontSize', fontsize)
 
 ax2.SortMethod = 'childorder';
@@ -503,8 +503,8 @@ cb2.FontSize = fontsize;
 xlabel([ax1, ax2], 'easting - RD (m)')
 ylabel([ax1, ax2], 'northing - RD (m)')
 
-caxis(ax1, [-5, 5])
-caxis(ax2, [0.3, 1.0])
+clim(ax1, [-5, 5])
+clim(ax2, [0.3, 1.0])
 
 axis([ax1, ax2], [xl(1), xl(2), yl(1), yl(2)]) 
 axis([ax1, ax2], 'equal')
@@ -519,7 +519,7 @@ scatter(ax1, z_2021_11.xRD(z_2021_11.z>0), z_2021_11.yRD(z_2021_11.z>0), [], z_2
 % s2 = scatter(z_2021_11.xRD(z_2021_11.z>-0.05 & z_2021_11.z<0.05),...
 %     z_2021_11.yRD(z_2021_11.z>-0.05 & z_2021_11.z<0.05), 4, 'g', 'filled');
 % legend([s1, s2], '', 'MSL', 'Location', 'west')
-scatter(ax2, GS_20211008_9_gps.xRD(ref_20211008_9), GS_20211008_9_gps.yRD(ref_20211008_9), 300, mean(D50_20211008_9), 'filled')
+scatter(ax2, GS_20211008_9_gps.xRD(ref_20211008_9), GS_20211008_9_gps.yRD(ref_20211008_9), 400, mean(D50_20211008_9), 'filled')
 text(GS_20211008_9_gps.xRD(ref_20211008_9)+80, GS_20211008_9_gps.yRD(ref_20211008_9)-80, num2cell(length(ref_20211008_9):-1:1), 'FontSize', fontsize)
 
 ax2.SortMethod = 'childorder';
@@ -558,8 +558,8 @@ cb2.FontSize = fontsize;
 xlabel([ax1, ax2], 'easting - RD (m)')
 ylabel([ax1, ax2], 'northing - RD (m)')
 
-caxis(ax1, [-5, 5])
-caxis(ax2, [0.3, 1.0])
+clim(ax1, [-5, 5])
+clim(ax2, [0.3, 1.0])
 
 axis([ax1, ax2], [xl(1), xl(2), yl(1), yl(2)]) 
 axis([ax1, ax2], 'equal')
@@ -569,7 +569,7 @@ set([ax1, ax2], 'Color', [.8 .8 .8])
 %% Visualisation: 8/9 Oct 2021 (no elevation map)
 % figure2('Name', '08-10-2021')
 % ax = axes;
-% scatter(ax, GS_20211008_9_gps.xRD(ref_20211008_9), GS_20211008_9_gps.yRD(ref_20211008_9), 300, mean(D50_20211008_9), 'filled')
+% scatter(ax, GS_20211008_9_gps.xRD(ref_20211008_9), GS_20211008_9_gps.yRD(ref_20211008_9), 400, mean(D50_20211008_9), 'filled')
 % text(GS_20211008_9_gps.xRD(ref_20211008_9)+80, GS_20211008_9_gps.yRD(ref_20211008_9)-80, num2cell(length(ref_20211008_9):-1:1), 'FontSize', fontsize)
 % 
 % ax.Visible = 'off';
@@ -589,7 +589,7 @@ set([ax1, ax2], 'Color', [.8 .8 .8])
 % xlabel(ax, 'easting - RD (m)')
 % ylabel(ax, 'northing - RD (m)')
 % 
-% caxis(ax, [0.3, 1.0])
+% clim(ax, [0.3, 1.0])
 % 
 % axis(ax, [xl(1), xl(2), yl(1), yl(2)]) 
 % axis(ax, 'equal')
@@ -620,7 +620,7 @@ plot(mean(D10_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceCol
 plot(mean(D50_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
 plot(mean(D90_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
 plot(mean(sort_20211008_9), 'ro:', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-ylabel('grain-size percentile ($mm$)', 'FontSize', fontsize*1.3)
+ylabel('grain size ($mm$)', 'FontSize', fontsize*1.3)
 xlabel('longshore location', 'FontSize', fontsize*1.3)
 xticks(1:10)
 xticklabels(num2cell(10:-1:1))
@@ -637,7 +637,7 @@ axis square
 figure2
 plot(mean(D50_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0]); hold on
 plot(flip(mean(D50_20211008_9)), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-ylabel('grain-size percentile ($mm$)', 'FontSize', fontsize*1.3)
+ylabel('D$_{50}$ ($mm$)', 'FontSize', fontsize*1.3)
 xlabel('longshore location', 'FontSize', fontsize*1.3)
 xticks(1:10)
 xticklabels(num2cell(1:10))
