@@ -9,7 +9,7 @@ basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
     'research-eurecca' filesep 'FieldVisits' filesep ...
     '20210908_SEDMEX' filesep 'Data Descriptor'];
 
-addpath([basePath filesep 'ADV'])
+% addpath(genpath([basePath filesep 'ADV']))
 
 start = datetime('2021-09-10 19:00:00'); % UTC+2
 
@@ -49,11 +49,11 @@ L2C2_Hm0 = ncread('L2C2VEC.nc', 'Hm0'); % significant wave height (m)
 set(0, 'DefaultLineLineWidth', 3);
 set(0, 'DefaultLineMarkerSize', 20);
 
-p = (tv >= datetime('2021-09-12 00:00:00')) & (tv <= datetime('2021-09-28 23:59:59'));
+p = (tv >= datetime('2021-09-11 00:00:00')) & (tv <= datetime('2021-10-17 8:00:00'));
 p3 = p(31:end); % L2C3 31*10 min (= 5.1667 h) ahead of L2C4 & L2C10
 p2 = p(15:end); % L2C2 15*10 min (= 2.5000 h) ahead of L2C4 & L2C10
 
-figure2
+figure
 tiledlayout(3, 1, 'TileSpacing', 'tight')
 
 ax(1) = nexttile;

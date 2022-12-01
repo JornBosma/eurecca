@@ -1,0 +1,33 @@
+%% Initialisation
+close all
+clear
+clc
+
+[~, ~, ~, ~, fontsize] = eurecca_init;
+
+basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
+    'research-eurecca' filesep 'FieldVisits' filesep ...
+    '20210908_SEDMEX' filesep 'Data Descriptor'];
+
+file = [basePath, '/TRANSECTS/field_visits_projected_netcdf/alleen_loop/track1.nc'];
+
+track = ncinfo(file);
+x = ncread(file, 'x'); % xRD [m]
+y = ncread(file, 'y'); % yRD [m]
+d = ncread(file, 'd'); % x-shore distance [m]
+profiles = ncread(file, '__xarray_dataarray_variable__'); % depth [m]
+ID = ncread(file, 'ID'); % profile ID (seconds since 2020-10-16 12:56:53)
+
+date = datetime(ID, 'ConvertFrom', 'epochtime', 'Epoch', '2020-10-16 12:56:53');
+
+range = 5:23; % SEDMEX period
+
+%% Visualisation
+figure
+plot(d, movmean(profiles(:, range), 6))
+legend(string(datetime(date(range), 'Format','dd MM yy')), 'Location', 'northeastoutside')
+xlim([190, 250])
+ylim([-1.5, 2])
+
+newcolors = colormap("pink");
+colororder(flipud(newcolors(10:10:50*5, :)))

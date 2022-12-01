@@ -13,8 +13,8 @@ load('zProfiles_20201016.mat')
 load('JDN_samples.mat')
 load('sampleGPS.mat')
 
-data = {z_UTD_realisatie, z_2019_Q4, z_2020_Q1, z_2020_Q2, z_2020_Q3, z_2020_Q4, z_2021_Q1, z_2021_06, z_2021_09, z_2021_11, zProfiles_20201016};
-names = {'2019 Q3', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', '2020 Q4', '2021 Q1', '2021-06', '2021-09', '2021-11', 'zProfiles 2020-10-16'};
+data = {z_UTD_realisatie, z_2019_Q4, z_2020_Q1, z_2020_Q2, z_2020_Q3, z_2020_Q4, z_2021_Q1, z_2021_06, z_2021_09, z_2021_11, z_2022_Q3, zProfiles_20201016};
+names = {'2019 Q3', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', '2020 Q4', '2021 Q1', '2021-06', '2021-09', '2021-11', '2022 Q3', 'zProfiles 2020-10-16'};
 
 %% Visualisation: topo-/bathymetric maps
 % figure2('Name', 'Elevation maps')
@@ -32,7 +32,7 @@ names = {'2019 Q3', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', '2020 Q4', '2021
 %     c.Label.String = 'm +NAP';
 %     c.Label.Interpreter = 'latex';
 %     c.TickLabelInterpreter = 'latex';
-%     caxis([-5 5]);
+%     clim([-5 5]);
 %     colormap(brewermap([], '*PuOr'))
 % %     set(gca, 'Color', [.8 .8 .8])
 % %     legend(p(2), 'NAP -1.6m', 'Location', 'northwest')
@@ -60,7 +60,7 @@ names = {'2019 Q3', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', '2020 Q4', '2021
 % c.TickLabelInterpreter = 'latex';
 % c.Label.String = ['$<$ erosion (m) $', repmat('\ ', 1, 16), '$ accretion (m) $>$'];
 % c.FontSize = fontsize;
-% caxis([-2 2]);
+% clim([-2 2]);
 % colormap(brewermap([], '*RdBu'))
 % % set(gca, 'Color', [.8 .8 .8])
 % axis([xl(1), xl(2), yl(1), yl(2)])
@@ -82,18 +82,18 @@ names = {'2019 Q3', '2019 Q4', '2020 Q1', '2020 Q2', '2020 Q3', '2020 Q4', '2021
 % c.TickLabelInterpreter = 'latex';
 % c.Label.String = ['$<$ erosion (m) $', repmat('\ ', 1, 30), '$ accretion (m) $>$'];
 % c.FontSize = fontsize;
-% caxis([-2 2]);
+% clim([-2 2]);
 % colormap(brewermap([], '*RdBu'))
 % % set(gca, 'Color', [.8 .8 .8])
 % axis([xl(1), xl(2), yl(1), yl(2)])
 % axis equal
 
-load('diffMap_newest-oldest.mat')
+load('diffMap_newest-oldest2.mat')
 diffMap2 = diffMap;
 clear diffMap
 
 % figure('Name', '2021-11 - UTD 2019')
-figure2
+f = figure;
 scatter(diffMap2.xRD, diffMap2.yRD, [], diffMap2.z, '.')
 xticks(xt)
 yticks(yt)
@@ -104,12 +104,14 @@ c.Label.Interpreter = 'latex';
 c.TickLabelInterpreter = 'latex';
 c.Label.String = ['$<$ erosion (m) $', repmat('\ ', 1, 1), '$ accretion (m) $>$'];
 c.FontSize = fontsize;
-caxis([-2 2]);
+clim([-2 2]);
 colormap(brewermap([], '*RdBu'))
 % set(gca, 'Color', [.8 .8 .8])
 axis([xl(1), xl(2), yl(1), yl(2)])
 axis('off')
 axis equal
+
+% exportgraphics(f, 'dsm_diff.png')
 
 %% Visualisation: cross-shore profiles
 % transect_end = [find(diff(zProfiles_20201016.Time)>minutes(1)); length(zProfiles_20201016.Time)];

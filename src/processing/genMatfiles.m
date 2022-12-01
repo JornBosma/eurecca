@@ -4,7 +4,8 @@ clear
 clc
 
 global basePath
-eurecca_init
+
+[~, ~, ~, ~, ~] = eurecca_init;
 
 % %% Generate mat-files
 % sampleShell = importfile3("190423_JDN.1712.PQF.81.03.nl.00_schelpenlaag strandhaak.xlsx",...
@@ -46,10 +47,16 @@ eurecca_init
 % z_2021_06 = JDN_txt("2021-06.txt", [1, Inf]);
 % z_2021_09 = JDN_txt("2021-09.txt", [1, Inf]);
 % z_2021_11 = JDN_txt("2021-11.txt", [1, Inf]);
+% z_2022_Q3 = JDN_xyz('2022_Q3.xyz', 1, inf);
+
 % fileName = 'zSounding.mat';
 % save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
 %     'z_UTD_realisatie', 'z_2019_Q4', 'z_2020_Q1', 'z_2020_Q2',...
-%     'z_2020_Q3', 'z_2020_Q4', 'z_2021_Q1', 'z_2021_06', 'z_2021_09', 'z_2021_11')
+%     'z_2020_Q3', 'z_2020_Q4', 'z_2021_Q1', 'z_2021_06', 'z_2021_09',...
+%     'z_2021_11', 'z_2022_Q3')
+
+% save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
+%     'z_2022_Q3','-append')
 
 %% Difference maps
 load('zSounding.mat')
@@ -74,13 +81,13 @@ load('zSounding.mat')
 % save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
 %     'diffMap')
 
-% z_2021_11 - z_UTD_realisatie
-z_UTD_realisatie_2 = table(z_2021_11.xRD, z_2021_11.yRD,...
-    griddata(z_UTD_realisatie.xRD, z_UTD_realisatie.yRD, z_UTD_realisatie.z, z_2021_11.xRD, z_2021_11.yRD),...
+% z_2022_Q3 - z_UTD_realisatie
+z_UTD_realisatie_2 = table(z_2022_Q3.xRD, z_2022_Q3.yRD,...
+    griddata(z_UTD_realisatie.xRD, z_UTD_realisatie.yRD, z_UTD_realisatie.z, z_2022_Q3.xRD, z_2022_Q3.yRD),...
     'VariableNames',{'xRD','yRD','z'});
-diffMap = table(z_2021_11.xRD, z_2021_11.yRD, z_2021_11.z - z_UTD_realisatie_2.z,...
+diffMap = table(z_2022_Q3.xRD, z_2022_Q3.yRD, z_2022_Q3.z - z_UTD_realisatie_2.z,...
     'VariableNames',{'xRD','yRD','z'});
-fileName = 'diffMap_newest-oldest.mat';
+fileName = 'diffMap_newest-oldest2.mat';
 save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
     'diffMap')
 

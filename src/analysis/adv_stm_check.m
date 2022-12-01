@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[xl, yl, xt, yt, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize] = eurecca_init;
 
 labels = {'L1C1', 'L2C3', 'L3C1', 'L4C1', 'L5C1', 'L6C1'};
 
