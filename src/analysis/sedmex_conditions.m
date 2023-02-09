@@ -5,11 +5,13 @@ clc
 
 [~, ~, ~, ~, fontsize] = eurecca_init;
 
-basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
-    'research-eurecca' filesep 'FieldVisits' filesep ...
-    '20210908_SEDMEX' filesep 'Data Descriptor'];
+% basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
+%     'research-eurecca' filesep 'FieldVisits' filesep ...
+%     '20210908_SEDMEX' filesep 'Data Descriptor'];
 
-% addpath(genpath([basePath filesep 'OSSI' filesep 'L4C3OSSI' filesep 'tailored' filesep]))
+basePath = [filesep 'Volumes' filesep 'JWB' filesep 'Data Descriptor' filesep];
+
+addpath(genpath([basePath filesep 'OSSI' filesep 'L4C3OSSI' filesep 'tailored' filesep]))
 
 start = datetime('2021-09-10 19:00:00'); % UTC+2
 
@@ -38,20 +40,20 @@ f = figure;
 tiledlayout(3, 1, 'TileSpacing', 'tight')
 
 ax(1) = nexttile;
-plot(tv(p), L4C3_h(p)-mean(L4C3_h))
+plot(tv(p), L4C3_h(p)-mean(L4C3_h), 'LineWidth', 2)
 set(gca,'xticklabel',{[]})
-ylabel('water level\newline (m +NAP)')
+ylabel('z (m +NAP)')
 
 ax(2) = nexttile;
-plot(tv(p), L2C10_Ulong(p)); hold on
-plot(tv(p), L2C10_Ucross(p))
+plot(tv(p), L2C10_Ulong(p), 'LineWidth', 2); hold on
+plot(tv(p), L2C10_Ucross(p), 'LineWidth', 2)
 set(gca,'xticklabel',{[]})
-ylabel('flow velocity\newline    (m s^{-1})')
+ylabel('U_{mag} (m s^{-1})')
 legend('longshore', 'cross-shore', 'Location', 'eastoutside')
 
 ax(3) = nexttile;
-plot(tv(p), L4C3_Hm0(p))
-ylabel('wave height\newline       (m)')
+plot(tv(p), L4C3_Hm0(p), 'LineWidth', 2)
+ylabel('H_{m0} (m)')
 
 xlim(ax, [min(tv(p)) max(tv(p))])
 linkaxes(ax, 'x')

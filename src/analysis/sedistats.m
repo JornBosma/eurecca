@@ -548,7 +548,7 @@ tiledlayout(3, 1, 'TileSpacing', 'tight')
 nexttile;
 hold on
 for n = 1:length(D90_day)
-    scatter(D90_day{n}(1, :), D90_day{n}(2, :), 200, 'filled', 'LineWidth', 3)
+    scatter(D90_day{n}(1, :), D90_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
 end
 xlim([0.5 11])
 ylim([0, 6])
@@ -556,11 +556,13 @@ newcolors = colormap("hot");
 colororder(newcolors(50:30:50*5, :))
 set(gca,'XTickLabel',[]);
 ylabel('D_{90} (mm)', 'FontSize', fontsize)
+% legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
+%     '2021-10-08', '2022-10-26'}, 'Location', 'northoutside', 'NumColumns', 7, 'FontSize', fontsize)
 
 nexttile
 hold on
 for n = 1:length(D50_day)
-    scatter(D50_day{n}(1, :), D50_day{n}(2, :), 200, 'filled', 'LineWidth', 3)
+    scatter(D50_day{n}(1, :), D50_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
 end
 xlim([0.5 11])
 ylim([0, 1.5])
@@ -574,7 +576,7 @@ ylabel('D_{50} (mm)', 'FontSize', fontsize)
 nexttile
 hold on
 for n = 1:length(D10_day)
-    scatter(D10_day{n}(1, :), D10_day{n}(2, :), 200, 'filled', 'LineWidth', 3)
+    scatter(D10_day{n}(1, :), D10_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
 end
 xlim([0.5 11])
 ylim([0.1, 0.6])
@@ -599,6 +601,7 @@ end
 p1 = plot(1:11, D10_fit, 'b', 'LineWidth', 4);
 yline(mean(D10_all(2, :), 'omitnan'), '--b', 'LineWidth', 2)
 text(1, mean(D10_all(2, :)+.02, 'omitnan'), [mat2str(mean(D10_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'b')
+yline(mean(D10_20201202_L(2, :), 'omitnan'), ':b', 'LineWidth', 2)
 
 hold on
 for n = 1:length(D50_day)
@@ -607,6 +610,7 @@ end
 p2 = plot(1:11, D50_fit, 'g', 'LineWidth', 4);
 yline(mean(D50_all(2, :), 'omitnan'), '--g', 'LineWidth', 2)
 text(1, mean(D50_all(2, :)+.05, 'omitnan'), [mat2str(mean(D50_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'g')
+yline(mean(D50_20201202_L(2, :), 'omitnan'), ':g', 'LineWidth', 2)
 
 hold on
 for n = 1:length(D90_day)
@@ -615,6 +619,7 @@ end
 p3 = plot(1:11, D90_fit, 'r', 'LineWidth', 4);
 yline(mean(D90_all(2, :), 'omitnan'), '--r', 'LineWidth', 2)
 text(1, mean(D90_all(2, :)+.2, 'omitnan'), [mat2str(mean(D90_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'r')
+yline(mean(D90_20201202_L(2, :), 'omitnan'), ':r', 'LineWidth', 2)
 
 xlim([0.5, 11])
 set(gca, 'YScale', 'log')

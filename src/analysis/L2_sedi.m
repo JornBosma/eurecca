@@ -36,8 +36,8 @@ MeasuringTimes = {'2021-09-20 08:00:00';'2021-09-20 09:00:00';...
     '2021-09-20 10:00:00';'2021-09-20 11:00:00'};
 
 %% Necessary adjustments
-% GS = GS_L2C3_plus;
-GS = GS_L2C5_plus;
+GS = GS_L2C3_plus;
+% GS = GS_L2C5_plus;
 
 GSa = GS(1:end-1, 1);
 GSb = GS(2:end, 2:end);
@@ -46,7 +46,7 @@ GSd = [GSc; GS(end, :)];
 GSd{end, :} = 0;
 GS = GSd;
 
-%% L2C3
+%% L2CX (sedmex period)
 MD = NaN([length(aperture) length(t)]);
 MD(:, 1) = GS.Sep16;
 MD(:, 5) = GS.Sep20a;
@@ -62,7 +62,7 @@ MD(:, 26) = GS.Oct11;
 MD(:, 28) = GS.Oct13;
 MD(:, 30) = GS.Oct15a;
 
-figure
+f = figure2;
 pcolor(t, aperture, MD)
 shading flat
 
@@ -74,9 +74,12 @@ xtickangle(45)
 
 c = colorbar;
 c.Label.String = 'cumulative mass (%)';
+c.Label.FontSize = fontsize;
 colormap(brewermap([], 'PuOr'))
 
-%% L2C3
+% exportgraphics(f, 'L2C3_GS.png')
+
+%% L2CX (tidal cycle)
 MD2 = NaN([length(aperture) 19]);
 MD2(:, 1) = GS.Sep20a;
 MD2(:, 2) = GS.Sep20b;
@@ -94,7 +97,7 @@ MD2(:, 16) = GS.Oct15a;
 MD2(:, 17) = GS.Oct15b;
 MD2(:, 18) = GS.Oct15c;
 
-figure
+f = figure2;
 pcolor(1:19, aperture, MD2)
 shading interp
 
@@ -107,4 +110,7 @@ xtickangle(45)
 
 c = colorbar;
 c.Label.String = 'cumulative mass (%)';
+c.Label.FontSize = fontsize;
 colormap(brewermap([], 'PuOr'))
+
+% exportgraphics(f, 'L2C3_GS_tide.png')
