@@ -112,19 +112,54 @@ z = survey.z(threshold);
 
 tri = delaunay(x, y);
 
-%% Visualisation: interp map
-f = figure;
-trisurf(tri, x, y, z)
-axis vis3d
-axis off
-view(61, 90)
-shading interp
-colorbar
-crameri('vik', 'pivot', 0)
-
-% l = light('Position',[-50 -15 29]);
-% set(gca,'CameraPosition',[208 -50 7687])
-% lighting phong
+%% Figure 1a: bed-level change from Summer 2019 - Summer 2022 
+% load d_2022_Q3-2019_Q3.mat
+% 
+% % survey = dz_2020_Q3_2019_Q3;
+% % survey = dz_2021_09_2019_Q3;
+% survey = dz_2022_Q3_2019_Q3;
+% threshold = survey.z >= -6;
+% 
+% x = survey.xRD(threshold);
+% y = survey.yRD(threshold);
+% dz = survey.z(threshold);
+% 
+% tri = delaunay(x, y);
+% 
+% L1C1 = [117421.461, 560053.687]; % vector
+% L2C5 = [117199.347, 559816.116]; % 3D-sonar
+% L3C1 = [116838.947, 559536.489]; % vector
+% L4C1 = [116103.892, 558946.574]; % 3D-sonar
+% L5C1 = [115670.000, 558603.700]; % vector
+% L6C1 = [115401.500, 558224.500]; % vector
+% 
+% LXCX = [L1C1; L2C5; L3C1; L4C1; L5C1; L6C1];
+% Tr_names = {'L1'; 'L2'; 'L3'; 'L4'; 'L5'; 'L6'};
+% 
+% %% Visualisation
+% f1a = figure;
+% trisurf(tri, x, y, dz); shading interp; hold on
+% scatter(LXCX(:,1), LXCX(:,2), 500, '|', 'k', 'LineWidth', 3);
+% text(LXCX(:, 1)+20, LXCX(:, 2)-150, Tr_names, 'FontSize', fontsize)
+% % EHY_plot_satellite_map('localEPSG', 32750, 'FaceAlpha', 1)
+% axis vis3d; axis off; ax = gca; ax.SortMethod = 'childorder';
+% view(46, 90)
+% 
+% cb = colorbar; set(cb, 'position', [.85 .5 .02 .15])
+% cb.TickLabelInterpreter = 'latex';
+% cb.FontSize = fontsize;
+% clim([-2, 2]);
+% crameri('vik', 'pivot', 0)
+% 
+% ta = annotation('textarrow', [.77 .79], [.60 .62], 'String', 'N');
+% ta.FontSize = fontsize;
+% ta.Interpreter = 'latex';
+% ta.LineWidth = 6;
+% ta.HeadStyle = 'hypocycloid';
+% ta.HeadWidth = 30;
+% ta.HeadLength = 30;
+% an = annotation('ellipse', [.752 .575 .045 .055]);
+% an.LineWidth = 2;
 
 %% Visualisation: contour map A
 % f = figure;

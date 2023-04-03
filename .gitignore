@@ -1,6 +1,9 @@
 # exclude compiled binaries and external models
 /bin/external/*
 
+# exclude 3rd-party code, freely available from file exchange
+/src/file_exchange/*
+
 # exclude data and results from source control by default
 /data/elevation/*
 /data/sediment/*

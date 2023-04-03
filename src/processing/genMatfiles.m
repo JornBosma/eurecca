@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-global basePath
+basePath = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/';
 
 [~, ~, ~, ~, ~] = eurecca_init;
 
@@ -36,33 +36,37 @@ global basePath
 %     'zProfiles_20201016')
 
 % % Jan De Nul: topo- & bathymetry
-% z_UTD_realisatie = JDN_xyz('UTD_realisatie.pts', 1, inf); % +bathy
+% z_2019_Q3 = JDN_xyz('UTD_realisatie.pts', 1, inf); % +bathy
 % z_2019_Q4 = JDN_xyz('2019_Q4.pts', 1, inf);
 % z_2020_Q1 = JDN_xyz('2020_Q1.pts', 1, inf);
 % z_2020_Q2 = JDN_xyz('2020_Q2.pts', 1, inf);
 % z_2020_Q3 = JDN_xyz('2020_Q3.pts', 1, inf); % +bathy
 % z_2020_Q4 = JDN_xyz('2020_Q4.xyz', 1, inf);
 % z_2021_Q1 = JDN_xyz('2021_Q1.xyz', 1, inf);
-% 
-% z_2021_06 = JDN_txt("2021-06.txt", [1, Inf]);
-% z_2021_09 = JDN_txt("2021-09.txt", [1, Inf]);
-% z_2021_11 = JDN_txt("2021-11.txt", [1, Inf]);
+% z_2021_Q2 = JDN_txt("2021-06.txt", [1, Inf]);
+% z_2021_Q3 = JDN_txt("2021-09.txt", [1, Inf]);
+% z_2021_Q4 = JDN_txt("2021-11.txt", [1, Inf]);
+% z_2022_Q1 = JDN_xyz('2022_Q1.txt', 1, inf);
+% z_2022_Q2 = JDN_xyz('2022_Q2.txt', 1, inf);
 % z_2022_Q3 = JDN_xyz('2022_Q3.xyz', 1, inf);
-% z_2022_Q3_raw = JDN_xyz('2022_Q3_ruw.xyz', 1, inf);
+% z_2022_Q3 = JDN_xyz('2022_Q3_ruw.xyz', 1, inf);
 % z_2022_Q3_grass = JDN_xyz('2022_Q3_helmgras.xyz', 1, inf);
+% z_2022_Q4 = JDN_xyz('2022_Q4.txt', 1, inf);
 
 % fileName = 'zSounding.mat';
 
 % save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
-%     'z_UTD_realisatie', 'z_2019_Q4', 'z_2020_Q1', 'z_2020_Q2',...
-%     'z_2020_Q3', 'z_2020_Q4', 'z_2021_Q1', 'z_2021_06', 'z_2021_09',...
-%     'z_2021_11', 'z_2022_Q3', 'z_2022_Q3_raw', 'z_2022_Q3_grass')
+%     'z_2019_Q3', 'z_2019_Q4', 'z_2020_Q1', 'z_2020_Q2',...
+%     'z_2020_Q3', 'z_2020_Q4', 'z_2021_Q1', 'z_2021_Q2',...
+%     'z_2021_Q3', 'z_2021_Q4', 'z_2022_Q1', 'z_2022_Q2',...
+%     'z_2022_Q3', 'z_2022_Q3_grass', 'z_2022_Q4')
 
 % save([basePath 'data' filesep 'elevation' filesep 'temp' filesep fileName],...
-%     'z_2022_Q3_raw','-append')
+%     'z_2022_Q2','-append')
 
 %% Difference maps
 load('zSounding.mat')
+z_2022_Q3 = [z_2022_Q3; z_2022_Q3_grass];
 
 % 2020 Q3 - 2019 Q3
 z_2019_Q3 = table(z_2020_Q3.xRD, z_2020_Q3.yRD,...

@@ -1,9 +1,4 @@
-%% Initialisation
-% close all
-% clear
-% clc
-% 
-% [xl, yl, xt, yt, fontsize] = eurecca_init;
+function [f1c, f1d] = getGSdata(fontsize)
 
 % processed sedi samples
 load('JDN_samples.mat') % 28-01-2019
@@ -296,82 +291,123 @@ D90_all = [D90_20190128_L, D90_20201016_L, D90_20201202_L, D90_20210921_L, D90_2
 p_D90 = polyfit(D90_all(1, 7:end), D90_all(2, 7:end), 3);
 D90_fit = polyval(p_D90, 1:11);
 
-% %% Visualisation: total comparison line plot
-% f = figure;
-% tiledlayout(3, 1, 'TileSpacing', 'tight')
-% 
-% nexttile;
-% hold on
-% for n = 1:length(D90_day)
-%     scatter(D90_day{n}(1, :), D90_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
-% end
-% xlim([0.5 11])
-% ylim([0, 6])
-% newcolors = colormap("hot");
-% colororder(newcolors(50:30:50*5, :))
-% set(gca,'XTickLabel',[]);
-% ylabel('D_{90} (mm)', 'FontSize', fontsize)
-% % legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
-% %     '2021-10-08', '2022-10-26'}, 'Location', 'northoutside', 'NumColumns', 7, 'FontSize', fontsize)
-% 
-% nexttile
-% hold on
-% for n = 1:length(D50_day)
-%     scatter(D50_day{n}(1, :), D50_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
-% end
-% xlim([0.5 11])
-% ylim([0, 1.5])
-% newcolors = colormap("hot");
-% colororder(newcolors(50:30:50*5, :))
-% set(gca,'XTickLabel',[]);
+%% Visualisation
+f1c = figure;
+hold on
+s1 = scatter(D10_all(1, 7:end), D10_all(2, 7:end), 200, 'filled', 'MarkerFaceColor', [0.9290 0.6940 0.1250], 'MarkerFaceAlpha', 0.1);
+p1 = plot(1:11, D10_fit, 'Color', [0.9290 0.6940 0.1250], 'LineWidth', 4);
+yline(mean(D10_all(2, :), 'omitnan'), '--', 'Color', [0.9290 0.6940 0.1250], 'LineWidth', 2)
+text(1, mean(D10_all(2, :)+.02, 'omitnan'), [mat2str(mean(D10_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.9290 0.6940 0.1250])
+yline(mean(D10_20201202_L(2, :), 'omitnan'), ':', 'Color', [0.9290 0.6940 0.1250], 'LineWidth', 2)
+hold off
+
+hold on
+s2 = scatter(D50_all(1, :), D50_all(2, :), 200, 'filled', 'MarkerFaceColor', [0.8500 0.3250 0.0980], 'MarkerFaceAlpha', 0.1);
+p2 = plot(1:11, D50_fit, 'Color', [0.8500 0.3250 0.0980], 'LineWidth', 4);
+yline(mean(D50_all(2, :), 'omitnan'), '--', 'Color', [0.8500 0.3250 0.0980], 'LineWidth', 2)
+text(1, mean(D50_all(2, :)+.05, 'omitnan'), [mat2str(mean(D50_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.8500 0.3250 0.0980])
+yline(mean(D50_20201202_L(2, :), 'omitnan'), ':', 'Color', [0.8500 0.3250 0.0980], 'LineWidth', 2)
+hold off
+
+hold on
+s3 = scatter(D90_all(1, 7:end), D90_all(2, 7:end), 200, 'filled', 'MarkerFaceColor', [0.6350 0.0780 0.1840], 'MarkerFaceAlpha', 0.1);
+p3 = plot(1:11, D90_fit, 'Color', [0.6350 0.0780 0.1840], 'LineWidth', 4);
+yline(mean(D90_all(2, :), 'omitnan'), '--', 'Color', [0.6350 0.0780 0.1840], 'LineWidth', 2)
+text(1, mean(D90_all(2, :)+.2, 'omitnan'), [mat2str(mean(D90_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.6350 0.0780 0.1840])
+yline(mean(D90_20201202_L(2, :), 'omitnan'), ':', 'Color', [0.6350 0.0780 0.1840], 'LineWidth', 2)
+hold off
+
+xlim([0.5, 11])
+set(gca, 'YScale', 'log')
+ylabel('grain size (mm)', 'FontSize', fontsize)
+xlabel('longshore location', 'FontSize', fontsize)
+xticks(1:10)
+xticklabels(num2cell(1:10))
+annotation('textbox', [0.11, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.86, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+legend([p3(1) p2(1) p1(1)], {'D$_{90}$', 'D$_{50}$', 'D$_{10}$'}, 'Location', 'eastoutside', 'FontSize', fontsize)
+
+%% Visualisation: total comparison line plot
+f1d = figure;
+tiledlayout(3, 1, 'TileSpacing', 'tight')
+
+nexttile;
+hold on
+for n = 1:length(D90_day)
+    plot(D90_day{n}(1, :), D90_day{n}(2, :), '-o', 'LineWidth',3)
+end
+xlim([0.5 11])
+ylim([0, 6])
+yticks(0:2:6)
+ytickformat('%.1f')
+set(gca,'XTickLabel',[]);
+ylabel({'D$_{90}$ (mm)'}, 'FontSize',fontsize)
 % legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
-%     '2021-10-08', '2022-10-26'}, 'Location', 'northeastoutside', 'FontSize', fontsize)
-% ylabel('D_{50} (mm)', 'FontSize', fontsize)
-% 
-% nexttile
-% hold on
-% for n = 1:length(D10_day)
-%     scatter(D10_day{n}(1, :), D10_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
-% end
-% xlim([0.5 11])
-% ylim([0.1, 0.6])
-% newcolors = colormap("cool");
-% colororder(newcolors(50:30:50*5, :))
-% ylabel('D_{10} (mm)', 'FontSize', fontsize)
-% xlabel('longshore location', 'FontSize', fontsize)
+%     '2021-10-08', '2022-10-26'}, 'Location', 'northoutside', 'NumColumns', 7, 'FontSize', fontsize)
+set(gca,'XTick',[])
+
+nexttile
+hold on
+for n = 1:length(D50_day)
+    plot(D50_day{n}(1, :), D50_day{n}(2, :), '-o', 'LineWidth',3);
+end
+xlim([0.5 11])
+ylim([0, 1.8])
+yticks(0:.5:2)
+ytickformat('%.1f')
+set(gca,'XTickLabel',[]);
+legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
+    '2021-10-08', '2022-10-26'}, 'Location', 'northeastoutside', 'FontSize', fontsize)
+ylabel({'D$_{50}$ (mm)'}, 'FontSize',fontsize)
+set(gca,'XTick',[])
+
+nexttile
+hold on
+for n = 1:length(D10_day)
+    plot(D10_day{n}(1, :), D10_day{n}(2, :), '-o', 'LineWidth',3)
+end
+xlim([0.5 11])
+ylim([0.1, 0.6])
+yticks(0:.1:.5)
+ytickformat('%.1f')
+newcolors = crameri('vik');
+colororder(newcolors(1:round(256/length(D90_day)):256, :))
+ylabel({'D$_{10}$ (mm)'}, 'FontSize',fontsize)
+xlabel('longshore location', 'FontSize', fontsize)
 % xticks(1:10)
 % xticklabels(num2cell(1:10))
-% annotation('textbox', [0.05, 0.06, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-% annotation('textbox', [0.82, 0.06, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-% 
-% %% Visualisation: total comparison line plot
-% f = figure;
-% 
+set(gca,'XTick',[])
+set(gca,'xticklabel',{})
+annotation('textbox', [0.05, 0.06, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.84, 0.06, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+
+%% Visualisation: total comparison line plot
+% f1e = figure;
 % hold on
 % for n = 1:length(D10_day)
-%     s1 = scatter(D10_day{n}(1, :), D10_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', 'b', 'MarkerFaceAlpha', 0.1);
+%     s1 = scatter(D10_day{n}(1, :), D10_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', [0.9290 0.6940 0.1250], 'MarkerFaceAlpha', 0.1);
 % end
-% p1 = plot(1:11, D10_fit, 'b', 'LineWidth', 4);
+% p1 = plot(1:11, D10_fit, [0.9290 0.6940 0.1250], 'LineWidth', 4);
 % yline(mean(D10_all(2, :), 'omitnan'), '--b', 'LineWidth', 2)
-% text(1, mean(D10_all(2, :)+.02, 'omitnan'), [mat2str(mean(D10_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'b')
+% text(1, mean(D10_all(2, :)+.02, 'omitnan'), [mat2str(mean(D10_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.9290 0.6940 0.1250])
 % yline(mean(D10_20201202_L(2, :), 'omitnan'), ':b', 'LineWidth', 2)
 % 
 % hold on
 % for n = 1:length(D50_day)
-%     s2 = scatter(D50_day{n}(1, :), D50_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', 'g', 'MarkerFaceAlpha', 0.1);
+%     s2 = scatter(D50_day{n}(1, :), D50_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', [0.8500 0.3250 0.0980], 'MarkerFaceAlpha', 0.1);
 % end
-% p2 = plot(1:11, D50_fit, 'g', 'LineWidth', 4);
+% p2 = plot(1:11, D50_fit, [0.8500 0.3250 0.0980], 'LineWidth', 4);
 % yline(mean(D50_all(2, :), 'omitnan'), '--g', 'LineWidth', 2)
-% text(1, mean(D50_all(2, :)+.05, 'omitnan'), [mat2str(mean(D50_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'g')
+% text(1, mean(D50_all(2, :)+.05, 'omitnan'), [mat2str(mean(D50_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.8500 0.3250 0.0980])
 % yline(mean(D50_20201202_L(2, :), 'omitnan'), ':g', 'LineWidth', 2)
 % 
 % hold on
 % for n = 1:length(D90_day)
-%     s3 = scatter(D90_day{n}(1, :), D90_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', 'r', 'MarkerFaceAlpha', 0.1);
+%     s3 = scatter(D90_day{n}(1, :), D90_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', [0.6350 0.0780 0.1840], 'MarkerFaceAlpha', 0.1);
 % end
-% p3 = plot(1:11, D90_fit, 'r', 'LineWidth', 4);
+% p3 = plot(1:11, D90_fit, [0.6350 0.0780 0.1840], 'LineWidth', 4);
 % yline(mean(D90_all(2, :), 'omitnan'), '--r', 'LineWidth', 2)
-% text(1, mean(D90_all(2, :)+.2, 'omitnan'), [mat2str(mean(D90_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'r')
+% text(1, mean(D90_all(2, :)+.2, 'omitnan'), [mat2str(mean(D90_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.6350 0.0780 0.1840])
 % yline(mean(D90_20201202_L(2, :), 'omitnan'), ':r', 'LineWidth', 2)
 % 
 % xlim([0.5, 11])

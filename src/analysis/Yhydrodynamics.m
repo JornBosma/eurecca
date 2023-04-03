@@ -5,8 +5,8 @@ clc
 
 [~, ~, ~, ~, fontsize] = eurecca_init;
 
-addpath('/Users/jwb/Local_NoSync/OET/matlab')
-oetsettings('quiet')
+% addpath('/Users/jwb/Local_NoSync/OET/matlab')
+% oetsettings('quiet')
 
 % basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
 %     'research-eurecca' filesep 'FieldVisits' filesep ...
@@ -33,6 +33,8 @@ for n = 1:length(adv_locs)
     adv_t{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 't'); % minutes since 2021-09-10 19:00:00
     U{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'umag');
     U_dir{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'uang');
+    Hm0{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'Hm0');
+    wave_ang{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'svdtheta');
 end
 
 tv{1} = datetime('2021-09-11 00:00:00') + minutes(adv_t{1}); % L1C1 (til 18-Oct-2021 09:50:00)
@@ -72,6 +74,18 @@ U_75 = [U{1}(p{1}), U{2}(p{2}), U{3}(p{3}), U{4}(p{4}), U{5}(p{5}), U{6}(p{6})];
 U_75(any(isnan(U_75), 2), :) = NaN; % only if all instruments have measured
 U_75 = fliplr(U_75);
 
+U_dir_75 = [U_dir{1}(p{1}), U_dir{2}(p{2}), U_dir{3}(p{3}), U_dir{4}(p{4}), U_dir{5}(p{5}), U_dir{6}(p{6})];
+U_dir_75(any(isnan(U_dir_75), 2), :) = NaN; % only if all instruments have measured
+U_dir_75 = fliplr(U_dir_75);
+
+Hm0_75 = [Hm0{1}(p{1}), Hm0{2}(p{2}), Hm0{3}(p{3}), Hm0{4}(p{4}), Hm0{5}(p{5}), Hm0{6}(p{6})];
+Hm0_75(any(isnan(Hm0_75), 2), :) = NaN; % only if all instruments have measured
+Hm0_75 = fliplr(Hm0_75);
+
+wave_ang_75 = [wave_ang{1}(p{1}), wave_ang{2}(p{2}), wave_ang{3}(p{3}), wave_ang{4}(p{4}), wave_ang{5}(p{5}), wave_ang{6}(p{6})];
+wave_ang_75(any(isnan(wave_ang_75), 2), :) = NaN; % only if all instruments have measured
+wave_ang_75 = fliplr(wave_ang_75);
+
 % adv_locs{2} = 'L2C5*';
 adv_locs = fliplr(adv_locs);
 
@@ -97,18 +111,18 @@ adv_locs = fliplr(adv_locs);
 
 %% Visualisation
 f = figure2;
-tiledlayout(3, 1)
+tiledlayout(5, 1, 'TileSpacing','tight')
 
-nexttile
-boxchart(U_75, 'Notch', 'on')
-hold on
-plot(mean(U_75, 'omitnan'), '-o', 'LineWidth', 2)
-hold off
-% set(gca,'xticklabel',{[]})
-ylabel('U (m s$^{-1}$)')
-ylim([0 .6])
-xticklabels(adv_locs)
-legend('velocity data', 'mean velocity')
+% nexttile
+% boxchart(U_75, 'Notch', 'on')
+% hold on
+% plot(mean(U_75, 'omitnan'), '-o', 'LineWidth', 2)
+% hold off
+% % set(gca,'xticklabel',{[]})
+% ylabel('U (m s$^{-1}$)')
+% ylim([0 .6])
+% xticklabels(adv_locs)
+% legend('velocity data', 'mean velocity')
 
 nexttile
 plot(taxis2, h)
@@ -117,12 +131,30 @@ legend(ossi_locs{1}, 'Orientation', 'horizontal', 'Location', 'northoutside')
 axis tight
 
 nexttile
-plot(taxis, U_75)
+plot(taxis, U_75, 'o')
 ylabel('U (m s$^{-1}$)')
 legend(adv_locs, 'Orientation', 'horizontal', 'Location', 'northoutside')
 axis tight
 
-exportgraphics(f, '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI Article 1 (draft)/Figures/fig8.pdf')
+nexttile
+plot(taxis, U_dir_75, 'o')
+ylabel('U$_{dir}$ (deg)')
+% legend(adv_locs, 'Orientation', 'horizontal', 'Location', 'northoutside')
+axis tight
+
+nexttile
+plot(taxis, Hm0_75, 'o')
+ylabel('H$_{m0}$ (m)')
+% legend(adv_locs, 'Orientation', 'horizontal', 'Location', 'northoutside')
+axis tight
+
+nexttile
+plot(taxis, wave_ang_75, 'o')
+ylabel('wave angle (deg)')
+% legend(adv_locs, 'Orientation', 'horizontal', 'Location', 'northoutside')
+axis tight
+
+% exportgraphics(f, '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI Article 1 (draft)/Figures/fig8.pdf')
 
 %% Visualisation
 % f = figure2;
