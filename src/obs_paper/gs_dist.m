@@ -1,4 +1,9 @@
-function [f1c, f1d] = getGSdata(fontsize)
+%% Initialisation
+close all
+clear
+clc
+
+[~, ~, ~, ~, fontsize] = eurecca_init;
 
 % processed sedi samples
 load('JDN_samples.mat') % 28-01-2019
@@ -291,8 +296,8 @@ D90_all = [D90_20190128_L, D90_20201016_L, D90_20201202_L, D90_20210921_L, D90_2
 p_D90 = polyfit(D90_all(1, 7:end), D90_all(2, 7:end), 3);
 D90_fit = polyval(p_D90, 1:11);
 
-%% Visualisation
-f1c = figure;
+%% Visualisation: longshore GS-distribution
+f0 = figure;
 hold on
 s1 = scatter(D10_all(1, 7:end), D10_all(2, 7:end), 200, 'filled', 'MarkerFaceColor', [0.9290 0.6940 0.1250], 'MarkerFaceAlpha', 0.1);
 p1 = plot(1:11, D10_fit, 'Color', [0.9290 0.6940 0.1250], 'LineWidth', 4);
@@ -327,8 +332,8 @@ annotation('textbox', [0.11, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 
 annotation('textbox', [0.86, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
 legend([p3(1) p2(1) p1(1)], {'D$_{90}$', 'D$_{50}$', 'D$_{10}$'}, 'Location', 'eastoutside', 'FontSize', fontsize)
 
-%% Visualisation: total comparison line plot
-f1d = figure;
+%% Visualisation: longshore GS-distribution through time
+f1 = figure;
 tiledlayout(3, 1, 'TileSpacing', 'tight')
 
 nexttile;
@@ -380,42 +385,3 @@ set(gca,'XTick',[])
 set(gca,'xticklabel',{})
 annotation('textbox', [0.05, 0.06, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
 annotation('textbox', [0.84, 0.06, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
-
-%% Visualisation: total comparison line plot
-% f1e = figure;
-% hold on
-% for n = 1:length(D10_day)
-%     s1 = scatter(D10_day{n}(1, :), D10_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', [0.9290 0.6940 0.1250], 'MarkerFaceAlpha', 0.1);
-% end
-% p1 = plot(1:11, D10_fit, [0.9290 0.6940 0.1250], 'LineWidth', 4);
-% yline(mean(D10_all(2, :), 'omitnan'), '--b', 'LineWidth', 2)
-% text(1, mean(D10_all(2, :)+.02, 'omitnan'), [mat2str(mean(D10_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.9290 0.6940 0.1250])
-% yline(mean(D10_20201202_L(2, :), 'omitnan'), ':b', 'LineWidth', 2)
-% 
-% hold on
-% for n = 1:length(D50_day)
-%     s2 = scatter(D50_day{n}(1, :), D50_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', [0.8500 0.3250 0.0980], 'MarkerFaceAlpha', 0.1);
-% end
-% p2 = plot(1:11, D50_fit, [0.8500 0.3250 0.0980], 'LineWidth', 4);
-% yline(mean(D50_all(2, :), 'omitnan'), '--g', 'LineWidth', 2)
-% text(1, mean(D50_all(2, :)+.05, 'omitnan'), [mat2str(mean(D50_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.8500 0.3250 0.0980])
-% yline(mean(D50_20201202_L(2, :), 'omitnan'), ':g', 'LineWidth', 2)
-% 
-% hold on
-% for n = 1:length(D90_day)
-%     s3 = scatter(D90_day{n}(1, :), D90_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', [0.6350 0.0780 0.1840], 'MarkerFaceAlpha', 0.1);
-% end
-% p3 = plot(1:11, D90_fit, [0.6350 0.0780 0.1840], 'LineWidth', 4);
-% yline(mean(D90_all(2, :), 'omitnan'), '--r', 'LineWidth', 2)
-% text(1, mean(D90_all(2, :)+.2, 'omitnan'), [mat2str(mean(D90_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', [0.6350 0.0780 0.1840])
-% yline(mean(D90_20201202_L(2, :), 'omitnan'), ':r', 'LineWidth', 2)
-% 
-% xlim([0.5, 11])
-% set(gca, 'YScale', 'log')
-% ylabel('grain size (mm)', 'FontSize', fontsize)
-% xlabel('longshore location', 'FontSize', fontsize)
-% xticks(1:10)
-% xticklabels(num2cell(1:10))
-% annotation('textbox', [0.1, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-% annotation('textbox', [0.82, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-% legend([p3(1) p2(1) p1(1)], {'D_{90}', 'D_{50}', 'D_{10}'}, 'Location', 'eastoutside')
