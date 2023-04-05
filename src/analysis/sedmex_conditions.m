@@ -3,15 +3,11 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
-% basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
-%     'research-eurecca' filesep 'FieldVisits' filesep ...
-%     '20210908_SEDMEX' filesep 'Data Descriptor'];
-
-basePath = [filesep 'Volumes' filesep 'JWB' filesep 'Data Descriptor' filesep];
-
-addpath(genpath([basePath filesep 'OSSI' filesep 'L4C3OSSI' filesep 'tailored' filesep]))
+dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
+addpath(genpath([dataPath filesep 'OSSI' filesep 'L4C3OSSI' filesep 'tailored' filesep]))
+addpath(genpath([dataPath filesep 'ADV' filesep 'L2C10VEC' filesep 'tailored_loose' filesep]))
 
 start = datetime('2021-09-10 19:00:00'); % UTC+2
 

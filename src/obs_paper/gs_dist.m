@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
 % processed sedi samples
 load('JDN_samples.mat') % 28-01-2019

@@ -3,13 +3,11 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
-basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
-    'research-eurecca' filesep 'FieldVisits' filesep ...
-    '20210908_SEDMEX' filesep 'Data Descriptor'];
+dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
 
-% addpath(genpath([basePath filesep 'ADV']))
+addpath(genpath([dataPath filesep 'ADV']))
 
 start = datetime('2021-09-10 19:00:00'); % UTC+2
 
@@ -71,7 +69,7 @@ scatter(tv(p), L2C4_U(p), 'filled')
 scatter(tv(p), L2C10_U(p), 'filled')
 scatter(tv(p), L2C2_U(p2), 'filled')
 set(gca,'xticklabel',{[]})
-ylabel('flow velocity (m s^{-1})')
+ylabel('flow velocity (m s$^{-1})$')
 legend('L2C3', 'L2C4', 'L2C10', 'L2C2')
 
 ax(3) = nexttile;

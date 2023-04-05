@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
 % processed sedi samples
 load('GS_L2C3_plus.mat') % 09/12 (SL) and 10/08 not exact same locations

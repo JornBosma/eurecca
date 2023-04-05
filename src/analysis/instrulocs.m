@@ -3,8 +3,8 @@ close all
 clear
 clc
 
-[xl, yl, xt, yt, fontsize] = eurecca_init;
-addpath('/Users/jwb/Desktop/OET/matlab/')
+[xl, yl, xt, yt, fontsize, ~] = eurecca_init;
+addpath('/Users/jwb/Local_NoSync/OET/matlab/')
 
 oetsettings('quiet')
 

@@ -3,38 +3,30 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
-% addpath('/Users/jwb/Local_NoSync/OET/matlab')
-% oetsettings('quiet')
-
-% basePath = [filesep 'Volumes' filesep 'geo.data.uu.nl' filesep ...
-%     'research-eurecca' filesep 'FieldVisits' filesep ...
-%     '20210908_SEDMEX' filesep 'Data Descriptor'];
-
-basePath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
-% addpath(genpath(basePath))
+dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
 
 ossi_locs = {'L1C2', 'L2C6', 'L2C8', 'L2C9', 'L4C3', 'L5C2', 'L6C2'};
 adv_locs = {'L1C1', 'L2C4', 'L3C1', 'L4C1', 'L5C1', 'L6C1'};
 
 for n = 1:length(ossi_locs)
-%     addpath(genpath([basePath filesep 'OSSI' filesep ossi_locs{n} 'OSSI' filesep 'tailored' filesep]))
+%     addpath(genpath([dataPath filesep 'OSSI' filesep ossi_locs{n} 'OSSI' filesep 'tailored' filesep]))
     OSSIpath{n} = [filesep 'OSSI' filesep ossi_locs{n} 'OSSI' filesep 'tailored' filesep];
-    ossi_info{n} = ncinfo([basePath OSSIpath{n} ossi_locs{n} 'OSSI.nc']);
-    ossi_t{n} = ncread([basePath OSSIpath{n} ossi_locs{n} 'OSSI.nc'], 't'); % minutes since 2021-09-10 19:00:00
-    h{n} = ncread([basePath OSSIpath{n} ossi_locs{n} 'OSSI.nc'], 'd');
+    ossi_info{n} = ncinfo([dataPath OSSIpath{n} ossi_locs{n} 'OSSI.nc']);
+    ossi_t{n} = ncread([dataPath OSSIpath{n} ossi_locs{n} 'OSSI.nc'], 't'); % minutes since 2021-09-10 19:00:00
+    h{n} = ncread([dataPath OSSIpath{n} ossi_locs{n} 'OSSI.nc'], 'd');
 end
 
 for n = 1:length(adv_locs)
-%     addpath(genpath([basePath filesep 'ADV' filesep adv_locs{n} 'VEC' filesep 'tailored_loose' filesep]))
+%     addpath(genpath([dataPath filesep 'ADV' filesep adv_locs{n} 'VEC' filesep 'tailored_loose' filesep]))
     ADVpath{n} = [filesep 'ADV' filesep adv_locs{n} 'VEC' filesep 'tailored_loose' filesep];
-    adv_info{n} = ncinfo([basePath ADVpath{n} adv_locs{n} 'VEC.nc']);
-    adv_t{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 't'); % minutes since 2021-09-10 19:00:00
-    U{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'umag');
-    U_dir{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'uang');
-    Hm0{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'Hm0');
-    wave_ang{n} = ncread([basePath ADVpath{n} adv_locs{n} 'VEC.nc'], 'svdtheta');
+    adv_info{n} = ncinfo([dataPath ADVpath{n} adv_locs{n} 'VEC.nc']);
+    adv_t{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 't'); % minutes since 2021-09-10 19:00:00
+    U{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'umag');
+    U_dir{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'uang');
+    Hm0{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'Hm0');
+    wave_ang{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'svdtheta');
 end
 
 tv{1} = datetime('2021-09-11 00:00:00') + minutes(adv_t{1}); % L1C1 (til 18-Oct-2021 09:50:00)

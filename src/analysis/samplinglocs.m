@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[xl, yl, xt, yt, fontsize] = eurecca_init;
+[xl, yl, xt, yt, fontsize, ~] = eurecca_init;
 
 % processed topo files
 load('zSounding.mat')

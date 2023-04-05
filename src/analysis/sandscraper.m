@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[xl, yl, xt, yt, fontsize] = eurecca_init;
+[xl, yl, xt, yt, fontsize, ~] = eurecca_init;
 
 % sediment profiles
 load GS_20211007.mat

@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[xl, yl, xt, yt, fontsize] = eurecca_init;
+[xl, yl, xt, yt, fontsize, ~] = eurecca_init;
 
 % processed topo files
 load('zSounding.mat')
@@ -312,323 +312,131 @@ GS_plot_settings(ax1, ax2, fontsize, xl, yl)
 % exportgraphics(f, 'D50_2022-10-26.png')
 
 %% Visualisation: 2 Dec 2020 (no elevation map)
-% f = figure('Name', '02-12-2020');
-% ax = axes;
-% scatter(ax, GS_20201202_gps.xRD(ref_20201202), GS_20201202_gps.yRD(ref_20201202), 400, mean(D50_20201202), 'filled')
-% % text(GS_20201202_gps.xRD(ref_20201202)+80, GS_20201202_gps.yRD(ref_20201202)-80, num2cell(length(ref_20201202):-1:1), 'FontSize', fontsize)
-% 
-% ax.Visible = 'off';
-% ax.XTick = [];
-% ax.YTick = [];
-% 
-% colormap(ax, flipud(hot))
-% 
-% set(ax, 'Position', [.17 .11 .685 .815]);
-% cb = colorbar(ax, 'Position', [.3 .6 .02 .2]);
-% 
-% cb.Label.String = 'D_{50} (mm)';
-% cb.Label.Interpreter = 'tex';
-% cb.TickLabelInterpreter = 'tex';
-% cb.FontSize = fontsize;
-% 
-% xlabel(ax, 'easting - RD (m)')
-% ylabel(ax, 'northing - RD (m)')
-% 
-% clim(ax, [0.3, 1.0])
-% 
-% axis(ax, [xl(1), xl(2), yl(1), yl(2)]) 
-% axis(ax, 'equal')
-% axis(ax, 'off')
+f = figure('Name', '02-12-2020');
+ax = axes;
+scatter(ax, GS_20201202_gps.xRD(ref_20201202), GS_20201202_gps.yRD(ref_20201202), 400, mean(D50_20201202), 'filled')
+% text(GS_20201202_gps.xRD(ref_20201202)+80, GS_20201202_gps.yRD(ref_20201202)-80, num2cell(length(ref_20201202):-1:1), 'FontSize', fontsize)
+
+ax.Visible = 'off';
+ax.XTick = [];
+ax.YTick = [];
+
+colormap(ax, flipud(hot))
+
+set(ax, 'Position', [.17 .11 .685 .815]);
+cb = colorbar(ax, 'Position', [.3 .6 .02 .2]);
+
+cb.Label.String = 'D_{50} (mm)';
+cb.Label.Interpreter = 'latex';
+cb.TickLabelInterpreter = 'latex';
+cb.FontSize = fontsize;
+
+xlabel(ax, 'easting - RD (m)')
+ylabel(ax, 'northing - RD (m)')
+
+clim(ax, [0.3, 1.0])
+
+axis(ax, [xl(1), xl(2), yl(1), yl(2)]) 
+axis(ax, 'equal')
+axis(ax, 'off')
 
 %% Visualisation: 2 Dec 2020 (line plot)
-% f = figure('Name', '02-12-2020');
-% plot(D50_20201202(1, :), 'LineWidth', 1); hold on
-% plot(D50_20201202(2, :), 'LineWidth', 1)
-% plot(D50_20201202(3, :), 'LineWidth', 1)
-% errorbar(mean(D50_20201202), std(D50_20201202), 'k', 'LineWidth', 3)
-% ylabel('D50 (mm)', 'FontSize', fontsize)
-% xlabel('longshore location', 'FontSize', fontsize)
-% xticks(1:10)
-% xticklabels(num2cell(1:10))
-% annotation('textbox', [0.12, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-% annotation('textbox', [0.89, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-% legend('~1.6 m +NAP', '~1.0 m +NAP', '~0.2 m +NAP',...
-%     'cross-shore mean', 'Location', 'northeast', 'FontSize', fontsize)
-% axis tight
-
-%% Visualisation: 2 Dec 2020 (line plot)
-% f = figure('Name', '02-12-2020');
-% plot(mean(D10_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0]); hold on
-% plot(mean(D50_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-% plot(mean(D90_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-% plot(mean(sort_20201202), 'ro:', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-% ylabel('grain size (mm)', 'FontSize', fontsize)
-% xlabel('longshore location', 'FontSize', fontsize)
-% xticks(1:10)
-% xticklabels(num2cell(1:10))
-% annotation('textbox', [0.3, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-% annotation('textbox', [0.71, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-% legend({'D_{10}','D_{50}','D_{90}','\sigma_G'}, 'Location', 'northeast', 'FontSize', fontsize)
-% newcolors = colormap("cool");
-% colororder(newcolors(50:50:50*3, :))
-% axis tight
-% axis square
-
-%% Visualisation: 8/9 Oct 2021 (no elevation map)
-% f = figure('Name', '08-10-2021');
-% ax = axes;
-% scatter(ax, GS_20211008_9_gps.xRD(ref_20211008_9), GS_20211008_9_gps.yRD(ref_20211008_9), 400, mean(D50_20211008_9), 'filled')
-% % text(GS_20211008_9_gps.xRD(ref_20211008_9)+80, GS_20211008_9_gps.yRD(ref_20211008_9)-80, num2cell(length(ref_20211008_9):-1:1), 'FontSize', fontsize)
-% 
-% ax.Visible = 'off';
-% ax.XTick = [];
-% ax.YTick = [];
-% 
-% colormap(ax, flipud(hot))
-% 
-% set(ax, 'Position', [.17 .11 .685 .815]);
-% cb = colorbar(ax, 'Position', [.3 .6 .02 .2]);
-% 
-% cb.Label.String = 'D_{50} (mm)';
-% cb.Label.Interpreter = 'tex';
-% cb.TickLabelInterpreter = 'tex';
-% cb.FontSize = fontsize;
-% 
-% xlabel(ax, 'easting - RD (m)')
-% ylabel(ax, 'northing - RD (m)')
-% 
-% clim(ax, [0.3, 1.0])
-% 
-% axis(ax, [xl(1), xl(2), yl(1), yl(2)]) 
-% axis(ax, 'equal')
-% axis(ax, 'off')
-
-%% Visualisation: 8/9 Oct 2021 (line plot)
-% f = figure('Name', '08-10-2021');
-% plot(D50_20211008_9(1, :), 'LineWidth', 1); hold on
-% plot(D50_20211008_9(2, :), 'LineWidth', 1)
-% plot(D50_20211008_9(3, :), 'LineWidth', 1)
-% plot(D50_20211008_9(4, :), 'LineWidth', 1)
-% plot(D50_20211008_9(5, :), 'LineWidth', 1)
-% errorbar(mean(D50_20211008_9), std(D50_20211008_9), 'k', 'LineWidth', 3)
-% ylabel('D50 (mm)', 'FontSize', fontsize)
-% xlabel('longshore location', 'FontSize', fontsize)
-% xticks(1:10)
-% xticklabels(num2cell(10:-1:1))
-% annotation('textbox', [0.12, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-% annotation('textbox', [0.89, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-% set(gca, 'XDir','reverse')
-% legend('1.00 m +NAP', '0.75 m +NAP', '0.50 m +NAP', '0.25 m +NAP', '0.00 m +NAP',...
-%     'cross-shore mean', 'Location', 'northeast', 'FontSize', fontsize)
-% axis tight
-
-%% Visualisation: 8/9 Oct 2021 (line plot)
-% f = figure('Name', '08-10-2021');
-% plot(mean(D10_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0]); hold on
-% plot(mean(D50_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-% plot(mean(D90_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-% plot(mean(sort_20211008_9), 'ro:', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-% ylabel('grain size (mm)', 'FontSize', fontsize)
-% xlabel('longshore location', 'FontSize', fontsize)
-% xticks(1:10)
-% xticklabels(num2cell(10:-1:1))
-% annotation('textbox', [0.3, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-% annotation('textbox', [0.7, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-% set(gca, 'XDir','reverse')
-% legend({'D_{10}','D_{50}','D_{90}','\sigma_G'}, 'Location', 'northeast', 'FontSize', fontsize)
-% newcolors = colormap("cool");
-% colororder(newcolors(50:50:50*3, :))
-% axis tight
-% axis square
-
-%% Visualisation: comparison line plot
-% f = figure;
-% plot(mean(D50_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0]); hold on
-% plot(flip(mean(D50_20211008_9)), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
-% ylabel('D_{50} (mm)', 'FontSize', fontsize)
-% xlabel('longshore location', 'FontSize', fontsize)
-% xticks(1:10)
-% xticklabels(num2cell(1:10))
-% annotation('textbox', [0.3, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-% annotation('textbox', [0.7, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-% legend({'20211202','20211008/9'}, 'Location', 'northeast', 'FontSize', fontsize)
-% newcolors = colormap("cool");
-% colororder(newcolors(50:50:50*3, :))
-% axis tight
-% axis square
-
-%% Calculation
-% D50
-D50_20190128_mean = mean(D50_20190128);
-D50_20190128_mean(1) = [];
-D50_20190128_L = [[1.5, 3, 4, 6, 7.5, 9.5]; D50_20190128_mean];
-
-D50_20201016_mean = mean(D50_20201016);
-D50_20201016_L = [[1.5, 3, 4, 6, 7, 8, 9, 10]; D50_20201016_mean];
-
-D50_20201202_mean = mean(D50_20201202);
-D50_20201202_L = [1:10; D50_20201202_mean];
-
-D50_20210921_mean = mean(D50_20210921);
-D50_20210921_L = [[1, 3, 4, 6, 10.2, 10.4]; D50_20210921_mean];
-
-D50_20210928_mean = mean(D50_20210928);
-D50_20210928_L = [[1, 3, 4, 6, 10.2, 10.4]; D50_20210928_mean];
-
-D50_20211008_9_mean = mean(D50_20211008_9);
-D50_20211008_9_L = [1:10; flip(D50_20211008_9_mean)];
-
-D50_20221026_mean = mean(D50_20221026);
-D50_20221026_L = [[1:4, 6, 8:10]; flip(D50_20221026_mean)];
-
-D50_day = {D50_20190128_L, D50_20201016_L, D50_20201202_L, D50_20210921_L, D50_20210928_L, D50_20211008_9_L, D50_20221026_L};
-D50_all = [D50_20190128_L, D50_20201016_L, D50_20201202_L, D50_20210921_L, D50_20210928_L, D50_20211008_9_L, D50_20221026_L];
-
-p_D50 = polyfit(D50_all(1, :), D50_all(2, :), 3);
-D50_fit = polyval(p_D50, 1:11);
-
-% D10
-D10_20190128_L = [[1.5, 3, 4, 6, 7.5, 9.5]; NaN(size(D50_20190128_mean))];
-
-D10_20201016_mean = mean(D10_20201016);
-D10_20201016_L = [[1.5, 3, 4, 6, 7, 8, 9, 10]; D10_20201016_mean];
-
-D10_20201202_mean = mean(D10_20201202);
-D10_20201202_L = [1:10; D10_20201202_mean];
-
-D10_20210921_mean = mean(D10_20210921);
-D10_20210921_L = [[1, 3, 4, 6, 10.2, 10.4]; D10_20210921_mean];
-
-D10_20210928_mean = mean(D10_20210928);
-D10_20210928_L = [[1, 3, 4, 6, 10.2, 10.4]; D10_20210928_mean];
-
-D10_20211008_9_mean = mean(D10_20211008_9);
-D10_20211008_9_L = [1:10; flip(D10_20211008_9_mean)];
-
-D10_20221026_mean = mean(D10_20221026);
-D10_20221026_L = [[1:4, 6, 8:10]; flip(D10_20221026_mean)];
-
-D10_day = {D10_20190128_L, D10_20201016_L, D10_20201202_L, D10_20210921_L, D10_20210928_L, D10_20211008_9_L, D10_20221026_L};
-D10_all = [D10_20190128_L, D10_20201016_L, D10_20201202_L, D10_20210921_L, D10_20210928_L, D10_20211008_9_L, D10_20221026_L];
-
-p_D10 = polyfit(D10_all(1, 7:end), D10_all(2, 7:end), 3);
-D10_fit = polyval(p_D10, 1:11);
-
-% D90
-D90_20190128_L = [[1.5, 3, 4, 6, 7.5, 9.5]; NaN(size(D50_20190128_mean))];
-
-D90_20201016_mean = mean(D90_20201016);
-D90_20201016_L = [[1.5, 3, 4, 6, 7, 8, 9, 10]; D90_20201016_mean];
-
-D90_20201202_mean = mean(D90_20201202);
-D90_20201202_L = [1:10; D90_20201202_mean];
-
-D90_20210921_mean = mean(D90_20210921);
-D90_20210921_L = [[1, 3, 4, 6, 10.2, 10.4]; D90_20210921_mean];
-
-D90_20210928_mean = mean(D90_20210928);
-D90_20210928_L = [[1, 3, 4, 6, 10.2, 10.4]; D90_20210928_mean];
-
-D90_20211008_9_mean = mean(D90_20211008_9);
-D90_20211008_9_L = [1:10; flip(D90_20211008_9_mean)];
-
-D90_20221026_mean = mean(D90_20221026);
-D90_20221026_L = [[1:4, 6, 8:10]; flip(D90_20221026_mean)];
-
-D90_day = {D90_20190128_L, D90_20201016_L, D90_20201202_L, D90_20210921_L, D90_20210928_L, D90_20211008_9_L, D90_20221026_L};
-D90_all = [D90_20190128_L, D90_20201016_L, D90_20201202_L, D90_20210921_L, D90_20210928_L, D90_20211008_9_L, D90_20221026_L];
-
-p_D90 = polyfit(D90_all(1, 7:end), D90_all(2, 7:end), 3);
-D90_fit = polyval(p_D90, 1:11);
-
-%% Visualisation: total comparison line plot
-f = figure;
-tiledlayout(3, 1, 'TileSpacing', 'tight')
-
-nexttile;
-hold on
-for n = 1:length(D90_day)
-    scatter(D90_day{n}(1, :), D90_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
-end
-xlim([0.5 11])
-ylim([0, 6])
-newcolors = colormap("hot");
-colororder(newcolors(50:30:50*5, :))
-set(gca,'XTickLabel',[]);
-ylabel('D_{90} (mm)', 'FontSize', fontsize)
-% legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
-%     '2021-10-08', '2022-10-26'}, 'Location', 'northoutside', 'NumColumns', 7, 'FontSize', fontsize)
-
-nexttile
-hold on
-for n = 1:length(D50_day)
-    scatter(D50_day{n}(1, :), D50_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
-end
-xlim([0.5 11])
-ylim([0, 1.5])
-newcolors = colormap("hot");
-colororder(newcolors(50:30:50*5, :))
-set(gca,'XTickLabel',[]);
-legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
-    '2021-10-08', '2022-10-26'}, 'Location', 'northeastoutside', 'FontSize', fontsize)
-ylabel('D_{50} (mm)', 'FontSize', fontsize)
-
-nexttile
-hold on
-for n = 1:length(D10_day)
-    scatter(D10_day{n}(1, :), D10_day{n}(2, :), 250, 'filled', 'LineWidth', 3)
-end
-xlim([0.5 11])
-ylim([0.1, 0.6])
-newcolors = colormap("cool");
-colororder(newcolors(50:30:50*5, :))
-ylabel('D_{10} (mm)', 'FontSize', fontsize)
+f = figure('Name', '02-12-2020');
+plot(D50_20201202(1, :), 'LineWidth', 1); hold on
+plot(D50_20201202(2, :), 'LineWidth', 1)
+plot(D50_20201202(3, :), 'LineWidth', 1)
+errorbar(mean(D50_20201202), std(D50_20201202), 'k', 'LineWidth', 3)
+ylabel('D50 (mm)', 'FontSize', fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(1:10))
-annotation('textbox', [0.05, 0.06, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-annotation('textbox', [0.82, 0.06, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
+annotation('textbox', [0.12, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.89, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+legend('~1.6 m +NAP', '~1.0 m +NAP', '~0.2 m +NAP',...
+    'cross-shore mean', 'Location', 'northeast', 'FontSize', fontsize)
+axis tight
 
-% exportgraphics(f, 'DX0_longshore_time.png')
-
-%% Visualisation: total comparison line plot
-f = figure;
-
-hold on
-for n = 1:length(D10_day)
-    s1 = scatter(D10_day{n}(1, :), D10_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', 'b', 'MarkerFaceAlpha', 0.1);
-end
-p1 = plot(1:11, D10_fit, 'b', 'LineWidth', 4);
-yline(mean(D10_all(2, :), 'omitnan'), '--b', 'LineWidth', 2)
-text(1, mean(D10_all(2, :)+.02, 'omitnan'), [mat2str(mean(D10_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'b')
-yline(mean(D10_20201202_L(2, :), 'omitnan'), ':b', 'LineWidth', 2)
-
-hold on
-for n = 1:length(D50_day)
-    s2 = scatter(D50_day{n}(1, :), D50_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', 'g', 'MarkerFaceAlpha', 0.1);
-end
-p2 = plot(1:11, D50_fit, 'g', 'LineWidth', 4);
-yline(mean(D50_all(2, :), 'omitnan'), '--g', 'LineWidth', 2)
-text(1, mean(D50_all(2, :)+.05, 'omitnan'), [mat2str(mean(D50_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'g')
-yline(mean(D50_20201202_L(2, :), 'omitnan'), ':g', 'LineWidth', 2)
-
-hold on
-for n = 1:length(D90_day)
-    s3 = scatter(D90_day{n}(1, :), D90_day{n}(2, :), 200, 'filled', 'MarkerFaceColor', 'r', 'MarkerFaceAlpha', 0.1);
-end
-p3 = plot(1:11, D90_fit, 'r', 'LineWidth', 4);
-yline(mean(D90_all(2, :), 'omitnan'), '--r', 'LineWidth', 2)
-text(1, mean(D90_all(2, :)+.2, 'omitnan'), [mat2str(mean(D90_all(2, :), 'omitnan'), 3), ' mm'], 'FontSize', fontsize, 'Color', 'r')
-yline(mean(D90_20201202_L(2, :), 'omitnan'), ':r', 'LineWidth', 2)
-
-xlim([0.5, 11])
-set(gca, 'YScale', 'log')
+%% Visualisation: 2 Dec 2020 (line plot)
+f = figure('Name', '02-12-2020');
+plot(mean(D10_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0]); hold on
+plot(mean(D50_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
+plot(mean(D90_20201202), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
+plot(mean(sort_20201202), 'ro:', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
 ylabel('grain size (mm)', 'FontSize', fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(1:10))
-annotation('textbox', [0.1, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'tex')
-annotation('textbox', [0.82, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'tex')
-legend([p3(1) p2(1) p1(1)], {'D_{90}', 'D_{50}', 'D_{10}'}, 'Location', 'eastoutside')
+annotation('textbox', [0.3, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.71, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+legend({'D_{10}','D_{50}','D_{90}','\sigma_G'}, 'Location', 'northeast', 'FontSize', fontsize)
+newcolors = colormap("cool");
+colororder(newcolors(50:50:50*3, :))
+axis tight
+axis square
 
-% exportgraphics(f, 'DX0_longshore_mean.png')
+%% Visualisation: 8/9 Oct 2021 (no elevation map)
+f = figure('Name', '08-10-2021');
+ax = axes;
+scatter(ax, GS_20211008_9_gps.xRD(ref_20211008_9), GS_20211008_9_gps.yRD(ref_20211008_9), 400, mean(D50_20211008_9), 'filled')
+% text(GS_20211008_9_gps.xRD(ref_20211008_9)+80, GS_20211008_9_gps.yRD(ref_20211008_9)-80, num2cell(length(ref_20211008_9):-1:1), 'FontSize', fontsize)
+
+ax.Visible = 'off';
+ax.XTick = [];
+ax.YTick = [];
+
+colormap(ax, flipud(hot))
+
+set(ax, 'Position', [.17 .11 .685 .815]);
+cb = colorbar(ax, 'Position', [.3 .6 .02 .2]);
+
+cb.Label.String = 'D_{50} (mm)';
+cb.Label.Interpreter = 'latex';
+cb.TickLabelInterpreter = 'latex';
+cb.FontSize = fontsize;
+
+xlabel(ax, 'easting - RD (m)')
+ylabel(ax, 'northing - RD (m)')
+
+clim(ax, [0.3, 1.0])
+
+axis(ax, [xl(1), xl(2), yl(1), yl(2)]) 
+axis(ax, 'equal')
+axis(ax, 'off')
+
+%% Visualisation: 8/9 Oct 2021 (line plot)
+f = figure('Name', '08-10-2021');
+plot(D50_20211008_9(1, :), 'LineWidth', 1); hold on
+plot(D50_20211008_9(2, :), 'LineWidth', 1)
+plot(D50_20211008_9(3, :), 'LineWidth', 1)
+plot(D50_20211008_9(4, :), 'LineWidth', 1)
+plot(D50_20211008_9(5, :), 'LineWidth', 1)
+errorbar(mean(D50_20211008_9), std(D50_20211008_9), 'k', 'LineWidth', 3)
+ylabel('D_{50} (mm)', 'FontSize', fontsize)
+xlabel('longshore location', 'FontSize', fontsize)
+xticks(1:10)
+xticklabels(num2cell(10:-1:1))
+annotation('textbox', [0.12, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.89, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+set(gca, 'XDir','reverse')
+legend('1.00 m +NAP', '0.75 m +NAP', '0.50 m +NAP', '0.25 m +NAP', '0.00 m +NAP',...
+    'cross-shore mean', 'Location', 'northeast', 'FontSize', fontsize)
+axis tight
+
+%% Visualisation: 8/9 Oct 2021 (line plot)
+f = figure('Name', '08-10-2021');
+plot(mean(D10_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0]); hold on
+plot(mean(D50_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
+plot(mean(D90_20211008_9), 'o-', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
+plot(mean(sort_20211008_9), 'ro:', 'LineWidth', 3, 'MarkerSize', 8, 'MarkerFaceColor', [1 0.5 0])
+ylabel('grain size (mm)', 'FontSize', fontsize)
+xlabel('longshore location', 'FontSize', fontsize)
+xticks(1:10)
+xticklabels(num2cell(10:-1:1))
+annotation('textbox', [0.3, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.7, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+set(gca, 'XDir','reverse')
+legend({'D_{10}','D_{50}','D_{90}','\sigma_G'}, 'Location', 'northeast', 'FontSize', fontsize)
+newcolors = colormap("cool");
+colororder(newcolors(50:50:50*3, :))
+axis tight
+axis square

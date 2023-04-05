@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
 % data1 = importxylem("MRD01-210925-210929.xlsx", "MRD01-210925-210929", [19, 602]);
 % data2 = importxylem("MRD01-210929-211001.xlsx", "MRD01-210929-211001", [19, 279]);

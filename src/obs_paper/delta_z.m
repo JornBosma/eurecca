@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
 % colourblind-friendly colour palette
 orange = [230/255, 159/255, 0];
@@ -15,11 +15,12 @@ bluegreen = [0, 158/255, 115/255];
 newcolors = crameri('-vik');
 colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 
-%% Figure 1a: bed-level change from Summer 2019 - Summer 2022
+%% Bed-level change from Summer 2019 - Summer 2022
 A = load('PHZ_2019_Q3','-mat');
 B = load('PHZ_2022_Q3','-mat');
 
-[dQ, dz, dz_Beach, pgns] = getVolumeChange2(A, B);
+[dQ, dz, dz_Beach] = getVolumeChange(A, B);
+[pgns, inside] = get_polygon(A);
 
 L1C1 = [117421.461, 560053.687]; % vector
 L2C5 = [117199.347, 559816.116]; % 3D-sonar
@@ -72,15 +73,7 @@ patch(pgns.xv_beach,pgns.yv_beach,yellow, 'FaceAlpha',.1, 'EdgeColor',yellow, 'L
 %     ['$\Delta$Q = ', mat2str(dQ.Net(4),2),' m$^3$'], 'FontSize',fontsize/1.3)
 
 % North arrow
-ta = annotation('textarrow', [.781 .801], [.595 .615], 'String', 'N');
-ta.FontSize = fontsize/1.3;
-ta.Interpreter = 'latex';
-ta.LineWidth = 6;
-ta.HeadStyle = 'hypocycloid';
-ta.HeadWidth = 30;
-ta.HeadLength = 30;
-an = annotation('ellipse', [.765 .575 .04 .05]);
-an.LineWidth = 2;
+Narrow(fontsize)
 
 %% Export figures
 % exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/dz_map.png')

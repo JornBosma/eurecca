@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~] = eurecca_init;
 
 dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
 
