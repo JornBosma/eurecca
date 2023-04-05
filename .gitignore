@@ -8,9 +8,7 @@
 /data/elevation/*
 /data/sediment/*
 /data/water/*
-/results/figures/*
-/results/figures_old/*
-/results/output/*
+
 /results/*
 
 # keep unfinished written material out of public sight
