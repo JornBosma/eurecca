@@ -49,13 +49,6 @@ bluegreen = [0, 158/255, 115/255];
 newcolors = crameri('-vik');
 colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 
-%% create dummy values
-profiles{3}(:, 17) = 1:length(profiles{3}(:, 17)); % add dummy values
-profiles{5}(:, 26) = 1:length(profiles{5}(:, 26)); % add dummy values
-% for n = 1:7
-%     profiles{n}(:,all(isnan(profiles{n}))) = 0;%1:length(profiles{n});
-% end
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Long-term monitoring
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,15 +79,27 @@ for n = [1:3 5:7] % discard track 4
         try
             idx_LW{m}(p) = find(prof_centred{m}(:,p) >= MLWS, 1, 'first');
         catch
-            idx_LW{m}(p) = find(prof_centred{m}(:,p) == min(prof_centred{m}(:,p))); % if max > MLWS, then find idx of min
+            try
+                idx_LW{m}(p) = find(prof_centred{m}(:,p) == min(prof_centred{m}(:,p))); % if max > MLWS, then find idx of min
+            catch
+                idx_LW{m}(p) = 1;
+            end
         end
-
-        idx_MW{m}(p) = find(prof_centred{m}(:,p) >= MSL, 1, 'first');
+        
+        try
+            idx_MW{m}(p) = find(prof_centred{m}(:,p) >= MSL, 1, 'first');
+        catch
+            idx_MW{m}(p) = 1;
+        end
 
         try
             idx_HW{m}(p) = find(prof_centred{m}(:,p) >= MHWS, 1, 'first')-1;
         catch
-            idx_HW{m}(p) = find(prof_centred{m}(:,p) == max(prof_centred{m}(:,p)))-1; % if max < MHWS, then find idx of max
+            try
+                idx_HW{m}(p) = find(prof_centred{m}(:,p) == max(prof_centred{m}(:,p)))-1; % if max < MHWS, then find idx of max
+            catch
+                idx_HW{m}(p) = 1;
+            end
         end
 
         aLW_p = polyfit(idx_LW{m}(p):idx_MW{m}(p), prof_centred{m}(idx_LW{m}(p):idx_MW{m}(p), p), 1);
@@ -125,7 +130,7 @@ for n = [4 1]
 
     axs{m} = nexttile; % Ln
     plot(prof_centred{n}, 'LineWidth', 2); hold on
-    text(2, 1.8, tracknames{n}, 'FontSize',fontsize*2, 'EdgeColor','k')
+    text(axs{m}, 3, 1.8, tracknames{n}, 'FontSize',fontsize*2, 'EdgeColor','k')
 
     plot(idx_LW{n}(1):idx_MW{n}(1), aLW_fit{n}{:,1}, 'k', 'LineWidth',6)
     plot(idx_MW{n}(1):idx_HW{n}(1), aHW_fit{n}{:,1}, 'k', 'LineWidth',6)
@@ -161,6 +166,8 @@ legend(axs{2}, string(datetime(date{5}(surv{5}), 'Format','dd-MM-yy')),...
 grid([axs{1} axs{2}], 'on')
 grid([axs{1} axs{2}], 'minor')
 
+clear axs
+
 %% Visualisation: profile evolution L1 - L6
 f1 = figure;
 
@@ -169,7 +176,7 @@ for n = 1:6
 
     axs{n} = nexttile; % Ln
     plot(prof_centred{n}, 'LineWidth', 2); hold on
-    text(2, 1.6, tracknames{n}, 'FontSize',fontsize, 'EdgeColor','k')
+    text(axs{n}, 2, 1.62, tracknames{n}, 'FontSize',fontsize, 'EdgeColor','k')
 
     plot(idx_LW{n}(1):idx_MW{n}(1), aLW_fit{n}{:,1}, 'k', 'LineWidth',6)
     plot(idx_MW{n}(1):idx_HW{n}(1), aHW_fit{n}{:,1}, 'k', 'LineWidth',6)
@@ -201,25 +208,33 @@ ylabel(axs{3}, 'bed level (m +NAP)')
 legend(axs{4}, string(datetime(date{5}(surv{5}), 'Format','dd-MM-yy')),...
     'Location','eastoutside', 'NumColumns',1, 'Box','on', 'FontSize',fontsize/1.2)
 
+clear axs
+
 %% Visualisation: slope evolution L1 - L6
 f2 = figure;
 
-tiledlayout(2,1)
+tiledlayout(2,1, 'TileSpacing','tight')
 
-nexttile
+ax{1} = nexttile;
 for n = 1:6
     plot(date_check(isfinite(aHW_mean{n}),n), 1./aHW_mean{n}(isfinite(aHW_mean{n})),...
         '-o', 'Color',colours(n,:), 'LineWidth',3); hold on
 end
-ylim([0 100])
-legend(tracknames, 'Location','northoutside', 'NumColumns',6)
+area(ax{1}.XLim, [100 100], 'FaceColor',yellow, 'FaceAlpha',0.1, 'LineStyle','none')
 
-nexttile
+ax{2} = nexttile;
 for n = 1:6
     plot(date_check(isfinite(aLW_mean{n}),n), 1./aLW_mean{n}(isfinite(aLW_mean{n})),...
         '-o', 'Color',colours(n,:), 'LineWidth',3); hold on
 end
-ylim([0 100])
+area(ax{2}.XLim, [100 100], 'FaceColor',bluegreen, 'FaceAlpha',0.1, 'LineStyle','none')
+
+ylim([ax{1} ax{2}], [0 100])
+xticklabels(ax{1}, {})
+ylabel([ax{1} ax{2}], 'slope (1:x)')
+legend(ax{1}, tracknames, 'Location','northoutside', 'NumColumns',6)
+
+clear ax
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SEDMEX
@@ -251,7 +266,7 @@ X = 30;
 m = 1;
 % for n = 1:7
 for n = [1:3 5:7] % discard track 4
-    prof_smooth{m} = movmean(profiles{n}(:, surv{n}), 3, 1, 'omitnan');
+    prof_smooth{m} = movmean(profiles{n}(:, surv{m}), 3, 1, 'omitnan');
     idx_0{m} = find(prof_smooth{m} >= MSL, 1, 'first');
     prof_centred{m} = prof_smooth{m}(idx_0{m}-X:idx_0{m}+X, :);
 
@@ -260,15 +275,27 @@ for n = [1:3 5:7] % discard track 4
         try
             idx_LW{m}(p) = find(prof_centred{m}(:,p) >= MLWS, 1, 'first');
         catch
-            idx_LW{m}(p) = find(prof_centred{m}(:,p) == min(prof_centred{m}(:,p))); % if max > MLWS, then find idx of min
+            try
+                idx_LW{m}(p) = find(prof_centred{m}(:,p) == min(prof_centred{m}(:,p))); % if max > MLWS, then find idx of min
+            catch
+                idx_LW{m}(p) = 1;
+            end
         end
-
-        idx_MW{m}(p) = find(prof_centred{m}(:,p) >= MSL, 1, 'first');
+        
+        try
+            idx_MW{m}(p) = find(prof_centred{m}(:,p) >= MSL, 1, 'first');
+        catch
+            idx_MW{m}(p) = 1;
+        end
 
         try
             idx_HW{m}(p) = find(prof_centred{m}(:,p) >= MHWS, 1, 'first')-1;
         catch
-            idx_HW{m}(p) = find(prof_centred{m}(:,p) == max(prof_centred{m}(:,p)))-1; % if max < MHWS, then find idx of max
+            try
+                idx_HW{m}(p) = find(prof_centred{m}(:,p) == max(prof_centred{m}(:,p)))-1; % if max < MHWS, then find idx of max
+            catch
+                idx_HW{m}(p) = 1;
+            end
         end
 
         aLW_p = polyfit(idx_LW{m}(p):idx_MW{m}(p), prof_centred{m}(idx_LW{m}(p):idx_MW{m}(p), p), 1);
@@ -289,44 +316,6 @@ end
 prof_centred{1}(11:12, 12) = NaN;
 prof_centred{2}(7:9, 12) = NaN;
 
-%% Visualisation: profile evolution
-f3 = figure;
-
-tiledlayout(3,2)
-for n = 1:6
-
-    ax{n} = nexttile; % Ln
-    plot(prof_centred{n}, 'LineWidth', 2); hold on
-    text(1, 1.65, tracknames{n}, 'FontSize',fontsize, 'EdgeColor','k')
-
-    yline(0,'-.')
-    yline([-1 1],'--')
-    area(0:X*2, ones(1,length(prof_centred{n})), 'FaceColor',yellow, 'FaceAlpha',0.1, 'EdgeColor','none')
-    text(X-25,.75, ['$\Delta_{first}$ = 1:',mat2str(meanSlope_HW{n}(1),2)], 'FontSize',fontsize/1.3)
-    text(X-25,.25, ['$\Delta_{last}$',repmat('\ ',1,2), '= 1:',mat2str(meanSlope_HW{n}(end),2)], 'FontSize',fontsize/1.3)
-
-    area(0:X*2, ones(1,length(prof_centred{n}))*-1, 'FaceColor',bluegreen, 'FaceAlpha',0.1, 'EdgeColor','none')
-    text(X+10,-.25, ['$\Delta_{first}$ = 1:',mat2str(meanSlope_LW{n}(1),2)], 'FontSize',fontsize/1.3)
-    text(X+10,-.75, ['$\Delta_{last}$',repmat('\ ',1,2), '= 1:',mat2str(meanSlope_LW{n}(end),2)], 'FontSize',fontsize/1.3)
-
-    xlim([0 X*2])
-    ylim([-2, 2])
-    xticks(10:10:X*2)
-    xticklabels(-X+10:10:X-10)
-
-    colororder(flipud(newcolors(1:round(256/numel(surv{n})):256, :)))
-
-    grid on
-    grid minor
-
-end
-
-xlabel([ax{5} ax{6}], 'x-shore distance (m)')
-ylabel(ax{3}, 'bed level (m +NAP)')
-
-legend(ax{4}, string(datetime(date{5}(surv{5}), 'Format','dd-MM-yy')),...
-    'Location','eastoutside', 'NumColumns',1, 'Box','on', 'FontSize',fontsize/1.2)
-
 %% Visualisation: profile evolution L1 - L6
 f3 = figure;
 
@@ -335,7 +324,7 @@ for n = 1:6
 
     axs{n} = nexttile; % Ln
     plot(prof_centred{n}, 'LineWidth', 2); hold on
-    text(2, 1.6, tracknames{n}, 'FontSize',fontsize, 'EdgeColor','k')
+    text(axs{n}, 1.6, 1.6, tracknames{n}, 'FontSize',fontsize, 'EdgeColor','k')
 
     plot(idx_LW{n}(1):idx_MW{n}(1), aLW_fit{n}{:,1}, 'k', 'LineWidth',6)
     plot(idx_MW{n}(1):idx_HW{n}(1), aHW_fit{n}{:,1}, 'k', 'LineWidth',6)
@@ -366,3 +355,38 @@ ylabel(axs{3}, 'bed level (m +NAP)')
 
 legend(axs{4}, string(datetime(date{5}(surv{5}), 'Format','dd-MM-yy')),...
     'Location','eastoutside', 'NumColumns',1, 'Box','on', 'FontSize',fontsize/1.2)
+
+clear axs
+
+%% Visualisation: slope evolution L1 - L6
+f4 = figure;
+
+tiledlayout(2,1, 'TileSpacing','tight')
+
+ax{1} = nexttile;
+for n = 1:6
+    plot(date_check_sedmex(isfinite(aHW_mean{n}),n), 1./aHW_mean{n}(isfinite(aHW_mean{n})),...
+        '-o', 'Color',colours(n,:), 'LineWidth',3); hold on
+end
+area(ax{1}.XLim, [100 100], 'FaceColor',yellow, 'FaceAlpha',0.1, 'LineStyle','none')
+
+ax{2} = nexttile;
+for n = 1:6
+    plot(date_check_sedmex(isfinite(aLW_mean{n}),n), 1./aLW_mean{n}(isfinite(aLW_mean{n})),...
+        '-o', 'Color',colours(n,:), 'LineWidth',3); hold on
+end
+area(ax{2}.XLim, [100 100], 'FaceColor',bluegreen, 'FaceAlpha',0.1, 'LineStyle','none')
+
+ylim([ax{1} ax{2}], [0 35])
+xticklabels(ax{1}, {})
+ylabel([ax{1} ax{2}], 'slope (1:x)')
+legend(ax{1}, tracknames, 'Location','northoutside', 'NumColumns',6)
+
+clear ax
+
+%% Export figures
+% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/xprofs_L1_L4.png')
+% exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/xprofs.png')
+% exportgraphics(f2, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/xprofs_slopes.png')
+% exportgraphics(f3, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/xprofs_sedmex.png')
+exportgraphics(f4, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/xprofs_slopes_sedmex.png')

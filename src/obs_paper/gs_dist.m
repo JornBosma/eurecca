@@ -385,3 +385,7 @@ set(gca,'XTick',[])
 set(gca,'xticklabel',{})
 annotation('textbox', [0.05, 0.06, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
 annotation('textbox', [0.84, 0.06, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+
+%% Export figures
+% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/GS_dist.png')
+% exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/GS_time.png')

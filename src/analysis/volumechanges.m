@@ -297,3 +297,6 @@ text(mean([pgns.xv_beach(2) pgns.xv_beach(4)])+20, mean([pgns.yv_beach(2) pgns.y
 % patch(xv_beach,yv_beach,yellow,'FaceAlpha',.2, 'EdgeColor',yellow)
 % text(mean([xv_beach(2) xv_beach(4)])+20, mean([yv_beach(2) yv_beach(4)]),...
 %     ['$\Delta$Q = ', mat2str(dQ_beach,2),' m$^3$'], 'FontSize',fontsize/1.3)
+
+%% Export figures
+% exportgraphics(f2, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/vol_change.png')

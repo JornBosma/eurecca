@@ -43,8 +43,8 @@ zlabel('z (m +NAP)')
 shading flat
 
 % (instruments) transect locations
-scatter(LXCX(:,1), LXCX(:,2), 500, '|', 'k', 'LineWidth',2);
-text(LXCX(:, 1)+20, LXCX(:, 2)-150, Tr_names, 'FontSize',fontsize/1.3)
+% scatter(LXCX(:,1), LXCX(:,2), 500, '|', 'k', 'LineWidth',2);
+% text(LXCX(:, 1)+20, LXCX(:, 2)-150, Tr_names, 'FontSize',fontsize/1.3)
 ax = gca; ax.SortMethod = 'childorder';
 
 % xlim([1.15e5 1.18e5])
@@ -81,3 +81,6 @@ ta.HeadWidth = 30;
 ta.HeadLength = 30;
 an = annotation('ellipse', [.765 .575 .04 .05]);
 an.LineWidth = 2;
+
+%% Export figures
+% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/dz_map.png')

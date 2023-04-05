@@ -20,7 +20,7 @@ newcolors = crameri('-vik');
 colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 
 %% Figure 1b: time-average longshore hydro conditions
-adv_locs = {'L6C1', 'L5C1', 'L4C1', 'L3C1', 'L2C10', 'L1C1'};
+adv_locs = {'L6C1', 'L5C1', 'L4C1', 'L3C1', 'L2C4', 'L1C1'};
 ossi_locs = {'L6C2', 'L5C2', 'L4C3', 'L2C6', 'L1C2'};
 locs = {'L6', 'L5', 'L4', 'L3', 'L2', 'L1'};
 
@@ -119,4 +119,5 @@ xticklabels(adv_locs)
 legend('wave-height data', 'mean wave height')
 
 %% Export figures
-% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/manuscript_observation/Figures/hydro.png')
+% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/hydro_C4.png')
+% exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/hydro_box_C4.png')
