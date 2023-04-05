@@ -9,9 +9,7 @@
 /data/sediment/*
 /data/water/*
 /results/figures/*
-/results/figures_old/*
 /results/output/*
-/results/figures.pptx
 
 # keep unfinished written material out of public sight
 /docs/manuscript/*
