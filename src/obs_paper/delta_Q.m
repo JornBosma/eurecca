@@ -11,7 +11,7 @@ DEMP = [basePath 'data' filesep 'elevation' filesep 'processed' filesep];
 DEMS = dir(fullfile(DEMP,'PHZ*.mat'));
 for k = 1:numel(DEMS)
     DEMS(k).data = load(DEMS(k).name);
-    waitbar(k/numel(DEMS), wb, sprintf('Loading DEMs: %d %%', floor(k/numel(DEMS)*100)));
+    waitbar(k/numel(DEMS), wb, sprintf('Loading DEMs: %d%%', floor(k/numel(DEMS)*100)));
     pause(0.1)
 end
 close(wb)
@@ -29,9 +29,10 @@ wb = waitbar(0, 'Computing volume changes');
 wb.Children.Title.Interpreter = 'none';
 for k = 2:numel(DEMS)
     A = DEMS(1).data; % relative to first survey
+    A = DEMS(k-1).data; % relative previous survey
     B = DEMS(k).data;
-    [dQ{k-1}, dz{k-1}, dz_Beach{k-1}, pgns] = getVolumeChange2(A, B);
-    waitbar(k/numel(DEMS), wb, sprintf('Computing volume changes: %d %%', floor(k/numel(DEMS)*100)));
+    [dQ{k-1}, dz{k-1}, dz_Beach{k-1}] = getVolumeChange(A, B);
+    waitbar(k/numel(DEMS), wb, sprintf('Computing volume changes: %d%%', floor(k/numel(DEMS)*100)));
     pause(0.1)
 end
 close(wb)
@@ -152,8 +153,87 @@ b1(3).CData = blue;
 b2(3).FaceColor = 'flat';
 b2(3).CData = blue;
 
+ylabel('$\Delta$Q (m$^3$)')
 legend('spit tip','spit beach','south beach','','','','total')
 
-%% Export figures
-% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/dQ_line.png')
-% exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/dQ_bar.png')
+%% Visualisation
+f2 = figure;
+b1 = bar(TT.SurveyDates, [cumsum(TT_pos.dQ_Nspit_pos), cumsum(TT_pos.dQ_spit_pos), cumsum(TT_pos.dQ_Sbeach_pos)], 'stacked'); hold on
+b2 = bar(TT.SurveyDates, [cumsum(TT_neg.dQ_Nspit_neg), cumsum(TT_neg.dQ_spit_neg), cumsum(TT_neg.dQ_Sbeach_neg)], 'stacked');
+plot(TT.SurveyDates, cumsum(TT.dQ_tot), 'r', 'LineWidth',10); hold off
+
+b1(1).FaceColor = 'flat';
+b1(1).CData = redpurp;
+b2(1).FaceColor = 'flat';
+b2(1).CData = redpurp;
+
+b1(2).FaceColor = 'flat';
+b1(2).CData = yellow;
+b2(2).FaceColor = 'flat';
+b2(2).CData = yellow;
+
+b1(3).FaceColor = 'flat';
+b1(3).CData = blue;
+b2(3).FaceColor = 'flat';
+b2(3).CData = blue;
+
+ylabel('$\Delta$Q (m$^3$)')
+legend('spit tip','spit beach','south beach','','','','total')
+
+%% Visualisation
+f3 = figure;
+tiledlayout(2,1, 'TileSpacing','tight')
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+nexttile
+b1 = bar(TT.SurveyDates, [TT_pos.dQ_Nspit_pos, TT_pos.dQ_spit_pos, TT_pos.dQ_Sbeach_pos], 'stacked'); hold on
+b2 = bar(TT.SurveyDates, [TT_neg.dQ_Nspit_neg, TT_neg.dQ_spit_neg, TT_neg.dQ_Sbeach_neg], 'stacked');
+plot(TT.SurveyDates, TT.dQ_tot, 'r', 'LineWidth',10); hold off
+xticklabels({})
+
+xregion(TT.SurveyDates(1), TT.SurveyDates(3)) % initial rapid response
+xregion(datetime('10-Sep-2021'), datetime('18-Oct-2021')) % SEDMEX
+
+b1(1).FaceColor = 'flat';
+b1(1).CData = redpurp;
+b2(1).FaceColor = 'flat';
+b2(1).CData = redpurp;
+
+b1(2).FaceColor = 'flat';
+b1(2).CData = yellow;
+b2(2).FaceColor = 'flat';
+b2(2).CData = yellow;
+
+b1(3).FaceColor = 'flat';
+b1(3).CData = blue;
+b2(3).FaceColor = 'flat';
+b2(3).CData = blue;
+
+ylabel('$\Delta$Q (m$^3$)')
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+nexttile
+b1 = bar(TT.SurveyDates, [cumsum(TT_pos.dQ_Nspit_pos), cumsum(TT_pos.dQ_spit_pos), cumsum(TT_pos.dQ_Sbeach_pos)], 'stacked'); hold on
+b2 = bar(TT.SurveyDates, [cumsum(TT_neg.dQ_Nspit_neg), cumsum(TT_neg.dQ_spit_neg), cumsum(TT_neg.dQ_Sbeach_neg)], 'stacked');
+plot(TT.SurveyDates, cumsum(TT.dQ_tot), 'r', 'LineWidth',10); hold off
+
+xregion(TT.SurveyDates(1), TT.SurveyDates(3)) % initial rapid response
+xregion(datetime('10-Sep-2021'), datetime('18-Oct-2021')) % SEDMEX
+
+b1(1).FaceColor = 'flat';
+b1(1).CData = redpurp;
+b2(1).FaceColor = 'flat';
+b2(1).CData = redpurp;
+
+b1(2).FaceColor = 'flat';
+b1(2).CData = yellow;
+b2(2).FaceColor = 'flat';
+b2(2).CData = yellow;
+
+b1(3).FaceColor = 'flat';
+b1(3).CData = blue;
+b2(3).FaceColor = 'flat';
+b2(3).CData = blue;
+
+ylabel('$\Delta$Q (m$^3$)')
+legend('spit tip','spit beach','south beach','','','','total','')

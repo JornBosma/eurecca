@@ -62,18 +62,56 @@ cb.Label.Interpreter = 'latex';
 cb.Label.String = ['$<$ erosion (m) ', repmat('\ ', 1, 9), ' deposition (m) $>$'];
 cb.FontSize = fontsize/1.3;
 clim([-2, 2])
-colormap(crameri('vik', 11, 'pivot', 0))
+colormap(crameri('vik', 11, 'pivot',0))
 
 % polygons and volumes
-patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
+% patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
 % text(mean([pgns.xv_N(2) pgns.xv_N(3)])+30, mean([pgns.yv_N(2) pgns.yv_N(3)])-50,...
 %     ['$\Delta$Q = ', mat2str(dQ.Net(1),2),' m$^3$'], 'FontSize',fontsize/1.3)
-patch(pgns.xv_beach,pgns.yv_beach,yellow, 'FaceAlpha',.1, 'EdgeColor',yellow, 'LineWidth',3)
+% patch(pgns.xv_beach,pgns.yv_beach,yellow, 'FaceAlpha',.1, 'EdgeColor',yellow, 'LineWidth',3)
 % text(mean([pgns.xv_beach(2) pgns.xv_beach(4)])+20, mean([pgns.yv_beach(2) pgns.yv_beach(4)])-20,...
 %     ['$\Delta$Q = ', mat2str(dQ.Net(4),2),' m$^3$'], 'FontSize',fontsize/1.3)
 
 % North arrow
 Narrow(fontsize)
 
-%% Export figures
-% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/dz_map.png')
+%% Visualisation
+dz2 = dz;
+dz2(B.DEM.Z<-.5) = NaN;
+dz2(B.DEM.Z>=-.5 & ~inside.in_beach & ~inside.in_N) = 0;
+
+f1 = figure;
+surf(B.DEM.X, B.DEM.Y, dz2); hold on
+
+x1 = 115260; x2 = 116290; x3 = x2+(x2-x1)*1.08; x4 = x3+(x2-x1)*.21;
+y1 = 557940; y2 = 558900; y3 = y2+(y2-y1)*1.08; y4 = y3+(y2-y1)*.21;
+line([x1,x2], [y1,y2], 'LineWidth',6, 'Color',blue)
+line([x2,x3], [y2,y3], 'LineWidth',6, 'Color',yellow)
+line([x3,x4], [y3,y4], 'LineWidth',6, 'Color',redpurp)
+text(x1+500, y1+350, 'south beach', 'FontSize',fontsize/1.3)
+text(x2+500, y2+350, 'spit beach', 'FontSize',fontsize/1.3)
+text(x3+80, y3-40, 'spit tip', 'FontSize',fontsize/1.3)
+
+shading flat
+ax = gca; ax.SortMethod = 'childorder';
+axis off; axis vis3d
+view(46, 90)
+
+% colorbar
+cb = colorbar;
+cb.Location = 'northoutside';
+set(cb, 'position', [.25 .62 .2 .01])
+cb.TickLabelInterpreter = 'latex';
+cb.Label.Interpreter = 'latex';
+cb.Label.String = ['$<$ erosion (m) ', repmat('\ ', 1, 9), ' deposition (m) $>$'];
+cb.FontSize = fontsize/1.3;
+clim([-2, 2])
+colormap(crameri('vik', 'pivot',0))
+
+% polygons and volumes
+% patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
+% patch(pgns.xv_spit,pgns.yv_spit,yellow, 'FaceAlpha',.1, 'EdgeColor',yellow, 'LineWidth',3)
+% patch(pgns.xv_S,pgns.yv_S,blue, 'FaceAlpha',.1, 'EdgeColor',blue, 'LineWidth',3)
+
+% North arrow
+Narrow(fontsize)

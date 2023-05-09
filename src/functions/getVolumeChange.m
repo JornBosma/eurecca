@@ -1,7 +1,13 @@
-function [dQ, dz, dz_Beach] = getVolumeChange2(A, B)
+function [dQ, dz, dz_Beach] = getVolumeChange(A, B)
 
 % Calculates the volume difference between two DEMs inside predefined
 % polygons.
+
+%% water levels
+% MHWS = 0.81; % mean high water spring [m]
+% MLWS = -1.07; % mean low water spring [m]
+% MSL = 0; % mean sea level [m]
+% NAP = MSL-0.1; % local reference datum [m]
 
 %% Polygon definitions
 [~, inside] = get_polygon(A);
@@ -16,7 +22,7 @@ dz_noNaN(isnan(dz)) = 0;
 
 % region between +2 and -1 contours = foreshore/beach face
 dz_fshore = dz_noNaN;
-dz_fshore(A.DEM.Z>3 | B.DEM.Z<-1) = 0;
+dz_fshore(A.DEM.Z>3 | B.DEM.Z<-.5) = 0;
 
 % accretive region at northern tip of the spit
 dz_N = dz_fshore;

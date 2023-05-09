@@ -18,17 +18,26 @@ newcolors = crameri('-vik');
 colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 
 %% Figure 1b: time-average longshore hydro conditions
-adv_locs = {'L6C1', 'L5C1', 'L4C1', 'L3C1', 'L2C4', 'L1C1'};
+adv_locs = {'L6C1', 'L5C1', 'L4C1', 'L3C1', 'L2C10', 'L1C1'};
 ossi_locs = {'L6C2', 'L5C2', 'L4C3', 'L2C6', 'L1C2'};
 locs = {'L6', 'L5', 'L4', 'L3', 'L2', 'L1'};
 
 for n = 1:length(adv_locs)
-    ADVpath{n} = [filesep 'ADV' filesep adv_locs{n} 'VEC' filesep 'tailored_loose' filesep];
-    adv_info{n} = ncinfo([dataPath ADVpath{n} adv_locs{n} 'VEC.nc']);
-    adv_t{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 't'); % minutes since 2021-09-10 19:00:00
-    U{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'umag');
-    Hm0{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'Hm0');
-    adv_hab{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'elev');
+    % if n == 5
+    %     ADVpath{n} = [filesep 'ADV' filesep adv_locs{n} 'SONTEK1' filesep 'tailored' filesep];
+    %     adv_info{n} = ncinfo([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc']);
+    %     adv_t{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 't'); % minutes since 2021-09-10 19:00:00
+    %     U{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 'umag');
+    %     Hm0{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 'Hm0');
+    %     adv_hab{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 'h');
+    % else
+        ADVpath{n} = [filesep 'ADV' filesep adv_locs{n} 'VEC' filesep 'tailored_loose' filesep];
+        adv_info{n} = ncinfo([dataPath ADVpath{n} adv_locs{n} 'VEC.nc']);
+        adv_t{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 't'); % minutes since 2021-09-10 19:00:00
+        U{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'umag');
+        Hm0{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'Hm0');
+        adv_hab{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'elev');
+    % end
 end
 
 for n = 1:length(ossi_locs)
@@ -44,6 +53,7 @@ tv{2} = datetime('2021-09-11 00:00:00') + minutes(adv_t{2}); % L5C1 (til 18-Oct-
 tv{3} = datetime('2021-09-10 19:00:00') + minutes(adv_t{3}); % L4C1 (til 18-Oct-2021 04:50:00)
 tv{4} = datetime('2021-09-11 00:00:00') + minutes(adv_t{4}); % L3C1 (til 18-Oct-2021 09:50:00)
 tv{5} = datetime('2021-09-10 19:00:00') + minutes(adv_t{5}); % L2C4 (til 18-Oct-2021 04:50:00)
+% tv{5} = datetime('2021-09-10 19:29:43') + minutes(adv_t{5}); % L2C5 (til 18-Oct-2021 09:50:00)
 tv{6} = datetime('2021-09-11 00:00:00') + minutes(adv_t{6}); % L1C1 (til 18-Oct-2021 09:50:00)
 
 tv{7} = datetime('2021-09-10 19:00:00') + minutes(ossi_t{1}); % L1C2 (til 18-Oct-2021 09:50:00)
@@ -109,13 +119,10 @@ nexttile
 b = boxchart(Hm0_75, 'Notch','on'); hold on
 b.JitterOutliers = 'on';
 b.MarkerStyle = '.';
-plot(mean(Hm0_75, 'omitnan'), '-o', 'LineWidth',2); hold off
+plot(mean(Hm0_75, 'omitnan'), '-o', 'LineWidth',2)
+plot(max(Hm0_75), '-o', 'LineWidth',2); hold off
 % set(gca,'xticklabel',{[]})
 ylabel('H$_{m0}$ (m)')
 ylim([0 .7])
 xticklabels(adv_locs)
 legend('wave-height data', 'mean wave height')
-
-%% Export figures
-% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/hydro_C4.png')
-% exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/hydro_box_C4.png')

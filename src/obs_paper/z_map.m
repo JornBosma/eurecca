@@ -38,23 +38,44 @@ clim([-4, 4])
 colormap(flipud('gray'))
 
 % polygons and volumes
-patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
-patch(pgns.xv_spit,pgns.yv_spit,yellow, 'FaceAlpha',.1, 'EdgeColor',yellow, 'LineWidth',3)
-patch(pgns.xv_S,pgns.yv_S,blue, 'FaceAlpha',.1, 'EdgeColor',blue, 'LineWidth',3)
+% patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
+% patch(pgns.xv_spit,pgns.yv_spit,yellow, 'FaceAlpha',.1, 'EdgeColor',yellow, 'LineWidth',3)
+% patch(pgns.xv_S,pgns.yv_S,blue, 'FaceAlpha',.1, 'EdgeColor',blue, 'LineWidth',3)
+
+% sampling locations
+LS_locx = [...
+117491.990000000
+117345.034000000
+117113.948000000
+116861.018000000
+116646.619000000
+116387.343000000
+116152.658000000
+115896.593000000
+115606.006000000
+115387.277000000];
+
+LS_locy = [...
+560006.329000000
+559822.696000000
+559621.521000000
+559445.443000000
+559250.492000000
+559062.809000000
+558871.963000000
+558697.807000000
+558402.354000000
+558120.895000000];
+
+text(LS_locx, LS_locy, num2cell(10:-1:1), 'FontSize', fontsize)
 
 % North arrow
-ta = annotation('textarrow', [.78 .80], [.595 .615], 'String', 'N');
-ta.FontSize = fontsize/1.3;
-ta.Interpreter = 'latex';
-ta.LineWidth = 6;
-ta.HeadStyle = 'hypocycloid';
-ta.HeadWidth = 30;
-ta.HeadLength = 30;
+Narrow(fontsize)
 
 %% Visualisation
 C = A;
-C.DEM.Z(C.DEM.Z<0) = NaN;
-C.DEM.Z(C.DEM.Z>=0 & ~inside.in_beach & ~inside.in_N) = 0;
+C.DEM.Z(C.DEM.Z<-.5) = NaN;
+C.DEM.Z(C.DEM.Z>=-.5 & ~inside.in_beach & ~inside.in_N) = 2.8;
 
 f1 = figure;
 surf(C.DEM.X, C.DEM.Y, C.DEM.Z); hold on
@@ -64,8 +85,16 @@ ax = gca; ax.SortMethod = 'childorder';
 axis off; axis vis3d
 view(46, 90)
 
-clim([-2, 2])
-colormap(crameri('vik', 'pivot',0))
+% colorbar
+cb = colorbar;
+cb.Location = 'northoutside';
+set(cb, 'position', [.25 .62 .2 .01])
+cb.TickLabelInterpreter = 'latex';
+cb.Label.Interpreter = 'latex';
+cb.Label.String = 'bed level (m+NAP)';
+cb.FontSize = fontsize/1.3;
+clim([-.5, 3])
+colormap(crameri('fes', 'pivot',-.5))
 
 % polygons and volumes
 patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
@@ -74,7 +103,3 @@ patch(pgns.xv_S,pgns.yv_S,blue, 'FaceAlpha',.1, 'EdgeColor',blue, 'LineWidth',3)
 
 % North arrow
 Narrow(fontsize)
-
-%% Export figures
-% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/greymap_poly.png')
-% exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/z_map_poly.png')

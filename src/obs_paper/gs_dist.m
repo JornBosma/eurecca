@@ -238,6 +238,14 @@ D50_20221026_L = [[1:4, 6, 8:10]; flip(D50_20221026_mean)];
 
 D50_day = {D50_20190128_L, D50_20201016_L, D50_20201202_L, D50_20210921_L, D50_20210928_L, D50_20211008_9_L, D50_20221026_L};
 D50_all = [D50_20190128_L, D50_20201016_L, D50_20201202_L, D50_20210921_L, D50_20210928_L, D50_20211008_9_L, D50_20221026_L];
+D50_ord = [1 1.5 2:7 7.5 8 9 9.5 10 10.2 10.4;...
+    NaN D50_all(2, 1) NaN D50_all(2, 2:3) NaN D50_all(2, 4) NaN D50_all(2, 5) NaN NaN D50_all(2, 6) NaN NaN NaN;...
+    NaN NaN NaN D50_all(2, 8:9) NaN D50_all(2, 10:11) NaN D50_all(2, 12:13) NaN D50_all(2, 14) NaN NaN;...
+    D50_all(2, 15) NaN D50_all(2, 16:21) NaN D50_all(2, 22:23) NaN D50_all(2, 24) NaN NaN;...
+    D50_all(2, 25) NaN NaN D50_all(2, 26:27) NaN D50_all(2, 28) NaN NaN NaN NaN NaN NaN D50_all(2, 29:30);...
+    D50_all(2, 31) NaN NaN D50_all(2, 32:33) NaN D50_all(2, 34) NaN NaN NaN NaN NaN NaN D50_all(2, 35:36);...
+    D50_all(2, 37) NaN D50_all(2, 38:43) NaN D50_all(2, 44:45) NaN D50_all(2, 46) NaN NaN;...
+    D50_all(2, 47) NaN D50_all(2, 48:50) NaN D50_all(2, 51) NaN NaN D50_all(2, 52:53) NaN D50_all(2, 54) NaN NaN]';
 
 p_D50 = polyfit(D50_all(1, :), D50_all(2, :), 3);
 D50_fit = polyval(p_D50, 1:11);
@@ -265,6 +273,13 @@ D10_20221026_L = [[1:4, 6, 8:10]; flip(D10_20221026_mean)];
 
 D10_day = {D10_20190128_L, D10_20201016_L, D10_20201202_L, D10_20210921_L, D10_20210928_L, D10_20211008_9_L, D10_20221026_L};
 D10_all = [D10_20190128_L, D10_20201016_L, D10_20201202_L, D10_20210921_L, D10_20210928_L, D10_20211008_9_L, D10_20221026_L];
+D10_ord = [1 1.5 2:10 10.2 10.4;...
+    NaN D10_all(2, 7) NaN D10_all(2, 8:9) NaN D10_all(2, 10:14) NaN NaN;...
+    D10_all(2, 15) NaN D10_all(2, 16:24) NaN NaN;...
+    D10_all(2, 25) NaN NaN D10_all(2, 26:27) NaN D10_all(2, 28) NaN NaN NaN NaN D10_all(2, 29:30);...
+    D10_all(2, 31) NaN NaN D10_all(2, 32:33) NaN D10_all(2, 34) NaN NaN NaN NaN D10_all(2, 35:36);...
+    D10_all(2, 37) NaN D10_all(2, 38:46) NaN NaN;...
+    D10_all(2, 47) NaN D10_all(2, 48:50) NaN D10_all(2, 51) NaN D10_all(2, 52:54) NaN NaN]';
 
 p_D10 = polyfit(D10_all(1, 7:end), D10_all(2, 7:end), 3);
 D10_fit = polyval(p_D10, 1:11);
@@ -292,6 +307,13 @@ D90_20221026_L = [[1:4, 6, 8:10]; flip(D90_20221026_mean)];
 
 D90_day = {D90_20190128_L, D90_20201016_L, D90_20201202_L, D90_20210921_L, D90_20210928_L, D90_20211008_9_L, D90_20221026_L};
 D90_all = [D90_20190128_L, D90_20201016_L, D90_20201202_L, D90_20210921_L, D90_20210928_L, D90_20211008_9_L, D90_20221026_L];
+D90_ord = [1 1.5 2:10 10.2 10.4;...
+    NaN D90_all(2, 7) NaN D90_all(2, 8:9) NaN D90_all(2, 10:14) NaN NaN;...
+    D90_all(2, 15) NaN D90_all(2, 16:24) NaN NaN;...
+    D90_all(2, 25) NaN NaN D90_all(2, 26:27) NaN D90_all(2, 28) NaN NaN NaN NaN D90_all(2, 29:30);...
+    D90_all(2, 31) NaN NaN D90_all(2, 32:33) NaN D90_all(2, 34) NaN NaN NaN NaN D90_all(2, 35:36);...
+    D90_all(2, 37) NaN D90_all(2, 38:46) NaN NaN;...
+    D90_all(2, 47) NaN D90_all(2, 48:50) NaN D90_all(2, 51) NaN D90_all(2, 52:54) NaN NaN]';
 
 p_D90 = polyfit(D90_all(1, 7:end), D90_all(2, 7:end), 3);
 D90_fit = polyval(p_D90, 1:11);
@@ -329,7 +351,7 @@ xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(1:10))
 annotation('textbox', [0.11, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
-annotation('textbox', [0.86, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.84, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
 legend([p3(1) p2(1) p1(1)], {'D$_{90}$', 'D$_{50}$', 'D$_{10}$'}, 'Location', 'eastoutside', 'FontSize', fontsize)
 
 %% Visualisation: longshore GS-distribution through time
@@ -339,53 +361,88 @@ tiledlayout(3, 1, 'TileSpacing', 'tight')
 nexttile;
 hold on
 for n = 1:length(D90_day)
-    plot(D90_day{n}(1, :), D90_day{n}(2, :), '-o', 'LineWidth',3)
+    plot(D90_day{n}(1, :), movmean(D90_day{n}(2, :), 1), '-s', 'LineWidth',4, 'MarkerSize',16, 'MarkerFaceColor','w')
 end
+yline(mean(D90_all(2, :), 'omitnan'), '--', 'Color','k', 'LineWidth',3)
 xlim([0.5 11])
-ylim([0, 6])
+% ylim([0, 6])
 yticks(0:2:6)
 ytickformat('%.1f')
 set(gca,'XTickLabel',[]);
 ylabel({'D$_{90}$ (mm)'}, 'FontSize',fontsize)
 % legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
 %     '2021-10-08', '2022-10-26'}, 'Location', 'northoutside', 'NumColumns', 7, 'FontSize', fontsize)
-set(gca,'XTick',[])
+grid on; grid minor
 
 nexttile
 hold on
 for n = 1:length(D50_day)
-    plot(D50_day{n}(1, :), D50_day{n}(2, :), '-o', 'LineWidth',3);
+    plot(D50_day{n}(1, :), movmean(D50_day{n}(2, :), 1), '-s', 'LineWidth',4, 'MarkerSize',16, 'MarkerFaceColor','w');
 end
+yline(mean(D50_all(2, :), 'omitnan'), '--', 'Color','k', 'LineWidth',3)
 xlim([0.5 11])
-ylim([0, 1.8])
+% ylim([0, 1.8])
 yticks(0:.5:2)
 ytickformat('%.1f')
 set(gca,'XTickLabel',[]);
-legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
-    '2021-10-08', '2022-10-26'}, 'Location', 'northeastoutside', 'FontSize', fontsize)
+hl = legend({'2019-01-28', '2020-10-16', '2021-12-02', '2021-09-21', '2021-09-28',...
+    '2021-10-08', '2022-10-26'}, 'Location', 'northeastoutside', 'FontSize', fontsize);
+hl.Layout.Tile = 'East';
 ylabel({'D$_{50}$ (mm)'}, 'FontSize',fontsize)
-set(gca,'XTick',[])
+grid on; grid minor
 
 nexttile
 hold on
 for n = 1:length(D10_day)
-    plot(D10_day{n}(1, :), D10_day{n}(2, :), '-o', 'LineWidth',3)
+    plot(D10_day{n}(1, :), movmean(D10_day{n}(2, :), 1), '-s', 'LineWidth',4, 'MarkerSize',16, 'MarkerFaceColor','w')
 end
+yline(mean(D10_all(2, :), 'omitnan'), '--', 'Color','k', 'LineWidth',3)
 xlim([0.5 11])
-ylim([0.1, 0.6])
+% ylim([0.1, 0.6])
 yticks(0:.1:.5)
 ytickformat('%.1f')
 newcolors = crameri('vik');
 colororder(newcolors(1:round(256/length(D90_day)):256, :))
 ylabel({'D$_{10}$ (mm)'}, 'FontSize',fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
-% xticks(1:10)
-% xticklabels(num2cell(1:10))
-set(gca,'XTick',[])
-set(gca,'xticklabel',{})
+xticks(1:10)
+xticklabels(num2cell(1:10))
 annotation('textbox', [0.05, 0.06, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
 annotation('textbox', [0.84, 0.06, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+grid on; grid minor
 
-%% Export figures
-% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/GS_dist.png')
-% exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/GS_time.png')
+%% Visualisation: longshore GS-distribution
+f2 = figure;
+
+hold on
+e1 = errorbar(D10_ord(:,1), mean(D10_ord(:,2:end), 2, 'omitnan'), std(D10_ord(:,2:end), [], 2, 'omitnan'),...
+    '-s', 'MarkerSize', 30, 'LineStyle','none', 'CapSize',18, 'LineWidth',3, 'Color',[0.9290 0.6940 0.1250]);
+plot(D10_ord(:,1), movmean(mean(D10_ord(:,2:end), 2, 'omitnan'), 5), 'LineWidth',3, 'Color',[0.9290 0.6940 0.1250])
+yline(mean(D10_all(2, :), 'omitnan'), '--', 'Color', [0.9290 0.6940 0.1250], 'LineWidth', 3)
+text(11.1, mean(D10_all(2, :)-.02, 'omitnan'), [mat2str(mean(D10_all(2, :), 'omitnan'), 3)], 'FontSize', fontsize, 'Color', [0.9290 0.6940 0.1250])
+% yline(mean(D10_20201202_L(2, :), 'omitnan'), ':', 'Color', [0.9290 0.6940 0.1250], 'LineWidth', 2)
+
+e2 = errorbar(D50_ord(:,1), mean(D50_ord(:,2:end), 2, 'omitnan'), std(D50_ord(:,2:end), [], 2, 'omitnan'),...
+    '-s', 'MarkerSize', 30, 'LineStyle','none', 'CapSize',18, 'LineWidth',3, 'Color',[0.8500 0.3250 0.0980]);
+plot(D50_ord(:,1), movmean(mean(D50_ord(:,2:end), 2, 'omitnan'), 5), 'LineWidth',3, 'Color',[0.8500 0.3250 0.0980])
+yline(mean(D50_all(2, :), 'omitnan'), '--', 'Color', [0.8500 0.3250 0.0980], 'LineWidth', 3)
+text(11.1, mean(D50_all(2, :)-.05, 'omitnan'), [mat2str(mean(D50_all(2, :), 'omitnan'), 3)], 'FontSize', fontsize, 'Color', [0.8500 0.3250 0.0980])
+% yline(mean(D50_20201202_L(2, :), 'omitnan'), ':', 'Color', [0.8500 0.3250 0.0980], 'LineWidth', 2)
+
+e3 = errorbar(D90_ord(:,1), mean(D90_ord(:,2:end), 2, 'omitnan'), std(D90_ord(:,2:end), [], 2, 'omitnan'),...
+    '-s', 'MarkerSize', 30, 'LineStyle','none', 'CapSize',18, 'LineWidth',3, 'Color',[0.6350 0.0780 0.1840]);
+plot(D90_ord(:,1), movmean(mean(D90_ord(:,2:end), 2, 'omitnan'), 5), 'LineWidth',3, 'Color',[0.6350 0.0780 0.1840])
+yline(mean(D90_all(2, :), 'omitnan'), '--', 'Color', [0.6350 0.0780 0.1840], 'LineWidth', 3)
+text(11.1, mean(D90_all(2, :)-.2, 'omitnan'), [mat2str(mean(D90_all(2, :), 'omitnan'), 3)], 'FontSize', fontsize, 'Color', [0.6350 0.0780 0.1840])
+% yline(mean(D90_20201202_L(2, :), 'omitnan'), ':', 'Color', [0.6350 0.0780 0.1840], 'LineWidth', 2)
+
+xlim([0.5, 11])
+set(gca, 'YScale', 'log')
+ylabel('grain size (mm)', 'FontSize', fontsize)
+xlabel('longshore location', 'FontSize', fontsize)
+xticks(1:10)
+xticklabels(num2cell(1:10))
+annotation('textbox', [0.11, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.84, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+legend([e3(1) e2(1) e1(1)], {'D$_{90}$', 'D$_{50}$', 'D$_{10}$'}, 'Location', 'eastoutside', 'FontSize', fontsize)
+grid on; grid minor

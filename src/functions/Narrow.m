@@ -8,7 +8,7 @@ ta.LineWidth = 6;
 ta.HeadStyle = 'hypocycloid';
 ta.HeadWidth = 30;
 ta.HeadLength = 30;
-an = annotation('ellipse', [.765 .575 .04 .05]);
-an.LineWidth = 2;
+% an = annotation('ellipse', [.765 .575 .04 .05]);
+% an.LineWidth = 2;
 
 end
