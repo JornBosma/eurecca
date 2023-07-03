@@ -1,4 +1,4 @@
-function [] = z_plot_settings(fontsize, xl, yl)
+function [] = zPlotSettings(fontsize, xl, yl)
 
 % ta = annotation('textarrow', [.48 .48], [.75 .78], 'String', 'N');
 % ta.FontSize = fontsize;

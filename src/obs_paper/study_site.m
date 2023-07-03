@@ -62,3 +62,9 @@ ylabel('northing [RD] (m)')
 
 set(gca, 'Color',[0 0.4470 0.7410])
 set(gcf, 'Color','w')
+
+%%
+t = Tiff('bodemhoogte_20mtr.tif');
+imageData = read(t);
+
+imshow(imageData);

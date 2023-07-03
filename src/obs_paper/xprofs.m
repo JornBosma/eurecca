@@ -353,3 +353,91 @@ grid([axs{1} axs{2}], 'on')
 grid([axs{1} axs{2}], 'minor')
 
 clear axs
+
+%% Visualisation: profile evolution Ln
+n = 1;
+p = [1 4 8];
+f5 = figure;
+
+plot(prof_centred{n}(:,p), 'LineWidth', 3); hold on
+text(1.6, 1.7, tracknames{n}, 'Color','r', 'FontSize',fontsize*1.4, 'EdgeColor','r')
+
+% area(0:X*2, ones(1,length(prof_centred{n}))*MHWS, 'FaceColor',yellow, 'FaceAlpha',0.1, 'LineStyle','none')
+% text(X-39,.7*MHWS, ['$\Delta_{first}$ = 1:',mat2str(1/aHW_mean{n}(1),2)], 'FontSize',fontsize)
+% text(X-39,.7*MHWS-.36, ['$\Delta_{last}$',repmat('\ ',1,2), '= 1:',mat2str(1/aHW_mean{n}(end),2)], 'FontSize',fontsize)
+
+% area(0:X*2, ones(1,length(prof_centred{n}))*MLWS, 'FaceColor',bluegreen, 'FaceAlpha',0.1, 'LineStyle','none')
+% text(X+21,-.43*MHWS, ['$\Delta_{first}$ = 1:',mat2str(1/aLW_mean{n}(1),2)], 'FontSize',fontsize)
+% text(X+21,-.43*MHWS-.36, ['$\Delta_{last}$',repmat('\ ',1,2), '= 1:',mat2str(1/aLW_mean{n}(end),2)], 'FontSize',fontsize)
+
+xlim([0 X*2])
+ylim([-2, 2])
+xticks(10:20:X*2)
+xticklabels(-X+10:20:X-10)
+
+newcolors = crameri('acton');
+colororder(flipud(newcolors(1:round(256/numel(surv{n}(p))):256, :)))
+grid on
+grid minor
+
+yline(MHWS, '--', 'MHWS', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+yline(MSL, '-.', 'MSL', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+yline(MLWS, '--', 'MLWS', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+
+xlabel('x-shore distance (m)', 'FontSize',fontsize, 'Interpreter','latex')
+ylabel('bed level (m +NAP)', 'FontSize',fontsize, 'Interpreter','latex')
+
+legend(string(datetime(date{5}(surv{5}(p)), 'Format','dd-MM-yy')),...
+    'Location','eastoutside', 'NumColumns',1, 'Box','on', 'FontSize',fontsize);
+
+%% Visualisation: profile evolution Ln1 & Ln2
+p = [1 4 8];
+m = 1;
+
+f6 = figure;
+
+tiledlayout(1,2, 'TileSpacing','tight')
+for n = [6 1]
+
+    axs{m} = nexttile; % Ln
+
+    plot(prof_centred{n}(:,p), 'LineWidth', 3); hold on
+    text(2.6, 1.7, tracknames{n}, 'Color','r', 'FontSize',fontsize*1.4, 'EdgeColor','r')
+        
+    % area(0:X*2, ones(1,length(prof_centred{n}))*MHWS, 'FaceColor',yellow, 'FaceAlpha',0.1, 'LineStyle','none')
+    % text(X-39,.7*MHWS, ['$\Delta_{first}$ = 1:',mat2str(1/aHW_mean{n}(1),2)], 'FontSize',fontsize)
+    % text(X-39,.7*MHWS-.36, ['$\Delta_{last}$',repmat('\ ',1,2), '= 1:',mat2str(1/aHW_mean{n}(end),2)], 'FontSize',fontsize)
+    
+    % area(0:X*2, ones(1,length(prof_centred{n}))*MLWS, 'FaceColor',bluegreen, 'FaceAlpha',0.1, 'LineStyle','none')
+    % text(X+21,-.43*MHWS, ['$\Delta_{first}$ = 1:',mat2str(1/aLW_mean{n}(1),2)], 'FontSize',fontsize)
+    % text(X+21,-.43*MHWS-.36, ['$\Delta_{last}$',repmat('\ ',1,2), '= 1:',mat2str(1/aLW_mean{n}(end),2)], 'FontSize',fontsize)
+    
+    xlim([0 X*2])
+    ylim([-2, 2])
+    xticks(10:20:X*2)
+    xticklabels(-X+10:20:X-10)
+    
+    newcolors = crameri('acton');
+    colororder(flipud(newcolors(1:round(256/numel(surv{n}(p))):256, :)))
+    grid on
+    grid minor
+            
+    m = m+1;
+
+end
+
+yline(axs{1}, MHWS, '--', 'MHWS', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+yline(axs{1}, MSL, '-.', 'MSL', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+yline(axs{1}, MLWS, '--', 'MLWS', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+
+yline(axs{2}, MHWS, '--', '', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+yline(axs{2}, MSL, '-.', '', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+yline(axs{2}, MLWS, '--', '', 'FontSize',fontsize*.8, 'Interpreter','latex', 'LineWidth',3, 'LabelHorizontalAlignment','left')
+
+legend(axs{2}, string(datetime(date{5}(surv{5}(p)), 'Format','dd-MM-yy')),...
+    'Location','eastoutside', 'NumColumns',1, 'Box','on', 'FontSize',fontsize);
+
+% yticklabels(axs{2}, [])
+
+ylabel(axs{1}, 'bed level (m +NAP)', 'FontSize',fontsize, 'Interpreter','latex')
+xlabel(axs{1}, 'x-shore distance (m)', 'FontSize',fontsize, 'Interpreter','latex')

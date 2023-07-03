@@ -16,16 +16,16 @@ addpath(genpath([basePath 'bin']))
 addpath(genpath([basePath 'docs']))
 
 % set default settings
-set(groot, 'DefaultAxesFontSize', 34)
+set(groot, 'DefaultAxesFontSize', 30)
 set(groot, 'DefaultTextInterpreter', 'latex')
 set(groot, 'DefaultAxesTickLabelInterpreter', 'latex')
 set(groot, 'DefaultLegendInterpreter', 'latex')
 set(groot, 'DefaultLegendLocation', 'northwest')
 % set(groot, 'DefaultLegendBox', 'off')
-set(groot, 'DefaultAxesBox', 'off')
+set(groot, 'DefaultAxesBox', 'on')
 
 % set parameters
-fontsize = 34;
+fontsize = 30;
 
 % axis limits and ticks
 xl = [1.148e+05, 1.1805e+05]; % PHZD

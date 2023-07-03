@@ -16,10 +16,10 @@ newcolors = crameri('-vik');
 colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 
 % load DEM
-A = load('PHZ_2022_Q4','-mat');
+A = load('PHZ_2021_Q4','-mat');
 
 %% Polygon definitions
-[pgns, inside] = get_polygon(A);
+[pgns, inside] = getPolygon(A);
 
 %% Visualisation
 B = A;
@@ -76,6 +76,7 @@ Narrow(fontsize)
 C = A;
 C.DEM.Z(C.DEM.Z<-.5) = NaN;
 C.DEM.Z(C.DEM.Z>=-.5 & ~inside.in_beach & ~inside.in_N) = 2.8;
+C.DEM.Z(~inside.in_scope) = NaN;
 
 f1 = figure;
 surf(C.DEM.X, C.DEM.Y, C.DEM.Z); hold on
@@ -100,6 +101,32 @@ colormap(crameri('fes', 'pivot',-.5))
 patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
 patch(pgns.xv_spit,pgns.yv_spit,yellow, 'FaceAlpha',.1, 'EdgeColor',yellow, 'LineWidth',3)
 patch(pgns.xv_S,pgns.yv_S,blue, 'FaceAlpha',.1, 'EdgeColor',blue, 'LineWidth',3)
+
+% North arrow
+Narrow(fontsize)
+
+%% Visualisation
+F = load('PHZ_2019_Q3.mat','-mat');
+F.DEM.Z(~inside.in_scope) = NaN;
+
+f2 = figure;
+surf(F.DEM.X, F.DEM.Y, F.DEM.Z); hold on
+
+shading flat
+ax = gca; ax.SortMethod = 'childorder';
+axis off; axis vis3d
+view(46, 90)
+
+% colorbar
+cb = colorbar;
+cb.Location = 'northoutside';
+set(cb, 'position', [.25 .62 .2 .01])
+cb.TickLabelInterpreter = 'latex';
+cb.Label.Interpreter = 'latex';
+cb.Label.String = 'bed level (m+NAP)';
+cb.FontSize = fontsize/1.3;
+clim([-8, 8])
+colormap(crameri('bukavu', 'pivot',0))
 
 % North arrow
 Narrow(fontsize)

@@ -10,7 +10,7 @@ function [dQ, dz, dz_Beach] = getVolumeChange(A, B)
 % NAP = MSL-0.1; % local reference datum [m]
 
 %% Polygon definitions
-[~, inside] = get_polygon(A);
+[~, inside] = getPolygon(A);
 
 %% Calculations
 % subtract DEMs to obtain difference map
@@ -20,7 +20,7 @@ dz = B.DEM.Z-A.DEM.Z;
 dz_noNaN = dz;
 dz_noNaN(isnan(dz)) = 0;
 
-% region between +2 and -1 contours = foreshore/beach face
+% region between +3 and -1 contours = foreshore/beach face
 dz_fshore = dz_noNaN;
 dz_fshore(A.DEM.Z>3 | B.DEM.Z<-.5) = 0;
 

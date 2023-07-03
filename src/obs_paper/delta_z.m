@@ -20,7 +20,7 @@ A = load('PHZ_2019_Q3','-mat');
 B = load('PHZ_2022_Q3','-mat');
 
 [dQ, dz, dz_Beach] = getVolumeChange(A, B);
-[pgns, inside] = get_polygon(A);
+[pgns, inside] = getPolygon(A);
 
 L1C1 = [117421.461, 560053.687]; % vector
 L2C5 = [117199.347, 559816.116]; % 3D-sonar
@@ -83,12 +83,12 @@ dz2(B.DEM.Z>=-.5 & ~inside.in_beach & ~inside.in_N) = 0;
 f1 = figure;
 surf(B.DEM.X, B.DEM.Y, dz2); hold on
 
-x1 = 115260; x2 = 116290; x3 = x2+(x2-x1)*1.08; x4 = x3+(x2-x1)*.21;
-y1 = 557940; y2 = 558900; y3 = y2+(y2-y1)*1.08; y4 = y3+(y2-y1)*.21;
+x1 = 115260; x2 = 115950; x3 = x2+(x2-x1)*2.11; x4 = x3+(x2-x1)*.34;
+y1 = 557940; y2 = 558580; y3 = y2+(y2-y1)*2.11; y4 = y3+(y2-y1)*.34;
 line([x1,x2], [y1,y2], 'LineWidth',6, 'Color',blue)
 line([x2,x3], [y2,y3], 'LineWidth',6, 'Color',yellow)
 line([x3,x4], [y3,y4], 'LineWidth',6, 'Color',redpurp)
-text(x1+500, y1+350, 'south beach', 'FontSize',fontsize/1.3)
+text(x1+290, y1+150, 'south beach', 'FontSize',fontsize/1.3)
 text(x2+500, y2+350, 'spit beach', 'FontSize',fontsize/1.3)
 text(x3+80, y3-40, 'spit tip', 'FontSize',fontsize/1.3)
 

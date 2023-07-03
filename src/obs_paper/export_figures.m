@@ -22,14 +22,23 @@ figloc2 = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figure
 exportgraphics(f0, [figloc2 'greymap_tracks.png'])
 exportgraphics(f1, [figloc2 'greymap_locs.png'])
 
+%% boundary conditions
+boundary
+%%
+figloc1 = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/';
+figloc2 = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figures/';
+
+exportgraphics(f0, [figloc2 'conditions_LT.png'])
+
 %% elevation maps
 z_map
 %%
 figloc1 = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/';
 figloc2 = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figures/';
 
-% exportgraphics(f0, [figloc2 'greymap_poly.png'])
-exportgraphics(f1, [figloc2 'z_map_poly.png'])
+exportgraphics(f0, [figloc1 'greymap_poly.png'])
+% exportgraphics(f1, [figloc1 'z_map_poly1.png'])
+% exportgraphics(f2, [figloc2 'z_map_initial.png'])
 
 %% elevation change
 delta_z
@@ -38,7 +47,7 @@ figloc1 = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/e
 figloc2 = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figures/';
 
 % exportgraphics(f0, [figloc2 'dz_map.png'])
-exportgraphics(f1, [figloc2 'dz_map_poly.png'])
+exportgraphics(f1, [figloc1 'dz_map_poly.png'])
 
 %% volume change
 delta_Q
@@ -47,9 +56,9 @@ figloc1 = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/e
 figloc2 = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figures/';
 
 % exportgraphics(f0, [figloc2 'dQ_line.png'])
-exportgraphics(f1, [figloc2 'dQ_bar.png'])
-exportgraphics(f2, [figloc2 'dQ_bar_cum.png'])
-exportgraphics(f3, [figloc2 'dQ_bar_sub.png'])
+exportgraphics(f1, [figloc1 'dQ_bar.png'])
+% exportgraphics(f2, [figloc1 'dQ_bar_cum.png'])
+exportgraphics(f3, [figloc1 'dQ_bar_sub.png'])
 
 %% cross-shore profile change
 xprofs

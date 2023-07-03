@@ -5,6 +5,20 @@ clc
 
 [~, ~, ~, ~, fontsize, basePath] = eurecca_init;
 
+% colourblind-friendly colours
+orange = [230/255, 159/255, 0];
+blue = [86/255, 180/255, 233/255];
+yellow = [240/255, 228/255, 66/255];
+redpurp = [204/255, 121/255, 167/255];
+bluegreen = [0, 158/255, 115/255];
+
+% water levels
+MHWS = 0.81; % mean high water spring [m]
+MLWS = -1.07; % mean low water spring [m]
+MSL = 0; % mean sea level [m]
+NAP = MSL-0.1; % local reference datum [m]
+
+% load DEMs
 wb = waitbar(0, 'Loading DEMs');
 wb.Children.Title.Interpreter = 'none';
 DEMP = [basePath 'data' filesep 'elevation' filesep 'processed' filesep];
@@ -19,49 +33,54 @@ close(wb)
 load DEMsurveys.mat
 SurveyDates = DEMsurveys.survey_date;
 
-% colourblind-friendly colours
-orange = [230/255, 159/255, 0];
-blue = [86/255, 180/255, 233/255];
-yellow = [240/255, 228/255, 66/255];
-redpurp = [204/255, 121/255, 167/255];
-bluegreen = [0, 158/255, 115/255];
+% settings
+pgns = getPolygons;
+contourLevels = [MHWS, MSL];
 
 %% Calculations
-dQ = cell(numel(DEMS)-1, 1);
+totalVolume = NaN(length(DEMS), 1);
+volumeChange = NaN(length(DEMS)-1, 1);
+
 wb = waitbar(0, 'Computing volume changes');
 wb.Children.Title.Interpreter = 'none';
 for k = 2:numel(DEMS)
     % A = DEMS(1).data; % relative to first survey
     A = DEMS(k-1).data; % relative previous survey
     B = DEMS(k).data;
-    [dQ{k-1}, dz{k-1}, dz_Beach{k-1}] = getVolumeChange(A, B);
+
+    totalVolume(k-1) = getVbetweenContoursInPolygon(A, contourLevels, pgns.north, 'sum');
+
+    volumeChange(k-1) = getVbetweenContoursInPolygon(B, contourLevels, pgns.north, 'sum') - ...
+               getVbetweenContoursInPolygon(A, contourLevels, pgns.north, 'sum');
+
     waitbar(k/numel(DEMS), wb, sprintf('Computing volume changes: %d%%', floor(k/numel(DEMS)*100)));
     pause(0.1)
 end
 close(wb)
 
-[dQ_Nspit,dQ_spit,dQ_Sbeach,dQ_beach,dQ_tot] = deal(nan(numel(dQ), 1));
-[dQ_Nspit_pos,dQ_spit_pos,dQ_Sbeach_pos,dQ_beach_pos,dQ_tot_pos] = deal(nan(numel(dQ), 1));
-[dQ_Nspit_neg,dQ_spit_neg,dQ_Sbeach_neg,dQ_beach_neg,dQ_tot_neg] = deal(nan(numel(dQ), 1));
+%%
+[dQ_Nspit,dQ_spit,dQ_Sbeach,dQ_beach,dQ_tot] = deal(nan(numel(dV), 1));
+[dQ_Nspit_pos,dQ_spit_pos,dQ_Sbeach_pos,dQ_beach_pos,dQ_tot_pos] = deal(nan(numel(dV), 1));
+[dQ_Nspit_neg,dQ_spit_neg,dQ_Sbeach_neg,dQ_beach_neg,dQ_tot_neg] = deal(nan(numel(dV), 1));
 
-for k = 1:numel(dQ)
-    dQ_Nspit(k) = dQ{k}.Net(1);
-    dQ_spit(k) = dQ{k}.Net(2);
-    dQ_Sbeach(k) = dQ{k}.Net(3);
-    dQ_beach(k) = dQ{k}.Net(4);
-    dQ_tot(k) = dQ{k}.Net(5);
+for k = 1:numel(dV)
+    dQ_Nspit(k) = dV{k}.Net(1);
+    dQ_spit(k) = dV{k}.Net(2);
+    dQ_Sbeach(k) = dV{k}.Net(3);
+    dQ_beach(k) = dV{k}.Net(4);
+    dQ_tot(k) = dV{k}.Net(5);
 
-    dQ_Nspit_pos(k) = dQ{k}.Sedimentation(1);
-    dQ_spit_pos(k) = dQ{k}.Sedimentation(2);
-    dQ_Sbeach_pos(k) = dQ{k}.Sedimentation(3);
-    dQ_beach_pos(k) = dQ{k}.Sedimentation(4);
-    dQ_tot_pos(k) = dQ{k}.Sedimentation(5);
+    dQ_Nspit_pos(k) = dV{k}.Sedimentation(1);
+    dQ_spit_pos(k) = dV{k}.Sedimentation(2);
+    dQ_Sbeach_pos(k) = dV{k}.Sedimentation(3);
+    dQ_beach_pos(k) = dV{k}.Sedimentation(4);
+    dQ_tot_pos(k) = dV{k}.Sedimentation(5);
 
-    dQ_Nspit_neg(k) = dQ{k}.Erosion(1);
-    dQ_spit_neg(k) = dQ{k}.Erosion(2);
-    dQ_Sbeach_neg(k) = dQ{k}.Erosion(3);
-    dQ_beach_neg(k) = dQ{k}.Erosion(4);
-    dQ_tot_neg(k) = dQ{k}.Erosion(5);
+    dQ_Nspit_neg(k) = dV{k}.Erosion(1);
+    dQ_spit_neg(k) = dV{k}.Erosion(2);
+    dQ_Sbeach_neg(k) = dV{k}.Erosion(3);
+    dQ_beach_neg(k) = dV{k}.Erosion(4);
+    dQ_tot_neg(k) = dV{k}.Erosion(5);
 end
 
 dQ_Nspit = [0;dQ_Nspit];

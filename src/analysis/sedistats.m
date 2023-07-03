@@ -346,14 +346,14 @@ plot(D50_20201202(1, :), 'LineWidth', 1); hold on
 plot(D50_20201202(2, :), 'LineWidth', 1)
 plot(D50_20201202(3, :), 'LineWidth', 1)
 errorbar(mean(D50_20201202), std(D50_20201202), 'k', 'LineWidth', 3)
-ylabel('D50 (mm)', 'FontSize', fontsize)
+ylabel('D$_{50}$ (mm)', 'FontSize', fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(1:10))
 annotation('textbox', [0.12, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
 annotation('textbox', [0.89, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
 legend('~1.6 m +NAP', '~1.0 m +NAP', '~0.2 m +NAP',...
-    'cross-shore mean', 'Location', 'northeast', 'FontSize', fontsize)
+    'cross-shore mean', 'Location', 'best', 'FontSize', fontsize)
 axis tight
 
 %% Visualisation: 2 Dec 2020 (line plot)
@@ -366,13 +366,14 @@ ylabel('grain size (mm)', 'FontSize', fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(1:10))
-annotation('textbox', [0.3, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
-annotation('textbox', [0.71, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
-legend({'D_{10}','D_{50}','D_{90}','\sigma_G'}, 'Location', 'northeast', 'FontSize', fontsize)
+annotation('textbox', [0.13, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.88, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+legend({'D$_{10}$','D$_{50}$','D$_{90}$','$\sigma_G$'}, 'Location', 'best', 'FontSize', fontsize)
 newcolors = colormap("cool");
 colororder(newcolors(50:50:50*3, :))
-axis tight
-axis square
+set(gca, 'YScale', 'log')
+% axis tight
+% axis square
 
 %% Visualisation: 8/9 Oct 2021 (no elevation map)
 f = figure('Name', '08-10-2021');
@@ -405,13 +406,21 @@ axis(ax, 'off')
 
 %% Visualisation: 8/9 Oct 2021 (line plot)
 f = figure('Name', '08-10-2021');
-plot(D50_20211008_9(1, :), 'LineWidth', 1); hold on
-plot(D50_20211008_9(2, :), 'LineWidth', 1)
-plot(D50_20211008_9(3, :), 'LineWidth', 1)
-plot(D50_20211008_9(4, :), 'LineWidth', 1)
-plot(D50_20211008_9(5, :), 'LineWidth', 1)
-errorbar(mean(D50_20211008_9), std(D50_20211008_9), 'k', 'LineWidth', 3)
-ylabel('D_{50} (mm)', 'FontSize', fontsize)
+plot(D50_20211008_9(1, :), 'LineWidth', 3); hold on
+plot(D50_20211008_9(2, :), 'LineWidth', 3)
+plot(D50_20211008_9(3, :), 'LineWidth', 3)
+plot(D50_20211008_9(4, :), 'LineWidth', 3)
+plot(D50_20211008_9(5, :), 'LineWidth', 3)
+
+% errorbar(mean(D50_20211008_9), std(D50_20211008_9), 'k', 'LineWidth', 3)
+
+% x = 1:10;
+% x2 = [x, fliplr(x)];
+% plot(mean(D50_20211008_9, 'omitnan'), '-o', 'Color','k', 'LineWidth',4, 'MarkerSize',15, 'MarkerFaceColor','k'); hold on
+% inBetween = [mean(D50_20211008_9, 'omitnan')+std(D50_20211008_9, 'omitnan'), fliplr(mean(D50_20211008_9, 'omitnan')-std(D50_20211008_9, 'omitnan'))];
+% fill(x2, inBetween, 'k', 'FaceAlpha',.1, 'LineStyle','none');
+
+ylabel('D$_{50}$ (mm)', 'FontSize', fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(10:-1:1))
@@ -419,8 +428,8 @@ annotation('textbox', [0.12, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 
 annotation('textbox', [0.89, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
 set(gca, 'XDir','reverse')
 legend('1.00 m +NAP', '0.75 m +NAP', '0.50 m +NAP', '0.25 m +NAP', '0.00 m +NAP',...
-    'cross-shore mean', 'Location', 'northeast', 'FontSize', fontsize)
-axis tight
+    'cross-shore $\mu$', 'cross-shore $\sigma$', 'Location', 'best', 'FontSize', fontsize)
+% axis tight
 
 %% Visualisation: 8/9 Oct 2021 (line plot)
 f = figure('Name', '08-10-2021');
@@ -432,11 +441,12 @@ ylabel('grain size (mm)', 'FontSize', fontsize)
 xlabel('longshore location', 'FontSize', fontsize)
 xticks(1:10)
 xticklabels(num2cell(10:-1:1))
-annotation('textbox', [0.3, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
-annotation('textbox', [0.7, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.13, 0.07, 0, 0], 'String', 'SW', 'FontSize', fontsize, 'Interpreter', 'latex')
+annotation('textbox', [0.88, 0.07, 0, 0], 'String', 'NE',  'FontSize', fontsize, 'Interpreter', 'latex')
 set(gca, 'XDir','reverse')
-legend({'D_{10}','D_{50}','D_{90}','\sigma_G'}, 'Location', 'northeast', 'FontSize', fontsize)
+legend({'D$_{10}$','D$_{50}$','D$_{90}$','$\sigma_G$'}, 'Location', 'northeast', 'FontSize', fontsize)
 newcolors = colormap("cool");
 colororder(newcolors(50:50:50*3, :))
-axis tight
-axis square
+set(gca, 'YScale', 'log')
+% axis tight
+% axis square
