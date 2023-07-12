@@ -1,4 +1,5 @@
-% Kalibraties OBS-en ingezet tijdens SEDMEX-meetcampagne
+% OBS-calibration for SEDMEX campaign
+% J.W. Bosma, 2023
 
 %% Initialisation
 close all
@@ -8,11 +9,11 @@ clc
 [~, ~, ~, ~, fontsize] = eurecca_init;
 
 %% L2 (-0.75 m +NAP)
-% te weinig kalibratiemateriaal voor 100 g/L
+% too little calibration material for 100 g/L
 
 c_L2_075 = [-0.003 0.10 0.24 0.58 1.16 2.50 6.38 12.40 25.33 36.24 51.57]; % testconcentraties [g/L]
 
-% responssignaal meetinstrumenten
+% reponse signal measuring instruments
 STM_12585 = [3.919 6.967 10.68 19.67 35.73 71.93 165.9 335.4 650.1 939.3 1182.4]; % L1C1 Vector #1
 STM_12586 = [23.256 23.984 26.43 37.57 52.77 83.44 170.8 350.3 660.8 976.3 1272.4]; % L2C3 Vector #2
 STM_12587 = [4.205 6.852 9.35 17.19 30.98 59.60 147.1 284.6 565.0 841.2 1127.6]; % L3C1 Vector #3
@@ -31,7 +32,7 @@ STMarray_3 = [7.385 8.301 10.80 14.98 23.82 40.34 75.4 171.7 346.2 669.5 980.0];
 STMarray_4 = [10.918 8.393 9.90 12.74 19.74 31.47 56.4 132.0 264.8 509.9 757.1]; % L2C5 TV STM array #4
 STMarray_5 = [5.591 5.995 7.88 10.20 16.23 27.21 50.0 116.3 231.6 450.9 667.4]; % L2C5 TV STM array #5
 
-% coefficiënten kalibratiecurves
+% coefficients calibration curves
 P_STM_12585 = polyfit(STM_12585(2:11), c_L2_075(2:11), 2);
 P_STM_12586 = polyfit(STM_12586(2:11), c_L2_075(2:11), 2);
 P_STM_12587 = polyfit(STM_12587(2:11), c_L2_075(2:11), 2);
@@ -51,32 +52,33 @@ P_STMarray_4 = polyfit(STMarray_4(2:11), c_L2_075(2:11), 2);
 P_STMarray_5 = polyfit(STMarray_5(2:11), c_L2_075(2:11), 2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% stilstand, achtergrond slib
-c_slib_L2_075 = 0.48;
+% stagnant water, background noise suspended load
 
-STM_12585_slib = 592.4;
-STM_12586_slib = 759.5;
-STM_12587_slib = 623.2;
-% STM_17486_slib = 708.0;
-% STM_17487_slib = 611.9;
-% STM_17488_slib = 756.3;
-STM_1566_slib = 701.6;
-STM_1567_slib = 819.5;
+c_silt_L2_075 = 0.48;
 
-OBS_9012_slib = 1374.5;
-OBS_9205_slib = 772.7;
+STM_12585_silt = 592.4;
+STM_12586_silt = 759.5;
+STM_12587_silt = 623.2;
+% STM_17486_silt = 708.0;
+% STM_17487_silt = 611.9;
+% STM_17488_silt = 756.3;
+STM_1566_silt = 701.6;
+STM_1567_silt = 819.5;
 
-STMarray_1_slib = 919.8;
-STMarray_2_slib = 1051.9;
-STMarray_3_slib = 1275.4;
-STMarray_4_slib = 999.9;
-STMarray_5_slib = 872.0;
+OBS_9012_silt = 1374.5;
+OBS_9205_silt = 772.7;
+
+STMarray_1_silt = 919.8;
+STMarray_2_silt = 1051.9;
+STMarray_3_silt = 1275.4;
+STMarray_4_silt = 999.9;
+STMarray_5_silt = 872.0;
 
 %% L2 (-1.20 m +NAP)
 
 c_L2_120 = [0.009 0.10 0.18 0.44 0.90 1.78 4.58 9.20 18.63 28.16 37.54 47.40 67.52 97.24]; % testconcentraties [g/L]
 
-% responssignaal meetinstrumenten
+% reponse signal measuring instruments
 % STM_12585 = [6.912 11.993 19.57 39.91 73.88 141.64 325.8 584.9 932.2 1087.4 1072.5 943.9 637.7 287.5]; % L1C1 Vector #1
 % STM_12586 = [19.271 25.195 32.53 54.71 89.56 160.84 354.2 636.1 1050.5 1238.2 1257.2 1160.9 815.6 378.3]; % L2C3 Vector #2
 % STM_12587 = [6.172 11.674 19.06 38.41 70.93 136.91 319.5 568.1 963.3 1159.1 1210.4 1136.7 834.5 475.6]; % L3C1 Vector #3
@@ -95,7 +97,7 @@ STM_17488 = [7.440 13.392 22.39 44.48 84.15 166.38 393.4 738.7 1336.7 1767.2 204
 % STMarray_4 = [8.606 14.076 20.75 38.42 69.31 130.36 295.5 521.7 848.2 982.7 967.0 852.6 550.6 245.8]; % L2C5 TV STM array #4
 % STMarray_5 = [7.952 12.555 18.28 34.10 60.84 113.27 258.7 460.1 745.9 867.3 847.8 758.5 510.7 233.3]; % L2C5 TV STM array #5
 
-% coefficiënten kalibratiecurves
+% coefficients calibration curves
 % P_STM_12585 = polyfit(STM_12585(2:10), c_L2_120(2:10), 2); % up to 30 g/L (including larger c deteriorates very small c)
 % P_STM_12586 = polyfit(STM_12586(2:10), c_L2_120(2:10), 2);
 % P_STM_12587 = polyfit(STM_12587(2:10), c_L2_120(2:10), 2);
@@ -115,33 +117,33 @@ P_STM_17488 = polyfit(STM_17488(2:10), c_L2_120(2:10), 2);
 % P_STMarray_5 = polyfit(STMarray_5(2:10), c_L2_120(2:10), 2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% slib, 1 L door filter
-c_slib_L2_120 = 0.73;
+% silt, 1 L door filter
+c_silt_L2_120 = 0.73;
 
-% STM_12585_slib = 1193.8;
-% STM_12586_slib = 1512.8;
-% STM_12587_slib = 1340.0;
-% STM_17486_slib = 1710.7;
-% STM_17487_slib = 1527.6;
-STM_17488_slib = 1850.7;
-% STM_1566_slib = 1563.3;
-% STM_1567_slib = 1866.5;
+% STM_12585_silt = 1193.8;
+% STM_12586_silt = 1512.8;
+% STM_12587_silt = 1340.0;
+% STM_17486_silt = 1710.7;
+% STM_17487_silt = 1527.6;
+STM_17488_silt = 1850.7;
+% STM_1566_silt = 1563.3;
+% STM_1567_silt = 1866.5;
 
-% OBS_9012_slib = 1242.9;
-% OBS_9205_slib = 653.0;
+% OBS_9012_silt = 1242.9;
+% OBS_9205_silt = 653.0;
 
-% STMarray_1_slib = 1358.3;
-% STMarray_2_slib = 1349.4;
-% STMarray_3_slib = 1748.8;
-% STMarray_4_slib = 1282.2;
-% STMarray_5_slib = 1143.8;
+% STMarray_1_silt = 1358.3;
+% STMarray_2_silt = 1349.4;
+% STMarray_3_silt = 1748.8;
+% STMarray_4_silt = 1282.2;
+% STMarray_5_silt = 1143.8;
 
 %% L5 (-0.75 m +NAP)
-% te weinig kalibratiemateriaal voor 100 g/L
+% too little calibration material for 100 g/L
 
 c_L5_075 = [-0.006 0.08 0.16 0.39 0.84 1.71 4.36 9.00 18.41 27.91 36.95 46.47 58.08 70.47 93.92]; % testconcentraties [g/L]
 
-% responssignaal meetinstrumenten
+% reponse signal measuring instruments
 % STM_12585 = [3.229 8.534 13.76 28.51 54.80 105.31 247.5 464.6 771.3 941.2 1011.2 1006.4 914.5 786.1 517.0]; % L1C1 Vector #1
 % STM_12586 = [26.616 32.344 37.67 53.54 78.88 131.62 280.3 515.2 862.4 1072.7 1175.1 1204.9 1120.6 984.3 692.8]; % L2C3 Vector #2
 % STM_12587 = [3.541 8.383 13.50 27.13 50.30 96.26 234.3 436.1 760.8 975.1 1086.5 1130.8 1086.9 972.8 733.0]; % L3C1 Vector #3
@@ -157,7 +159,7 @@ STM_17487 = [3.790 9.384 14.77 29.98 56.90 110.20 268.7 523.1 951.3 1280.0 1542.
 % STMarray_4 = [373.755 412.404 318.80 436.64 409.70 95.09 220.8 731.6 1166.9 1307.3 920.4 906.9 834.7 707.5 472.5]; % L2C5 TV STM array #4
 % STMarray_5 = [6.088 10.085 13.94 25.28 44.69 83.13 191.5 358.7 599.5 749.4 804.7 796.6 735.3 625.5 414.6]; % L2C5 TV STM array #5
 
-% coefficiënten kalibratiecurves
+% coefficients calibration curves
 % P_STM_12585 = polyfit(STM_12585(2:10), c_L5_075(2:10), 2); % up to 30 g/L (including larger c deteriorates very small c)
 % P_STM_12586 = polyfit(STM_12586(2:10), c_L5_075(2:10), 2);
 % P_STM_12587 = polyfit(STM_12587(2:10), c_L5_075(2:10), 2);
@@ -174,23 +176,23 @@ P_STM_17487 = polyfit(STM_17487(2:10), c_L5_075(2:10), 2);
 % P_STMarray_5 = polyfit(STMarray_5(2:10), c_L5_075(2:10), 2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% slib, 1 L door filter
-c_slib_L5_075 = 0.53;
+% silt, 1 L door filter
+c_silt_L5_075 = 0.53;
 
-% STM_12585_slib = 955.8;
-% STM_12586_slib = 1137.2;
-% STM_12587_slib = 1060.4;
-STM_17486_slib = 1281.6;
-STM_17487_slib = 1072.0;
-% STM_17488_slib = 1411.5;
-% STM_1566_slib = 1202.3;
-% STM_1567_slib = 1433.5;
+% STM_12585_silt = 955.8;
+% STM_12586_silt = 1137.2;
+% STM_12587_silt = 1060.4;
+STM_17486_silt = 1281.6;
+STM_17487_silt = 1072.0;
+% STM_17488_silt = 1411.5;
+% STM_1566_silt = 1202.3;
+% STM_1567_silt = 1433.5;
 
-% STMarray_1_slib = 988.1;
-% STMarray_2_slib = 1014.8;
-% STMarray_3_slib = 1299.1;
-% STMarray_4_slib = 963.0;
-% STMarray_5_slib = 842.4;
+% STMarray_1_silt = 988.1;
+% STMarray_2_silt = 1014.8;
+% STMarray_3_silt = 1299.1;
+% STMarray_4_silt = 963.0;
+% STMarray_5_silt = 842.4;
 
 %% Visualisation
 figure
@@ -200,35 +202,54 @@ ax(1) = nexttile;
 plot(c_L2_075, [STM_12585; STM_12586; STM_12587; STM_1566; STM_1567], '-o'); hold on
 plot(c_L2_120, STM_17488, '-o')
 plot(c_L5_075, [STM_17486; STM_17487], '-o')
-legend({'STM 12585' 'STM 12586' 'STM 12587' 'STM 1566' 'STM 1567' 'STM 17488' 'STM 17486' 'STM 17487'})
+legend({'STM 12585' 'STM 12586' 'STM 12587' 'STM 1566' 'STM 1567' 'STM 17488' 'STM 17486' 'STM 17487'}, 'Location','eastoutside')
 
 ax(2) = nexttile;
 plot(c_L2_075, [OBS_9012; OBS_9205], '-o')
-legend({'OBS 9012' 'OBS 9205'})
+legend({'OBS 9012' 'OBS 9205'}, 'Location','eastoutside')
 ylabel('signal (mV)')
 
 ax(3) = nexttile;
 plot(c_L2_075, [STMarray_1; STMarray_2; STMarray_3; STMarray_4; STMarray_5], '-o')
-legend({'STMarray 1' 'STMarray 2' 'STMarray 3' 'STMarray 4' 'STMarray 5'})
+legend({'STMarray 1' 'STMarray 2' 'STMarray 3' 'STMarray 4' 'STMarray 5'}, 'Location','eastoutside')
 xlabel('concentration (g/L)')
 
 %% Calibration test
-overdrachtsfactor = 0.5; % conversie van gemeten 'counts' naar mV
+overdrachtsfactor = 0.5; % conversion measured 'counts' to mV
 offset = 0; % intercept
 slope = 1;
 
 % conc = offset + slope * (rawConcentrations/overdrachtsfactor);
 % conc = polyval(P1, conc); % proper calibration
 
-L2C3 = ncinfo('L2C3VEC_20210928.nc');
-L2C3_STMraw = ncread('L1C1VEC_20210928.nc', 'anl1'); % turbidity ('mV' counts)
+% data location; change to correct location!
+dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
+ADVpath = [filesep 'ADV' filesep 'L1C1VEC' filesep 'raw_netcdf' filesep];
 
-[STMnoBackground, background] = removeOffsetSTM(L2C3_STMraw, 16*60);
+% netcdf contents
+adv_info = ncinfo([dataPath ADVpath filesep 'L1C1VEC_20210928.nc']);
 
-L2C3_STM = offset + slope * (STMnoBackground/overdrachtsfactor);
-L2C3_STM = polyval(P_STM_12586, L2C3_STM);
+% minutes since 2021-09-28 00:00:00 (along columns)
+adv_t = ncread([dataPath ADVpath filesep 'L1C1VEC_20210928.nc'], 't');
+
+% measuring frequency [Hz] (along rows)
+adv_sf = ncread([dataPath ADVpath filesep 'L1C1VEC_20210928.nc'], 'sf');
+
+% turbidity ['mV' counts] 
+L1C1_STMraw = ncread([dataPath ADVpath filesep 'L1C1VEC_20210928.nc'], 'anl1');
+
+% next step makes use of function script included in the folder
+[STMnoBackground, background] = removeOffsetSTM(L1C1_STMraw, 16*60);
+
+L1C1_STM = offset + slope * (STMnoBackground/overdrachtsfactor);
+L1C1_STM = polyval(P_STM_12586, L1C1_STM);
+
+taxis = linspace(0, length(L1C1_STM)/adv_sf, length(L1C1_STM));
 
 figure
-plot(L2C3_STM(:, 1))
-xlabel('time')
-ylabel('concentration (kg m^{-3})')
+plot(taxis, L1C1_STM(:, 1)); hold on
+plot(taxis, movmean(L1C1_STM(:, 1), adv_sf*60), 'r', 'LineWidth',2)
+legend('raw signal','minute mean')
+ylim([0 60])
+xlabel('time (s)')
+ylabel('concentration (kg m$^{-3}$) (g L$^{-1}$)', 'Interpreter','latex')

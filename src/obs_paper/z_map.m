@@ -24,7 +24,7 @@ A = load('PHZ_2021_Q4','-mat');
 %% Visualisation
 B = A;
 B.DEM.Z(B.DEM.Z<0) = NaN;
-B.DEM.Z(B.DEM.Z>=0) = 1;
+% B.DEM.Z(B.DEM.Z>=0) = 1;
 
 f0 = figure;
 surf(B.DEM.X, B.DEM.Y, B.DEM.Z); hold on
@@ -34,8 +34,8 @@ ax = gca; ax.SortMethod = 'childorder';
 axis off; axis vis3d
 view(46, 90)
 
-clim([-4, 4])
-colormap(flipud('gray'))
+light_gray = [0.8 0.8 0.8];
+colormap(repmat(light_gray, 64, 1))
 
 % polygons and volumes
 % patch(pgns.xv_N,pgns.yv_N,redpurp, 'FaceAlpha',.1, 'EdgeColor',redpurp, 'LineWidth',3)
@@ -106,7 +106,7 @@ patch(pgns.xv_S,pgns.yv_S,blue, 'FaceAlpha',.1, 'EdgeColor',blue, 'LineWidth',3)
 Narrow(fontsize)
 
 %% Visualisation
-F = load('PHZ_2019_Q3.mat','-mat');
+F = load('PHZ_2019_Q0.mat','-mat');
 F.DEM.Z(~inside.in_scope) = NaN;
 
 f2 = figure;
