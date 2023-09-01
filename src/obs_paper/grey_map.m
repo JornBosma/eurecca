@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, ~] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~, ~] = eurecca_init;
 
 % load DEM
 A = load('PHZ_2019_Q0','-mat');
@@ -53,6 +53,7 @@ patch(pgns.south(:,1),pgns.south(:,2),'k', 'FaceAlpha',.1, 'EdgeColor','m', 'Lin
 patch(pgns.beach(:,1),pgns.beach(:,2),'k', 'FaceAlpha',.1, 'EdgeColor','y', 'LineWidth',3)
 patch(pgns.scope(:,1),pgns.scope(:,2),'k', 'FaceAlpha',.1, 'EdgeColor','k', 'LineWidth',3)
 patch(pgns.harbour(:,1),pgns.harbour(:,2),'k', 'FaceAlpha',.1, 'EdgeColor','w', 'LineWidth',3)
+patch(pgns.chanwall(:,1),pgns.chanwall(:,2),'k', 'FaceAlpha',.1, 'EdgeColor','r', 'LineWidth',3)
 ax = gca; ax.SortMethod = 'childorder';
 
 legend('2019 Q0', '2022 Q4', 'north', 'lagoon', 'hook', 'spit', 'south', 'beach', 'scope', 'harbour')

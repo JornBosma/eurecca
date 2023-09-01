@@ -1,4 +1,4 @@
-function [STMnoBackground background] = removeOffsetSTM(STM,N)
+function [STMnoBackground, background] = removeOffsetSTM(STM,N)
 % REMOVEOFFSETSTM produces a smooth time series of background mV in STM
 % signal. This offset has to be removed from the mV signal prior to the
 % actual calibration to concentration in kg/m3. During this calibration,
@@ -20,8 +20,8 @@ nObs = size(STM,1);
 if sum(isnan(STM)) == nObs
    STMnoBackground = STM;
    background = STM;
-   return;
-end;
+   return
+end
     
 % "time" axis
 t = 1:nObs;
@@ -38,19 +38,19 @@ tminmV = minmV;
 % estimate minumum and its location for each block
 for b = 1:nBlocks
     idRange = id(b):id(b+1)-1;
-    [minmV(b) idMin] = min(STM(idRange));
+    [minmV(b), idMin] = min(STM(idRange));
     tminmV(b) = t(idRange(idMin));
-end;
+end
 
-% % remove NaNs
-% id = find(isnan(minmV));
-% minmV(id) = [];
-% tminmV(id) = [];
-% if isempty(minmV),
-%     STMnoBackground = STM*NaN;
-%     background = STMnoBackground;
-%     return;
-% end;
+% remove NaNs
+id = find(isnan(minmV));
+minmV(id) = [];
+tminmV(id) = [];
+if isempty(minmV)
+    STMnoBackground = STM*NaN;
+    background = STMnoBackground;
+    return
+end
 
 % for smooth handling at begin and end of series repeat first and last
 % value

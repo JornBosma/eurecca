@@ -13,6 +13,37 @@ figloc2 = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figure
 
 exportgraphics(f0, [figloc2 'study_site.png'])
 
+%% wind roses
+roses
+%%
+figloc1 = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/';
+figloc2 = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figures/';
+
+exportgraphics(f1, [figloc1 'wind_rose_1989.png'])
+exportgraphics(f2, [figloc1 'wind_rose_2019.png'])
+exportgraphics(f3, [figloc1 'wind_rose_SEDMEX.png'])
+
+exportgraphics(f1, [figloc1 'wind_rose_legend.png'])
+
+%% sediment sample locations
+sampleLocs
+%%
+exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/PHZ/DataDescriptor/figs/sediLocs.png')
+exportgraphics(f1, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/PHZ/DataDescriptor/figs/L2sediLocs.png')
+
+%% suspended sediment plots
+ssc
+%%
+figloc1 = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/GitHub/eurecca-wp2/results/figures/';
+exportgraphics(f0, [figloc1 'SSC_ADVs.png'])
+
+% exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/PHZ/DataDescriptor/figs/SSC_ADVs.png')
+
+%% grain-size plots
+grainSize
+%%
+exportgraphics(f0, '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/PHZ/DataDescriptor/figs/GSplot.png')
+
 %% location maps
 loc_map
 %%

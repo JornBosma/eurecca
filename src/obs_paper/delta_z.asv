@@ -17,7 +17,7 @@ colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 
 %% Bed-level change from Summer 2019 - Summer 2022
 A = load('PHZ_2019_Q0','-mat');
-B = load('PHZ_2022_Q4','-mat');
+B = load('PHZ_2020_Q3','-mat');
 
 [dQ, dz, dz_Beach] = getVolumeChange(A, B);
 [pgns, inside] = getPolygon(A);
@@ -83,8 +83,8 @@ dz2 = dz;
 f1 = figure;
 surf(B.DEM.X, B.DEM.Y, dz2); hold on
 
-% x1 = 115260; x2 = 115950; x3 = x2+(x2-x1)*2.11; x4 = x3+(x2-x1)*.34;
-% y1 = 557940; y2 = 558580; y3 = y2+(y2-y1)*2.11; y4 = y3+(y2-y1)*.34;
+x1 = 115260; x2 = 115950; x3 = x2+(x2-x1)*2.11; x4 = x3+(x2-x1)*.34;
+y1 = 557940; y2 = 558580; y3 = y2+(y2-y1)*2.11; y4 = y3+(y2-y1)*.34;
 % line([x1,x2], [y1,y2], 'LineWidth',6, 'Color',blue)
 % line([x2,x3], [y2,y3], 'LineWidth',6, 'Color',yellow)
 % line([x3,x4], [y3,y4], 'LineWidth',6, 'Color',redpurp)

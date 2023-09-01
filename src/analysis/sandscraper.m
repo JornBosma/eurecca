@@ -165,6 +165,7 @@ plot3(SEDMEX1015profielenredacted.xRD, SEDMEX1015profielenredacted.yRD, smooth(S
 plot3(SEDMEX100715zandschraperredacted.xRD, SEDMEX100715zandschraperredacted.yRD, SEDMEX100715zandschraperredacted.z,...
     'd', 'LineWidth', 3)
 text(SEDMEX100715zandschraperredacted.xRD+10, SEDMEX100715zandschraperredacted.yRD, SEDMEX100715zandschraperredacted.z, name, 'FontSize', 10)
+legend('profile_07', 'profile_15', 'sample_loc')
 grid on
 
 %%

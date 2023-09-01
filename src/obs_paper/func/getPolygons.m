@@ -22,14 +22,18 @@ function pgns = getPolygons
     xv_beach = [115110; 115230; 115780; 117420; 117330; 115690; 115110];
     yv_beach = [558000; 558000; 558650; 559950; 560020; 558710; 558000];
     
-    xv_scope = [114850; 115108; 116300; 118062; 118062; 116920; 114850];
-    yv_scope = [557860; 557772; 557774; 559208; 560612; 560526; 557860];
+    xv_scope = [114850; 115108; 115728; 118060; 118062; 116920; 114850];
+    yv_scope = [557860; 557772; 557776; 560044; 560520; 560526; 557860];
 
     xv_harbour = [114800; 115500; 115450; 114950; 114800];
-    yv_harbour = [557800; 557780; 558000; 558000; 557800];
+    yv_harbour = [557800; 557700; 558000; 558000; 557800];
+
+    xv_chanwall = [115418; 115552; 116030; 118060; 118060; 115984; 115440; 115432; 115418];
+    yv_chanwall = [557782; 557776; 558646; 560214; 560282; 558702; 557970; 557960; 557782];
     
     % Create the structure with field names
-    pgns = struct('north', [], 'lagoon', [], 'hook', [], 'spit', [], 'south', [], 'beach', [], 'scope', [], 'harbour', []);
+    pgns = struct('north',[], 'lagoon',[], 'hook',[], 'spit',[], 'south',[],...
+        'beach',[], 'scope',[], 'harbour',[], 'chanwall',[]);
 
     % Assign values to the matrices within the structure
     pgns.north = [xv_north, yv_north];
@@ -40,5 +44,6 @@ function pgns = getPolygons
     pgns.beach = [xv_beach, yv_beach];
     pgns.scope = [xv_scope, yv_scope];
     pgns.harbour = [xv_harbour, yv_harbour];
+    pgns.chanwall = [xv_chanwall, yv_chanwall];
 
 end

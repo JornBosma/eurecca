@@ -1,0 +1,56 @@
+# Opmerking: door stationsverplaatsingen en veranderingen in waarneemmethodieken zijn deze tijdreeksen van uurwaarden mogelijk inhomogeen! Dat betekent dat deze reeks van gemeten waarden niet geschikt is voor trendanalyse. Voor studies naar klimaatverandering verwijzen we naar de gehomogeniseerde dagreeksen <http://www.knmi.nl/nederland-nu/klimatologie/daggegevens> of de Centraal Nederland Temperatuur <http://www.knmi.nl/kennis-en-datacentrum/achtergrond/centraal-nederland-temperatuur-cnt>.
+# 
+# SOURCE: ROYAL NETHERLANDS METEOROLOGICAL INSTITUTE (KNMI)
+# Comment: These time series are inhomogeneous because of station relocations and changes in observation techniques. As a result these series are not suitable for trend analysis. For climate change studies we refer to the homogenized series of daily data <http://www.knmi.nl/nederland-nu/klimatologie/daggegevens> or the Central Netherlands Temperature <http://www.knmi.nl/kennis-en-datacentrum/achtergrond/centraal-nederland-temperatuur-cnt>.
+# 
+# STN         LON(east)   LAT(north)  ALT(m)      NAME
+# 235         4.781       52.928      1.20        De Kooy     
+# DDVEC     : Vectorgemiddelde windrichting in graden (360=noord; 90=oost; 180=zuid; 270=west; 0=windstil/variabel). Zie http://www.knmi.nl/kennis-en-datacentrum/achtergrond/klimatologische-brochures-en-boeken / Vector mean wind direction in degrees (360=north; 90=east; 180=south; 270=west; 0=calm/variable)
+# FHVEC     : Vectorgemiddelde windsnelheid (in 0.1 m/s). Zie http://www.knmi.nl/kennis-en-datacentrum/achtergrond/klimatologische-brochures-en-boeken / Vector mean windspeed (in 0.1 m/s)
+# FHX       : Hoogste uurgemiddelde windsnelheid (in 0.1 m/s) / Maximum hourly mean windspeed (in 0.1 m/s)
+# FHXH      : Uurvak waarin FHX is gemeten / Hourly division in which FHX was measured
+# TG        : Etmaalgemiddelde temperatuur (in 0.1 graden Celsius) / Daily mean temperature in (0.1 degrees Celsius)
+# STN,YYYYMMDD,DDVEC,FHVEC,  FHX, FHXH,   TG
+  235,20210906,   79,   14,   30,   11,  175
+  235,20210907,  133,   10,   40,   17,  198
+  235,20210908,   94,   31,   50,   15,  207
+  235,20210909,  178,   20,   70,   14,  191
+  235,20210910,  210,   33,   60,   14,  185
+  235,20210911,  237,   49,   60,    8,  183
+  235,20210912,  293,   31,   50,   10,  170
+  235,20210913,   61,   26,   50,   22,  161
+  235,20210914,   86,   38,   50,    5,  177
+  235,20210915,  275,   37,   70,   24,  172
+  235,20210916,  286,   40,   60,    1,  163
+  235,20210917,  236,   14,   50,   12,  158
+  235,20210918,  104,   22,   40,   15,  165
+  235,20210919,  104,   44,   60,   14,  161
+  235,20210920,   81,   30,   50,   12,  145
+  235,20210921,  242,   31,   60,   10,  144
+  235,20210922,  238,   55,   70,   10,  172
+  235,20210923,  267,   68,  110,    9,  168
+  235,20210924,  238,   64,  100,   13,  179
+  235,20210925,  225,   18,   50,   15,  184
+  235,20210926,  185,   25,   50,   12,  174
+  235,20210927,  213,   45,  110,   14,  161
+  235,20210928,  189,   41,   70,   10,  149
+  235,20210929,  269,   45,  100,   18,  128
+  235,20210930,  228,   78,  120,   20,  138
+  235,20211001,  194,   69,  120,    1,  136
+  235,20211002,  169,   58,  120,   22,  132
+  235,20211003,  214,   64,  120,    1,  139
+  235,20211004,  197,   74,  110,   13,  141
+  235,20211005,  187,   55,  100,   24,  133
+  235,20211006,  288,   24,   90,    1,  135
+  235,20211007,  167,   10,   40,   20,  130
+  235,20211008,   89,   22,   40,   21,  114
+  235,20211009,   98,   28,   50,    8,  108
+  235,20211010,  313,   19,   50,   19,  118
+  235,20211011,  312,   46,   60,   11,  134
+  235,20211012,  336,   39,   60,    2,  124
+  235,20211013,  286,   33,   60,   14,  127
+  235,20211014,  262,   71,   90,   14,  143
+  235,20211015,  308,   38,  100,    1,  120
+  235,20211016,  248,   34,   70,   16,  124
+  235,20211017,  212,   60,   80,   12,  133
+  235,20211018,  181,   46,   50,    1,  122

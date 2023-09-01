@@ -16,7 +16,7 @@ newcolors = crameri('-vik');
 colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 
 % load DEM
-A = load('PHZ_2021_Q4','-mat');
+A = load('PHZ_2020_Q3','-mat');
 
 %% Polygon definitions
 [pgns, inside] = getPolygon(A);
@@ -106,7 +106,7 @@ patch(pgns.xv_S,pgns.yv_S,blue, 'FaceAlpha',.1, 'EdgeColor',blue, 'LineWidth',3)
 Narrow(fontsize)
 
 %% Visualisation
-F = load('PHZ_2019_Q0.mat','-mat');
+F = load('PHZ_2022_Q4.mat','-mat');
 F.DEM.Z(~inside.in_scope) = NaN;
 
 f2 = figure;

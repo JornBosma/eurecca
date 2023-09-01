@@ -19,7 +19,8 @@ colours = newcolors(1:round(length(newcolors)/5):length(newcolors), :);
 A = load('PHZ_2022_Q4','-mat');
 
 % load track locations
-dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
+dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor'...
+    filesep 'topobathy' filesep 'transects' filesep 'PHZD.nc'];
 
 n = 1;
 for j = [1:3 5:7] % discard extra track 4

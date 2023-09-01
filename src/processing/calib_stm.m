@@ -11,7 +11,7 @@ clc
 %% L2 (-0.75 m +NAP)
 % too little calibration material for 100 g/L
 
-c_L2_075 = [-0.003 0.10 0.24 0.58 1.16 2.50 6.38 12.40 25.33 36.24 51.57]; % testconcentraties [g/L]
+CS_L2_075 = [-0.003 0.10 0.24 0.58 1.16 2.50 6.38 12.40 25.33 36.24 51.57]; % testconcentraties [g/L]
 
 % reponse signal measuring instruments
 STM_12585 = [3.919 6.967 10.68 19.67 35.73 71.93 165.9 335.4 650.1 939.3 1182.4]; % L1C1 Vector #1
@@ -24,7 +24,7 @@ STM_1566 = [4.252 7.021 10.47 20.29 37.20 73.16 170.5 346.7 685.0 1001.5 1289.5]
 STM_1567 = [4.992 8.456 12.17 22.26 42.59 80.20 186.9 400.4 783.9 1183.4 1565.1]; % L2C5 TV STM #2
 
 OBS_9012 = [17.992 18.647 21.84 26.31 37.37 58.93 96.1 218.7 421.7 777.6 1081.0]; % L4C1 OBS3+
-OBS_9205 = [9.722 10.060 12.82 14.19 21.74 33.76 57.0 132.8 248.6 459.8 618.7];  % L4C1 OBS3+
+OBS_9205 = [9.722 10.060 12.82 14.19 21.74 33.76 57.0 132.8 248.6 459.8 618.7]; % L4C1 OBS3+
 
 STMarray_1 = [7.299 8.050 9.78 11.86 18.40 28.81 52.2 116.1 224.7 441.3 677.8]; % L2C5 TV STM array #1
 STMarray_2 = [6.477 7.523 9.28 12.38 20.20 33.93 58.8 141.7 285.3 543.1 798.5]; % L2C5 TV STM array #2
@@ -32,24 +32,25 @@ STMarray_3 = [7.385 8.301 10.80 14.98 23.82 40.34 75.4 171.7 346.2 669.5 980.0];
 STMarray_4 = [10.918 8.393 9.90 12.74 19.74 31.47 56.4 132.0 264.8 509.9 757.1]; % L2C5 TV STM array #4
 STMarray_5 = [5.591 5.995 7.88 10.20 16.23 27.21 50.0 116.3 231.6 450.9 667.4]; % L2C5 TV STM array #5
 
+%%
 % coefficients calibration curves
-P_STM_12585 = polyfit(STM_12585(2:11), c_L2_075(2:11), 2);
-P_STM_12586 = polyfit(STM_12586(2:11), c_L2_075(2:11), 2);
-P_STM_12587 = polyfit(STM_12587(2:11), c_L2_075(2:11), 2);
+P_STM_12585 = polyfit(STM_12585(2:11), CS_L2_075(2:11), 2);
+P_STM_12586 = polyfit(STM_12586(2:11), CS_L2_075(2:11), 2);
+P_STM_12587 = polyfit(STM_12587(2:11), CS_L2_075(2:11), 2);
 % P_STM_17486 = polyfit(STM_17486(2:11), c_L2_075(2:11), 2);
 % P_STM_17487 = polyfit(STM_17487(2:11), c_L2_075(2:11), 2);
 % P_STM_17488 = polyfit(STM_17488(2:11), c_L2_075(2:11), 2);
-P_STM_1566 = polyfit(STM_1566(2:11), c_L2_075(2:11), 2);
-P_STM_1567 = polyfit(STM_1567(2:11), c_L2_075(2:11), 2);
+P_STM_1566 = polyfit(STM_1566(2:11), CS_L2_075(2:11), 2);
+P_STM_1567 = polyfit(STM_1567(2:11), CS_L2_075(2:11), 2);
 
-P_OBS_9012 = polyfit(OBS_9012(2:11), c_L2_075(2:11), 2);
-P_OBS_9205 = polyfit(OBS_9205(2:11), c_L2_075(2:11), 2);
+P_OBS_9012 = polyfit(OBS_9012(2:11), CS_L2_075(2:11), 2);
+P_OBS_9205 = polyfit(OBS_9205(2:11), CS_L2_075(2:11), 2);
 
-P_STMarray_1 = polyfit(STMarray_1(2:11), c_L2_075(2:11), 2);
-P_STMarray_2 = polyfit(STMarray_2(2:11), c_L2_075(2:11), 2);
-P_STMarray_3 = polyfit(STMarray_3(2:11), c_L2_075(2:11), 2);
-P_STMarray_4 = polyfit(STMarray_4(2:11), c_L2_075(2:11), 2);
-P_STMarray_5 = polyfit(STMarray_5(2:11), c_L2_075(2:11), 2);
+P_STMarray_1 = polyfit(STMarray_1(2:11), CS_L2_075(2:11), 2);
+P_STMarray_2 = polyfit(STMarray_2(2:11), CS_L2_075(2:11), 2);
+P_STMarray_3 = polyfit(STMarray_3(2:11), CS_L2_075(2:11), 2);
+P_STMarray_4 = polyfit(STMarray_4(2:11), CS_L2_075(2:11), 2);
+P_STMarray_5 = polyfit(STMarray_5(2:11), CS_L2_075(2:11), 2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % stagnant water, background noise suspended load
@@ -199,18 +200,18 @@ figure
 tiledlayout(3, 1, 'TileSpacing', 'tight')
 
 ax(1) = nexttile;
-plot(c_L2_075, [STM_12585; STM_12586; STM_12587; STM_1566; STM_1567], '-o'); hold on
+plot(CS_L2_075, [STM_12585; STM_12586; STM_12587; STM_1566; STM_1567], '-o'); hold on
 plot(c_L2_120, STM_17488, '-o')
 plot(c_L5_075, [STM_17486; STM_17487], '-o')
 legend({'STM 12585' 'STM 12586' 'STM 12587' 'STM 1566' 'STM 1567' 'STM 17488' 'STM 17486' 'STM 17487'}, 'Location','eastoutside')
 
 ax(2) = nexttile;
-plot(c_L2_075, [OBS_9012; OBS_9205], '-o')
+plot(CS_L2_075, [OBS_9012; OBS_9205], '-o')
 legend({'OBS 9012' 'OBS 9205'}, 'Location','eastoutside')
 ylabel('signal (mV)')
 
 ax(3) = nexttile;
-plot(c_L2_075, [STMarray_1; STMarray_2; STMarray_3; STMarray_4; STMarray_5], '-o')
+plot(CS_L2_075, [STMarray_1; STMarray_2; STMarray_3; STMarray_4; STMarray_5], '-o')
 legend({'STMarray 1' 'STMarray 2' 'STMarray 3' 'STMarray 4' 'STMarray 5'}, 'Location','eastoutside')
 xlabel('concentration (g/L)')
 
