@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[xl, yl, xt, yt, fontsize, ~] = eurecca_init;
+[~, fontsize, cbf, ~] = eurecca_init;
 
 % sediment profiles
 load GS_20211007.mat
@@ -69,9 +69,7 @@ ax(3) = nexttile;
 pcolor([1, 2], [D50_new.depth_mm, D50_new.depth_mm], [D50_new.LW07_mu, D50_new.LW07_mu])
 title('C')
 c = colorbar;
-c.Label.Interpreter = 'latex';
-c.TickLabelInterpreter = 'latex';
-c.Label.String = 'D$_{50}$ ($mm$)';
+c.Label.String = 'D_{50} (mm)';
 c.FontSize = fontsize;
 
 set(ax(2:3), 'yTickLabel', [])
@@ -96,9 +94,7 @@ ax(3) = nexttile;
 pcolor([1, 2], [D50_new.depth_mm, D50_new.depth_mm], [D50_new.LW15_mu, D50_new.LW15_mu])
 title('LW')
 c = colorbar;
-c.Label.Interpreter = 'latex';
-c.TickLabelInterpreter = 'latex';
-c.Label.String = 'D$_{50}$ ($mm$)';
+c.Label.String = 'D_{50} (mm)';
 c.FontSize = fontsize;
 
 set(ax(2:3), 'yTickLabel', [])
@@ -119,9 +115,7 @@ ax(2) = nexttile;
 pcolor([1, 2], [D50_new.depth_mm, D50_new.depth_mm], [D50_new.runnel15_mu, D50_new.runnel15_mu])
 title('runnel')
 c = colorbar;
-c.Label.Interpreter = 'latex';
-c.TickLabelInterpreter = 'latex';
-c.Label.String = 'D$_{50}$ ($mm$)';
+c.Label.String = 'D_{50} (mm)';
 c.FontSize = fontsize;
 
 set(ax(2), 'yTickLabel', [])
@@ -138,9 +132,7 @@ set(ax, 'Colormap', flipud(colormap(flipud(brewermap([], 'YlOrRd')))), 'CLim', [
 % % title('HW')
 % ylabel('depth (mm)')
 % c = colorbar;
-% c.Label.Interpreter = 'latex';
-% c.TickLabelInterpreter = 'latex';
-% c.Label.String = 'D$_{50}$ ($mm$)';
+% c.Label.String = 'D_{50} (mm)';
 % 
 % ax(2) = nexttile;
 % pcolor([1, 2], [D50_new.depth_mm, D50_new.depth_mm], [D50_new.MW07_mu, D50_new.MW07_mu])
@@ -180,8 +172,8 @@ text([559834, 559822, 559814], [0.95, 0.28, -0.59], {'A', 'B', 'C'}, 'FontSize',
 % plot(L2_2D(:,1,19), smooth(L2_2D(:,2,19), 10), 'LineWidth', 3)          % 15/10
 % plot(SEDMEX100715zandschraperredacted.yRD, SEDMEX100715zandschraperredacted.z,...
 %     'd', 'LineWidth', 3)
-% text(SEDMEX100715zandschraperredacted.yRD-10, SEDMEX100715zandschraperredacted.z+0.2, name, 'FontSize', fontsize,  'Interpreter', 'latex')
-yline([MHW, MSL, MLW], '--', {'MHW', 'MSL', 'MLW'}, 'LineWidth', 2, 'FontSize', fontsize, 'Interpreter', 'latex')
+% text(SEDMEX100715zandschraperredacted.yRD-10, SEDMEX100715zandschraperredacted.z+0.2, name, 'FontSize', fontsize)
+yline([MHW, MSL, MLW], '--', {'MHW', 'MSL', 'MLW'}, 'LineWidth', 2, 'FontSize', fontsize)
 xticks(5.595e5+290:10:5.599e5)
 xticklabels(0:10:80)
 xlabel('cross-shore distance (m)')

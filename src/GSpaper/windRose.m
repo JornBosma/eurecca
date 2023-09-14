@@ -3,12 +3,26 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, ~] = eurecca_init;
+[~, fontsize, cbf, ~] = eurecca_init;
 
-%% Wind climate: 1989-2019 (30 years) daily record
+% plot coastline orientations
+coastAngleNdeg = 50; % coastline angle northern beach [deg North]
+coastAngleSdeg = 40; % coastline angle southern beach [deg North]
+
+coastAngleN = deg2rad(90-coastAngleNdeg); % coastline angle northern beach [rad wrt East]
+coastAngleS = deg2rad(90-coastAngleSdeg); % coastline angle southern beach [rad wrt East]
+
+%% Wind climate: 1989-2019 (30 years) hourly record
 
 % load data
-DeKooy1989 = readtable('DeKooy1989_2022_daily.txt', 'VariableNamingRule','preserve');
+DeKooy1989_1991 = readtable('DeKooy1989_1991_hourly.txt', 'VariableNamingRule','preserve');
+DeKooy1992_2001 = readtable('DeKooy1992_2001_hourly.txt', 'VariableNamingRule','preserve');
+DeKooy2002_2011 = readtable('DeKooy2002_2011_hourly.txt', 'VariableNamingRule','preserve');
+DeKooy2012_2022 = readtable('DeKooy2012_2022_hourly.txt', 'VariableNamingRule','preserve');
+
+% append data
+DeKooy1989 = [DeKooy1989_1991; DeKooy1992_2001; DeKooy2002_2011; DeKooy2012_2022];
+clear DeKooy1989_1991 DeKooy1992_2001 DeKooy2002_2011 DeKooy2012_2022
 
 % set dates
 startDate1989 = datetime(DeKooy1989.YYYYMMDD(1), 'ConvertFrom','yyyyMMdd');
@@ -18,49 +32,16 @@ endDate1989 = datetime(DeKooy1989.YYYYMMDD(end), 'ConvertFrom','yyyyMMdd');
 Options1989 = WindRoseOptions(startDate1989, endDate1989, fontsize);
 
 % generate wind rose
-[f1, ~, ~, ~, ~, ~] = WindRose(DeKooy1989.DDVEC, DeKooy1989.FHVEC/10, Options1989);
+[f1, ~, ~, ~, ~, ~] = WindRose(DeKooy1989.DD, DeKooy1989.FF/10, Options1989);
 
-% plot coastline orientation
-line([-.6, -.065], [-.8, -.065], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'DisplayName','coastline')
-line([.065, .8], [.065, .6], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'HandleVisibility','off')
+% plot coastline orientations
+line([cos(coastAngleN)*.1, cos(coastAngleN)], [sin(coastAngleN)*.1, sin(coastAngleN)], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'DisplayName','N beach')
+line([-cos(coastAngleN), -cos(coastAngleN)*.1], [-sin(coastAngleN), -sin(coastAngleN)*.1], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
 
-%% Wind climate: 1989-2019 (30 years) hourly record
-% 
-% % load data
-% DeKooy1989 = readtable('DeKooy1989_2022_hourly.txt', 'VariableNamingRule','preserve');
-% 
-% % set dates
-% startDate1989 = datetime(DeKooy1989.YYYYMMDD(1), 'ConvertFrom','yyyyMMdd');
-% endDate1989 = datetime(DeKooy1989.YYYYMMDD(end), 'ConvertFrom','yyyyMMdd');
-% 
-% % set wind rose options
-% Options1989 = WindRoseOptions(startDate1989, endDate1989, fontsize);
-% 
-% % generate wind rose
-% [~, ~, ~, ~, ~, ~] = WindRose(DeKooy1989.DD, DeKooy1989.FF/10, Options1989);
-% 
-% % plot coastline orientation
-% line([-.6, -.065], [-.8, -.065], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'DisplayName','coastline')
-% line([.065, .8], [.065, .6], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'HandleVisibility','off')
+line([cos(coastAngleS)*.1, cos(coastAngleS)], [sin(coastAngleS)*.1, sin(coastAngleS)], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'DisplayName','S beach')
+line([-cos(coastAngleS), -cos(coastAngleS)*.1], [-sin(coastAngleS), -sin(coastAngleS)*.1], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
 
-%% Monitoring period: 2019-2022 (3 years) daily record
-% 
-% % load data
-% DeKooy2019 = readtable('DeKooy2019_2022_daily.txt', 'VariableNamingRule','preserve');
-% 
-% % set dates
-% startDate2019 = datetime(DeKooy2019.YYYYMMDD(1), 'ConvertFrom','yyyyMMdd');
-% endDate2019 = datetime(DeKooy2019.YYYYMMDD(end), 'ConvertFrom','yyyyMMdd');
-% 
-% % set wind rose options
-% Options2019 = WindRoseOptions(startDate2019, endDate2019, fontsize);
-% 
-% % generate wind rose
-% [~, ~, ~, ~, ~, ~] = WindRose(DeKooy2019.DDVEC, DeKooy2019.FHVEC/10, Options2019);
-% 
-% % plot coastline orientation
-% line([-.6, -.065], [-.8, -.065], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'DisplayName','coastline')
-% line([.065, .8], [.065, .6], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'HandleVisibility','off')
+hold off
 
 %% Monitoring period: 2019-2022 (3 years) hourly record
 
@@ -77,28 +58,14 @@ Options2019 = WindRoseOptions(startDate2019, endDate2019, fontsize);
 % generate wind rose
 [f2, ~, ~, ~, ~, ~] = WindRose(DeKooy2019.DD, DeKooy2019.FF/10, Options2019);
 
-% plot coastline orientation
-line([-.6, -.065], [-.8, -.065], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'DisplayName','coastline')
-line([.065, .8], [.065, .6], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'HandleVisibility','off')
+% plot coastline orientations
+line([cos(coastAngleN)*.1, cos(coastAngleN)], [sin(coastAngleN)*.1, sin(coastAngleN)], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'DisplayName','N beach')
+line([-cos(coastAngleN), -cos(coastAngleN)*.1], [-sin(coastAngleN), -sin(coastAngleN)*.1], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
 
-%% SEDMEX period: 6 Sep - 18 Oct 2021 (6 weeks) daily record
-% 
-% % load data
-% DeKooySEDMEX = readtable('DeKooy_SEDMEX_daily.txt', 'VariableNamingRule','preserve');
-% 
-% % set dates
-% startDateSEDMEX = datetime(DeKooySEDMEX.YYYYMMDD(1), 'ConvertFrom','yyyyMMdd');
-% endDateSEDMEX = datetime(DeKooySEDMEX.YYYYMMDD(end), 'ConvertFrom','yyyyMMdd');
-% 
-% % set wind rose options
-% OptionsSEDMEX = WindRoseOptions(startDateSEDMEX, endDateSEDMEX, fontsize);
-% 
-% % generate wind rose
-% [~, ~, ~, ~, ~, ~] = WindRose(DeKooySEDMEX.DDVEC, DeKooySEDMEX.FHVEC/10, OptionsSEDMEX);
-% 
-% % plot coastline orientation
-% line([-.6, -.065], [-.8, -.065], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'DisplayName','coastline')
-% line([.065, .8], [.065, .6], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'HandleVisibility','off')
+line([cos(coastAngleS)*.1, cos(coastAngleS)], [sin(coastAngleS)*.1, sin(coastAngleS)], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'DisplayName','S beach')
+line([-cos(coastAngleS), -cos(coastAngleS)*.1], [-sin(coastAngleS), -sin(coastAngleS)*.1], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
+
+hold off
 
 %% SEDMEX period: 6 Sep - 18 Oct 2021 (6 weeks) hourly record
 
@@ -115,6 +82,11 @@ OptionsSEDMEX = WindRoseOptions(startDateSEDMEX, endDateSEDMEX, fontsize);
 % generate wind rose
 [f3, ~, ~, ~, ~, ~] = WindRose(DeKooySEDMEX.DD, DeKooySEDMEX.FF/10, OptionsSEDMEX);
 
-% plot coastline orientation
-line([-.6, -.065], [-.8, -.065], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'DisplayName','coastline')
-line([.065, .8], [.065, .6], 'Color','r', 'LineStyle','--', 'LineWidth',5, 'HandleVisibility','off')
+% plot coastline orientations
+line([cos(coastAngleN)*.1, cos(coastAngleN)], [sin(coastAngleN)*.1, sin(coastAngleN)], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'DisplayName','N beach')
+line([-cos(coastAngleN), -cos(coastAngleN)*.1], [-sin(coastAngleN), -sin(coastAngleN)*.1], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
+
+line([cos(coastAngleS)*.1, cos(coastAngleS)], [sin(coastAngleS)*.1, sin(coastAngleS)], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'DisplayName','S beach')
+line([-cos(coastAngleS), -cos(coastAngleS)*.1], [-sin(coastAngleS), -sin(coastAngleS)*.1], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
+
+hold off

@@ -11,15 +11,8 @@ MLWS = -1.07; % mean low water spring [m]
 MSL = 0; % mean sea level [m]
 NAP = MSL-0.1; % local reference datum [m]
 
-% colourblind-friendly colours
-orange = [230/255, 159/255, 0];
-blue = [86/255, 180/255, 233/255];
-yellow = [240/255, 228/255, 66/255];
-redpurp = [204/255, 121/255, 167/255];
-bluegreen = [0, 158/255, 115/255];
-
 load DEMsurveys.mat
-SurveyNames = DEMsurveys.name
+SurveyNames = DEMsurveys.name;
 SurveyDates = DEMsurveys.survey_date;
 
 %% Prepare Xylem data
@@ -55,7 +48,7 @@ Toud2 = eta_Oudeschild;
 
 DT2 = datetime([Toud2.year Toud2.month Toud2.day Toud2.hour Toud2.minute Toud2.second]);
 
-Toud2.eta(Toud2.eta>999) = NaN;
+Toud2.eta(Toud2.eta>=999) = NaN;
 
 TToud2 = table2timetable(Toud2(:,'eta'), 'RowTimes',DT2);
 TToud2.eta = TToud2.eta/100; % convert cm to m

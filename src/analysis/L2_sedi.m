@@ -10,8 +10,8 @@ load('GS_L2C3_plus.mat') % 09/12 (SL) and 10/08 not exact same locations
 load('GS_L2C5_plus.mat')
 
 % gps-locations samples
-load('GS_20210920_gps.mat')
-load('GS_202109301013_gps.mat')
+% load('GS_20210920_gps.mat')
+% load('GS_202109301013_gps.mat')
 
 t = datetime('2021-09-16'):datetime('2021-10-16');
 t2 = [datetime('2021-09-20 08:00:00'):hours(1):datetime('2021-09-20 11:00:00'),...
@@ -62,7 +62,7 @@ MD(:, 26) = GS.Oct11;
 MD(:, 28) = GS.Oct13;
 MD(:, 30) = GS.Oct15a;
 
-f = figure2;
+f = figure;
 pcolor(t, aperture, MD)
 shading flat
 
@@ -97,7 +97,7 @@ MD2(:, 16) = GS.Oct15a;
 MD2(:, 17) = GS.Oct15b;
 MD2(:, 18) = GS.Oct15c;
 
-f = figure2;
+f = figure;
 pcolor(1:19, aperture, MD2)
 shading interp
 

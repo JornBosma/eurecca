@@ -56,5 +56,5 @@ patch(pgns.harbour(:,1),pgns.harbour(:,2),'k', 'FaceAlpha',.1, 'EdgeColor','w', 
 patch(pgns.chanwall(:,1),pgns.chanwall(:,2),'k', 'FaceAlpha',.1, 'EdgeColor','r', 'LineWidth',3)
 ax = gca; ax.SortMethod = 'childorder';
 
-legend('2019 Q0', '2022 Q4', 'north', 'lagoon', 'hook', 'spit', 'south', 'beach', 'scope', 'harbour')
+legend('2019 Q0', '2022 Q4', 'north', 'lagoon', 'hook', 'spit', 'south', 'beach', 'scope', 'harbour', 'chanwall')
 Narrow(fontsize)

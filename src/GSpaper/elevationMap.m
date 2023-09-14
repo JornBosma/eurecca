@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, cbf, ~] = eurecca_init;
+[~, fontsize, cbf, ~] = eurecca_init;
 
 % load cross-shore tracks
 dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor'...
@@ -72,7 +72,7 @@ clim([-8, 8])
 colormap(crameri('bukavu', 'pivot',0))
 
 % North arrow
-% Narrow(fontsize)
+Narrow(fontsize)
 
 %% Visualisation: second DEM
 f1b = figure;
@@ -115,7 +115,7 @@ cb.Label.Interpreter = 'latex';
 cb.Label.String = ['$<$ erosion (m) ', repmat('\ ', 1, 9), ' deposition (m) $>$'];
 cb.FontSize = fontsize/1.3;
 clim([-2, 2])
-colormap(crameri('vik', 'pivot',0))
+colormap(crameri('bam', 'pivot',0))
 
 % black background
 ax.SortMethod = 'childorder';
@@ -125,13 +125,13 @@ set(ax,'Children',[h(2) h(1)])
 
 % channel wall (rocks)
 p = patch(ax, pgns.chanwall(:,1),pgns.chanwall(:,2), 'k');
-hatch(p, [45 10 1], 'w');
-hatch(p, [15 10 1], 'w');
+hatch(p, [45 5 1], 'w');
+hatch(p, [15 5 1], 'w');
 
 % tracks
 for n = 1:7
-    line([x(trackStart(n),n) x(trackEnd(n),n)], [y(trackStart(n),n) y(trackEnd(n),n)], 'Color','red', 'LineStyle',':', 'LineWidth',3)
-    text(x(trackCentre(n),n)+80, y(trackCentre(n),n), trackNumbers{n}, 'FontSize',fontsize/2, 'Color','r')
+    line([x(trackStart(n),n) x(trackEnd(n),n)], [y(trackStart(n),n) y(trackEnd(n),n)], 'Color','k', 'LineStyle',':', 'LineWidth',3)
+    text(x(trackCentre(n),n)+80, y(trackCentre(n),n), trackNumbers{n}, 'FontSize',fontsize*.7, 'Color','k')
 end
 
 % North arrow

@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, basePath] = eurecca_init;
+[~, ~, ~, ~, fontsize, ~, basePath] = eurecca_init;
 
 % colourblind-friendly colours
 orange = [230/255, 159/255, 0];
