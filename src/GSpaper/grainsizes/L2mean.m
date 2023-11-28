@@ -9,7 +9,7 @@ folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' fil
 locsX = {'L2C2', 'L2C3', 'L2C3.5', 'L2C4', 'L2C4.5', 'L2C5W', 'L2C5E', 'L2C6'};
 
 
-%% GS_20210920: 19 Sep 2021
+%% GS_20210920 (bed level: 19 Sep 2021)
 
 % Load sediment data
 dataPath = [folderPath 'grainsizes' filesep 'GS_20210920.csv'];
@@ -24,7 +24,7 @@ GS_20210920.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20210920.Sample_Identity = regexprep(GS_20210920.Sample_Identity, '_.*', '');
 
 % Visualisation
-f1 = figure;
+f1 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -68,7 +68,7 @@ xlabel('µm')
 yticks([])
 
 
-%% GS_20210928: 28 Sep 2021
+%% GS_20210928 (bed level: 28 Sep 2021)
 
 % Load sediment data
 dataPath = [folderPath 'grainsizes' filesep 'GS_20210928.csv'];
@@ -82,7 +82,7 @@ GS_20210928.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20210928.Sample_Identity = regexprep(GS_20210928.Sample_Identity, '_.*', '');
 
 % Visualisation
-f2 = figure;
+f2 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -126,7 +126,7 @@ xlabel('µm')
 yticks([])
 
 
-%% GS_20211001: 30 Sep 2021
+%% GS_20211001 (bed level: 30 Sep 2021)
 
 % Load sediment data
 dataPath = [folderPath 'grainsizes' filesep 'GS_20211001.csv'];
@@ -142,7 +142,7 @@ GS_20211001{9:end, 6:end} = NaN;
 GS_20211001.Sample_Number = repelem([1 2 3 4], 8)';
 
 % Visualisation
-f3 = figure;
+f3 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -190,7 +190,7 @@ xlabel('µm')
 yticks([])
 
 
-%% GS_20211007: 7 Oct 2021
+%% GS_20211007 (bed level: 7 Oct 2021)
 
 % Load sediment data
 dataPath = [folderPath 'grainsizes' filesep 'GS_20211007.csv'];
@@ -203,7 +203,7 @@ GS_20211007.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20211007.Sample_Identity = regexprep(GS_20211007.Sample_Identity, '_.*', '');
 
 % Visualisation
-f4 = figure;
+f4 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -247,7 +247,7 @@ xlabel('µm')
 yticks([])
 
 
-%% GS_20211015: 15 Oct 2021
+%% GS_20211015 (bed level: 15 Oct 2021)
 
 % Load sediment data
 dataPath = [folderPath 'grainsizes' filesep 'GS_20211015.csv'];
@@ -265,7 +265,7 @@ GS_20211015.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20211015.Sample_Identity = regexprep(GS_20211015.Sample_Identity, '_.*', '');
 
 % Visualisation
-f5 = figure;
+f5 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])

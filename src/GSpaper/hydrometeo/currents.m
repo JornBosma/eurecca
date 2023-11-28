@@ -75,7 +75,7 @@ k = 10; % moving average window length
 maxValX = etaBin_unique(maxIdx);
 
 %% Visualisation: umag
-f1 = figure;
+f1 = figureRH;
 scatter(etaBin, umagBin, 'sq', 'Color',cbf.blue); hold on
 plot(etaBin_unique, movmean(umagBin_mean, k), 'r-', 'Color', cbf.vermilion, 'LineWidth',5)
 
@@ -87,7 +87,7 @@ ylabel('flow velocity [u_{mag}] (m s^{-1})')
 legend(['bins [N = ',mat2str(numBins),']'], ['median fit [k = ',mat2str(k),']'])
 
 %% Visualisation: ulm
-f2 = figure;
+f2 = figureRH;
 scatter(etaBin, ulmBin, 'sq', 'Color',cbf.blue)
 
 xlabel('water level [\eta] (m)')
@@ -101,7 +101,7 @@ ulm = ncread(dataPath, 'ulm'); % longshore flow velocity [m/s] (flood tide = neg
 ulm = -ulm; % flood = positive; ebb = negative
 time = datetime('2021-09-10 00:00:00','Format','yyyy-MM-dd HH:mm:ss') + minutes(t);
 
-f3 = figure;
+f3 = figureRH;
 plot(time, movmean(eta, 10), 'Color',cbf.blue); hold on
 plot(time, movmean(ulm, 10), 'Color',cbf.vermilion); hold off
 

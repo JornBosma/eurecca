@@ -36,7 +36,7 @@ D50_new(1:end-1, 2:end) = D50_new(2:end, 2:end);
 D50_new{:, 2:end} = D50_new{:, 2:end}/1000; % convert mu to mm
 
 %% Visualisation: pcolor
-f1 = figure;
+f1 = figureRH;
 tiledlayout(1,8, "TileSpacing","compact")
 
 ax(1) = nexttile;

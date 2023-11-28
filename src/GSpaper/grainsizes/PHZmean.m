@@ -51,7 +51,7 @@ clear Track_Number Sample_Number numbers name row dataPath opts GS_20211008 GS_2
 
 
 %% Area-wide (x) 8/9 Oct 2021
-f1 = figure;
+f1 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -68,6 +68,8 @@ h1.FontSize = fontsize;
 h1.CellLabelFormat = '%0.0f';
 h1.ColorbarVisible = 'off';
 h1.GridVisible = 'off';
+h1.MissingDataColor = 'w';
+h1.MissingDataLabel = 'no data';
 
 nexttile(6)
 text(0, .5, '2021-10-08/09', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
@@ -157,7 +159,7 @@ clear Track_Number Sample_Number numbers name row dataPath opts
 
 
 %% Area-wide (x) 26 Oct 2022
-f2 = figure;
+f2 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -174,6 +176,8 @@ h2.FontSize = fontsize;
 h2.CellLabelFormat = '%0.0f';
 h2.ColorbarVisible = 'off';
 h2.GridVisible = 'off';
+h2.MissingDataColor = 'w';
+h2.MissingDataLabel = 'no data';
 
 nexttile(6)
 text(0, .5, '2022-10-26', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
@@ -263,7 +267,7 @@ clear Track_Number Sample_Number numbers name row dataPath folderPath opts
 
 
 %% Area-wide (x) 02 Dec 2020
-f3 = figure;
+f3 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -280,6 +284,8 @@ h3.FontSize = fontsize;
 h3.CellLabelFormat = '%0.0f';
 h3.ColorbarVisible = 'off';
 h3.GridVisible = 'off';
+h3.MissingDataColor = 'w';
+h3.MissingDataLabel = 'no data';
 
 nexttile(6)
 text(0, .5, '2020-12-02', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)

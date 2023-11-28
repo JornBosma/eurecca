@@ -24,7 +24,7 @@ GS_20210920.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20210920.Sample_Identity = regexprep(GS_20210920.Sample_Identity, '_.*', '');
 
 % Visualisation
-f1 = figure;
+f1 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -82,7 +82,7 @@ GS_20210928.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20210928.Sample_Identity = regexprep(GS_20210928.Sample_Identity, '_.*', '');
 
 % Visualisation
-f2 = figure;
+f2 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -142,7 +142,7 @@ GS_20211001{9:end, 6:end} = NaN;
 GS_20211001.Sample_Number = repelem([1 2 3 4], 8)';
 
 % Visualisation
-f3 = figure;
+f3 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -203,7 +203,7 @@ GS_20211007.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20211007.Sample_Identity = regexprep(GS_20211007.Sample_Identity, '_.*', '');
 
 % Visualisation
-f4 = figure;
+f4 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])
@@ -265,7 +265,7 @@ GS_20211015.Sample_Number = repelem([1 2 3 4], 8)';
 GS_20211015.Sample_Identity = regexprep(GS_20211015.Sample_Identity, '_.*', '');
 
 % Visualisation
-f5 = figure;
+f5 = figureRH;
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(7,[5 5])

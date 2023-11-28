@@ -61,7 +61,7 @@ TTlw.eta(TTwater.eta >= PHZ.MLWS) = NaN;
 TTmw.eta(TTwater.eta > PHZ.MHWS | TTwater.eta < PHZ.MLWS) = NaN;
 
 %% Visualisation: 2019-2022
-% f1 = figure;
+% f1 = figureRH;
 % tiledlayout(3,1, 'TileSpacing','tight')
 % 
 % ax1 = nexttile;
@@ -97,7 +97,7 @@ TTmw.eta(TTwater.eta > PHZ.MHWS | TTwater.eta < PHZ.MLWS) = NaN;
 % zoom xon
 
 %% Visualisation: 2019-2022
-f1 = figure;
+f1 = figureRH;
 plot(TTmw.DateTime, TTmw.eta, 'Color',cbf.blue); hold on
 plot(TThw.DateTime, TThw.eta, 'Color',cbf.vermilion)
 plot(TTlw.DateTime, TTlw.eta, 'Color',cbf.vermilion)
@@ -145,7 +145,7 @@ T_L2C10 = table(t, eta, umag, ucm, ulm, Hm0, puvdir);
 TT_L2C10 = table2timetable(T_L2C10);
 
 %% Visualisation: SEDMEX
-f2 = figure;
+f2 = figureRH;
 tiledlayout(6,1, 'TileSpacing','loose')
 
 ax1 = nexttile;

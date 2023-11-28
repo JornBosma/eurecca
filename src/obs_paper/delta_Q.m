@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, basePath] = eurecca_init;
+[basePath, fontsize, cbf, ~] = eurecca_init;
 
 wb = waitbar(0, 'Loading DEMs');
 wb.Children.Title.Interpreter = 'none';
@@ -92,92 +92,92 @@ T_neg = table(SurveyDates, dQ_Nspit_neg, dQ_spit_neg, dQ_Sbeach_neg, dQ_beach_ne
 TT_neg = table2timetable(T_neg);
 
 %% Visualisation
-f0 = figure;
-tiledlayout(1,2, 'TileSpacing','tight')
-
-ax1 = nexttile;
-plot(TT_pos.SurveyDates, TT_pos.dQ_beach_pos,'o:', 'Color',orange, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k'); hold on
-plot(TT_pos.SurveyDates, TT_neg.dQ_beach_neg,'o:', 'Color',blue, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k')
-area(TT_pos.SurveyDates, TT_pos.dQ_beach_pos, 'FaceColor',orange, 'FaceAlpha',0.2, 'EdgeColor','none')
-area(TT_neg.SurveyDates, TT_neg.dQ_beach_neg, 'FaceColor',blue, 'FaceAlpha',0.2, 'EdgeColor','none')
-yline(0, 'LineWidth',3)
-% title('beach face')
-legend('sedimentation', 'erosion', 'Location','northeast')
-
-ax1.XColor = yellow;
-ax1.YColor = yellow;
-ax1.XRuler.Axle.LineWidth = 6;
-ax1.YRuler.Axle.LineWidth = 6;
-ylabel('$\Delta$Q (m$^3$)', 'Color','k')
-
-ax2 = nexttile;
-plot(TT_pos.SurveyDates, TT_pos.dQ_Nspit_pos,'o:', 'Color',orange, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k'); hold on
-plot(TT_pos.SurveyDates, TT_neg.dQ_Nspit_neg,'o:', 'Color',blue, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k')
-area(TT_pos.SurveyDates, TT_pos.dQ_Nspit_pos, 'FaceColor',orange, 'FaceAlpha',0.2, 'EdgeColor','none')
-area(TT_neg.SurveyDates, TT_neg.dQ_Nspit_neg, 'FaceColor',blue, 'FaceAlpha',0.2, 'EdgeColor','none')
-yline(0, 'LineWidth',3)
-% title('northern tip spit')
-
-ax2.XColor = redpurp;
-ax2.YColor = redpurp;
-ax2.XRuler.Axle.LineWidth = 6;
-ax2.YRuler.Axle.LineWidth = 6;
-
-xticks([ax1 ax2], [datetime('2019','Inputformat','yyyy') datetime('2020','Inputformat','yyyy') datetime('2021','Inputformat','yyyy') datetime('2022','Inputformat','yyyy') datetime('2023','Inputformat','yyyy')])
-xtickformat([ax1 ax2], 'yyyy')
-yticklabels(ax2, {})
-linkaxes([ax1 ax2])
-
-grid([ax1 ax2], 'on')
-grid([ax1 ax2], 'minor')
-
-%% Visualisation
-f1 = figure;
-b1 = bar(TT.SurveyDates, [TT_pos.dQ_Nspit_pos, TT_pos.dQ_spit_pos, TT_pos.dQ_Sbeach_pos], 'stacked'); hold on
-b2 = bar(TT.SurveyDates, [TT_neg.dQ_Nspit_neg, TT_neg.dQ_spit_neg, TT_neg.dQ_Sbeach_neg], 'stacked');
-plot(TT.SurveyDates, TT.dQ_tot, 'r', 'LineWidth',10); hold off
-
-b1(1).FaceColor = 'flat';
-b1(1).CData = redpurp;
-b2(1).FaceColor = 'flat';
-b2(1).CData = redpurp;
-
-b1(2).FaceColor = 'flat';
-b1(2).CData = yellow;
-b2(2).FaceColor = 'flat';
-b2(2).CData = yellow;
-
-b1(3).FaceColor = 'flat';
-b1(3).CData = blue;
-b2(3).FaceColor = 'flat';
-b2(3).CData = blue;
-
-ylabel('$\Delta$Q (m$^3$)')
-legend('spit tip','spit beach','south beach','','','','total')
+% f0 = figure;
+% tiledlayout(1,2, 'TileSpacing','tight')
+% 
+% ax1 = nexttile;
+% plot(TT_pos.SurveyDates, TT_pos.dQ_beach_pos,'o:', 'Color',orange, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k'); hold on
+% plot(TT_pos.SurveyDates, TT_neg.dQ_beach_neg,'o:', 'Color',blue, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k')
+% area(TT_pos.SurveyDates, TT_pos.dQ_beach_pos, 'FaceColor',orange, 'FaceAlpha',0.2, 'EdgeColor','none')
+% area(TT_neg.SurveyDates, TT_neg.dQ_beach_neg, 'FaceColor',blue, 'FaceAlpha',0.2, 'EdgeColor','none')
+% yline(0, 'LineWidth',3)
+% % title('beach face')
+% legend('sedimentation', 'erosion', 'Location','northeast')
+% 
+% ax1.XColor = yellow;
+% ax1.YColor = yellow;
+% ax1.XRuler.Axle.LineWidth = 6;
+% ax1.YRuler.Axle.LineWidth = 6;
+% ylabel('$\Delta$Q (m$^3$)', 'Color','k')
+% 
+% ax2 = nexttile;
+% plot(TT_pos.SurveyDates, TT_pos.dQ_Nspit_pos,'o:', 'Color',orange, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k'); hold on
+% plot(TT_pos.SurveyDates, TT_neg.dQ_Nspit_neg,'o:', 'Color',blue, 'LineWidth',4, 'MarkerSize',10, 'MarkerFaceColor','k')
+% area(TT_pos.SurveyDates, TT_pos.dQ_Nspit_pos, 'FaceColor',orange, 'FaceAlpha',0.2, 'EdgeColor','none')
+% area(TT_neg.SurveyDates, TT_neg.dQ_Nspit_neg, 'FaceColor',blue, 'FaceAlpha',0.2, 'EdgeColor','none')
+% yline(0, 'LineWidth',3)
+% % title('northern tip spit')
+% 
+% ax2.XColor = redpurp;
+% ax2.YColor = redpurp;
+% ax2.XRuler.Axle.LineWidth = 6;
+% ax2.YRuler.Axle.LineWidth = 6;
+% 
+% xticks([ax1 ax2], [datetime('2019','Inputformat','yyyy') datetime('2020','Inputformat','yyyy') datetime('2021','Inputformat','yyyy') datetime('2022','Inputformat','yyyy') datetime('2023','Inputformat','yyyy')])
+% xtickformat([ax1 ax2], 'yyyy')
+% yticklabels(ax2, {})
+% linkaxes([ax1 ax2])
+% 
+% grid([ax1 ax2], 'on')
+% grid([ax1 ax2], 'minor')
 
 %% Visualisation
-f2 = figure;
-b1 = bar(TT.SurveyDates, [cumsum(TT_pos.dQ_Nspit_pos), cumsum(TT_pos.dQ_spit_pos), cumsum(TT_pos.dQ_Sbeach_pos)], 'stacked'); hold on
-b2 = bar(TT.SurveyDates, [cumsum(TT_neg.dQ_Nspit_neg), cumsum(TT_neg.dQ_spit_neg), cumsum(TT_neg.dQ_Sbeach_neg)], 'stacked');
-plot(TT.SurveyDates, cumsum(TT.dQ_tot), 'r', 'LineWidth',10); hold off
+% f1 = figure;
+% b1 = bar(TT.SurveyDates, [TT_pos.dQ_Nspit_pos, TT_pos.dQ_spit_pos, TT_pos.dQ_Sbeach_pos], 'stacked'); hold on
+% b2 = bar(TT.SurveyDates, [TT_neg.dQ_Nspit_neg, TT_neg.dQ_spit_neg, TT_neg.dQ_Sbeach_neg], 'stacked');
+% plot(TT.SurveyDates, TT.dQ_tot, 'r', 'LineWidth',10); hold off
+% 
+% b1(1).FaceColor = 'flat';
+% b1(1).CData = redpurp;
+% b2(1).FaceColor = 'flat';
+% b2(1).CData = redpurp;
+% 
+% b1(2).FaceColor = 'flat';
+% b1(2).CData = yellow;
+% b2(2).FaceColor = 'flat';
+% b2(2).CData = yellow;
+% 
+% b1(3).FaceColor = 'flat';
+% b1(3).CData = blue;
+% b2(3).FaceColor = 'flat';
+% b2(3).CData = blue;
+% 
+% ylabel('$\Delta$Q (m$^3$)')
+% legend('spit tip','spit beach','south beach','','','','total')
 
-b1(1).FaceColor = 'flat';
-b1(1).CData = redpurp;
-b2(1).FaceColor = 'flat';
-b2(1).CData = redpurp;
-
-b1(2).FaceColor = 'flat';
-b1(2).CData = yellow;
-b2(2).FaceColor = 'flat';
-b2(2).CData = yellow;
-
-b1(3).FaceColor = 'flat';
-b1(3).CData = blue;
-b2(3).FaceColor = 'flat';
-b2(3).CData = blue;
-
-ylabel('$\Delta$Q (m$^3$)')
-legend('spit tip','spit beach','south beach','','','','total')
+%% Visualisation
+% f2 = figure;
+% b1 = bar(TT.SurveyDates, [cumsum(TT_pos.dQ_Nspit_pos), cumsum(TT_pos.dQ_spit_pos), cumsum(TT_pos.dQ_Sbeach_pos)], 'stacked'); hold on
+% b2 = bar(TT.SurveyDates, [cumsum(TT_neg.dQ_Nspit_neg), cumsum(TT_neg.dQ_spit_neg), cumsum(TT_neg.dQ_Sbeach_neg)], 'stacked');
+% plot(TT.SurveyDates, cumsum(TT.dQ_tot), 'r', 'LineWidth',10); hold off
+% 
+% b1(1).FaceColor = 'flat';
+% b1(1).CData = redpurp;
+% b2(1).FaceColor = 'flat';
+% b2(1).CData = redpurp;
+% 
+% b1(2).FaceColor = 'flat';
+% b1(2).CData = yellow;
+% b2(2).FaceColor = 'flat';
+% b2(2).CData = yellow;
+% 
+% b1(3).FaceColor = 'flat';
+% b1(3).CData = blue;
+% b2(3).FaceColor = 'flat';
+% b2(3).CData = blue;
+% 
+% ylabel('$\Delta$Q (m$^3$)')
+% legend('spit tip','spit beach','south beach','','','','total')
 
 %% Visualisation
 f3 = figure;
@@ -236,3 +236,50 @@ b2(3).CData = blue;
 
 ylabel('$\Delta$Q (m$^3$)')
 legend('spit tip','spit beach','south beach','','','','total','')
+
+
+%% Visualisation
+f4 = figure;
+tiledlayout(2,1, 'TileSpacing','tight')
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+nexttile
+b1 = bar(TT.SurveyDates, [TT.dQ_Nspit, TT.dQ_spit, TT.dQ_Sbeach], 'stacked'); hold on
+plot(TT.SurveyDates, TT.dQ_tot, 'r', 'LineWidth',6); hold off
+xticklabels({})
+
+xregion(TT.SurveyDates(1), TT.SurveyDates(3)) % initial rapid response
+xregion(datetime('10-Sep-2021'), datetime('18-Oct-2021')) % SEDMEX
+
+b1(1).FaceColor = 'flat';
+b1(1).CData = redpurp;
+
+b1(2).FaceColor = 'flat';
+b1(2).CData = yellow;
+
+b1(3).FaceColor = 'flat';
+b1(3).CData = blue;
+
+ylabel('\DeltaQ (m^3)')
+legend('spit hook','spit beach','south beach','total', 'Location','south')
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+nexttile
+b1 = bar(TT.SurveyDates, [cumsum(TT.dQ_Nspit), cumsum(TT.dQ_spit), cumsum(TT.dQ_Sbeach)], 'stacked'); hold on
+plot(TT.SurveyDates, cumsum(TT.dQ_tot), 'r', 'LineWidth',6); hold off
+
+xregion(TT.SurveyDates(1), TT.SurveyDates(3)) % initial rapid response
+xregion(datetime('10-Sep-2021'), datetime('18-Oct-2021')) % SEDMEX
+
+b1(1).FaceColor = 'flat';
+b1(1).CData = redpurp;
+
+b1(2).FaceColor = 'flat';
+b1(2).CData = yellow;
+
+b1(3).FaceColor = 'flat';
+b1(3).CData = blue;
+
+ylabel('\DeltaQ (m^3)')
+
