@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, fontsize, cbf, PHZ] = eurecca_init;
+[~, fontsize, ~, ~, ~] = eurecca_init;
 
 folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep];
 
@@ -51,50 +51,52 @@ clear Track_Number Sample_Number numbers name row dataPath opts GS_20211008 GS_2
 
 
 %% Area-wide (x) 8/9 Oct 2021
-f1 = figureRH;
+f1 = figure('Position',[730, 1846, 1279, 391]);
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
-nexttile(7,[5 5])
+nexttile(13,[4 5])
 h1 = heatmap(GS_2021, 'Sample_Identity', 'Sample_Number', 'ColorVariable','Mean_mu');
 colormap(h1, crameri('lajolla'))
-clim([0, 2000])
+clim([300, 1400])
 
 h1.Title = [];
-h1.YDisplayData = flipud(h1.YDisplayData);
-h1.YDisplayLabels = fliplr({'+1.00 m', '+0.75 m', '+0.50 m', '+0.25 m', '+0.00 m'});
+h1.XDisplayData = flipud(h1.XDisplayData);
+h1.XDisplayLabels = flipud(h1.XDisplayLabels);
+h1.YDisplayLabels = {'+1.00 m', '+0.75 m', '+0.50 m', '+0.25 m', '+0.00 m'};
 h1.XLabel = '';
 h1.YLabel = '';
-h1.FontSize = fontsize;
+h1.FontSize = fontsize*.8;
 h1.CellLabelFormat = '%0.0f';
 h1.ColorbarVisible = 'off';
 h1.GridVisible = 'off';
 h1.MissingDataColor = 'w';
 h1.MissingDataLabel = 'no data';
 
-nexttile(6)
-text(0, .5, '2021-10-08/09', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
+nexttile(6,[2 1])
+% text(0, .5, '2021-10-08/09', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
+text(0, .5, 'M_{G} (µm)', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','none', 'Margin',6)
 axis off
 
-heatdata = h1.ColorData;
+heatdata = rot90(h1.ColorData, 2);
 meanS = mean(heatdata, 1, 'omitmissing');
 stdS = std(heatdata, 0, 1, 'omitmissing');
-nexttile(1,[1 5])
+meanT = mean(heatdata, 2, 'omitmissing');
+stdT = std(heatdata, 0, 2, 'omitmissing');
+
+nexttile(1,[2 5])
 errorbar(1.5:10.5, meanS, stdS, '-ok', 'LineWidth',3)
 yline(mean(meanS, 'omitmissing'), '--k', 'LineWidth',2)
 xlim([1 11])
-ylim([0 1500])
-ylabel('µm')
+ylim([250 1150])
+% ylabel('M_{G} (µm)')
 xticks([])
 
-meanT = mean(heatdata, 2, 'omitmissing');
-stdT = std(heatdata, 0, 2, 'omitmissing');
-nexttile(12,[5 1])
-
+nexttile(18,[4 1])
 errorbar(meanT, 1.5:5.5, stdT, 'horizontal', '-ok', 'LineWidth',3)
 xline(mean(meanT, 'omitmissing'), '--k', 'LineWidth',2)
 ylim([1 6])
-xlim([0 1500])
-xlabel('µm')
+xlim([250 1150])
+% xlabel('M_{G} (µm)')
 yticks([])
 
 
@@ -186,8 +188,11 @@ axis off
 heatdata = h2.ColorData;
 meanS = mean(heatdata, 1, 'omitmissing');
 stdS2 = std(heatdata, 0, 1, 'omitmissing');
+noNaN = ~isnan(meanS);
+x = 1.5:10.5;
+
 nexttile(1,[1 5])
-errorbar(1.5:10.5, meanS, stdS2, '-ok', 'LineWidth',3)
+errorbar(x(noNaN), meanS(noNaN), stdS2(noNaN), '-ok', 'LineWidth',3)
 yline(mean(meanS, 'omitmissing'), '--k', 'LineWidth',2)
 xlim([1 11])
 ylim([0 1500])
@@ -264,6 +269,21 @@ GS_2020.Sample_Number = Sample_Number;
 
 % Clear temp vars
 clear Track_Number Sample_Number numbers name row dataPath folderPath opts
+
+
+%% Quick statistics
+
+M2020 = mean(GS_2020.Mean_mu, "omitmissing");
+M2021 = mean(GS_2021.Mean_mu, "omitmissing");
+M2022 = mean(GS_2022.Mean_mu, "omitmissing");
+
+Mtot = mean([M2020, M2021, M2022]);
+
+S2020 = mean(GS_2020.Sorting, "omitmissing");
+S2021 = mean(GS_2021.Sorting, "omitmissing");
+S2022 = mean(GS_2022.Sorting, "omitmissing");
+
+Stot = mean([S2020, S2021, S2022]);
 
 
 %% Area-wide (x) 02 Dec 2020

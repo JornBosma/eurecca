@@ -3,13 +3,14 @@ close all
 clear
 clc
 
-[~, fontsize, cbf, PHZ] = eurecca_init;
+[~, ~, cbf, PHZ, SEDMEX] = eurecca_init;
 
 folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep];
 locsX = {'L2C2', 'L2C3', 'L2C3.5', 'L2C4', 'L2C4.5', 'L2C5W', 'L2C5E', 'L2C6'};
 locsY = {'S', 'SL', 'L3.5', 'L4', 'T', 'L6'};
 idxSedi = [2155 2166 2171 2176 2181 2186 2196 2209];
 
+fontsize = 30;
 
 %% Cross-shore profiles
 dataPath{6} = [folderPath 'topobathy' filesep 'transects' filesep 'PHZD.nc'];
@@ -25,6 +26,7 @@ transect = ncread(dataPath{6}, 'transect'); % tansect number (Python counting)
 % Timing
 startDate = datetime('2020-10-16 00:00:00');
 surveyDates = startDate + days(ID);
+surveyDates.Format = 'dd MMM yyyy';
 
 % Data selection
 track = 2; % L2
@@ -90,7 +92,7 @@ GS_20211015.zNAP_m = repmat(Z(idxSedi, 5), 4, 1);
 
 
 %% L2 profile development
-f1 = figureRH;
+f1 = figure('Position',[1722, 709, 1719, 628]);
 
 hold on
 p = nan(length(survey));
@@ -103,16 +105,16 @@ hold off
 
 xline(d(idxSedi), '-', string(locsX), 'FontSize',fontsize*1, 'LabelHorizontalAlignment','center')
 
-yline(PHZ.MHW, '--', 'MHW', 'FontSize',fontsize*1)
-yline(PHZ.MSL, '-.', 'MSL', 'FontSize',fontsize*1)
-yline(PHZ.MLW, '--', 'MLW', 'FontSize',fontsize*1)
+yline(SEDMEX.MHW, '--', 'MHW', 'FontSize',fontsize*1)
+yline(0, '-.', 'MSL', 'FontSize',fontsize*1)
+yline(SEDMEX.MLW, '--', 'MLW', 'FontSize',fontsize*1)
 
 xlim([-30, 20])
 ylim([-1.7, 1.7])
 
 xlabel('cross-shore distance (m)')
 ylabel('bed level (m +NAP)')
-legend(string(surveyDates(survey)))
+legend(string(surveyDates(survey)), 'Location','southwest')
 
 % newcolors = crameri('roma');
 % colororder(newcolors(1:round(length(newcolors)/length(survey)):length(newcolors), :))
@@ -124,7 +126,7 @@ tSedi = [GS_20210920.Date_ddMMyyyy(1), GS_20210928.Date_ddMMyyyy(1), GS_20211001
 zSedi2 = Z2(idxSedi, :);
 tSedi2 = surveyDates(survey2);
 
-f2 = figureRH;
+f2 = figure('Position',[1722, 709, 1719, 628]);
 plot(tSedi2, zSedi2, '-o', 'LineWidth',3)
 
 xline(tSedi, '-', 'sampling', 'FontSize',fontsize*1, 'LabelHorizontalAlignment','center')

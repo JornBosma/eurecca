@@ -106,7 +106,7 @@ title({'2021-10-07s','2021-10-15s'}, 'FontSize',fontsize*.7, 'Units','normalized
 
 ax10 = nexttile;
 plot(xB, yB, '-k', 'LineWidth', 2); hold on
-scatter(S.GS_20211008.xRD_m, S.GS_20211008.yRD_m, 40, 'r', 'filled', 'LineWidth',2, 'LineWidth',1);
+scatter(S.GS_20211008.xRD_m, S.GS_20211008.yRD_m, 40, 'r', 'filled', 'LineWidth',2;
 title('2021-10-08', 'FontSize',fontsize*.7, 'Units','normalized',...
     'Position',[.5, .65]);
 

@@ -10,10 +10,11 @@ warning off
 % addpath('/Users/jwb/Local_NoSync/OET/matlab/')
 % oetsettings('quiet')
 
-folderPath = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/PHZ/DataDescriptor/sediment_marlies/csv';
+% folderPath = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/PHZ/DataDescriptor/sediment_marlies/csv';
+folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep 'grainsizes' filesep];
 
 % List all files in the folder
-fileList = dir(fullfile(folderPath, 'GS_*'));
+fileList = dir(fullfile(folderPath, 'GS_*.csv'));
 
 S = struct();
 
@@ -65,7 +66,7 @@ tiledlayout(3,4, 'TileSpacing','none', 'Padding','tight')
 
 ax1 = nexttile;
 plot(xB, yB, '-k', 'LineWidth', 2); hold on
-scatter(S.GS_20201016.xRD_m, S.GS_20201016.yRD_m, 40, 'r', 'filled', 'LineWidth',2);
+scatter(S.GS_20201016.xRD_inaccurate_m, S.GS_20201016.yRD_inaccurate_m, 40, 'r', 'filled', 'LineWidth',2);
 title('2020-10-16', 'FontSize',fontsize*.7, 'Units','normalized',...
     'Position',[.5, .65]);
 
@@ -89,7 +90,7 @@ title('2021-04-08', 'FontSize',fontsize*.7, 'Units','normalized',...
 
 ax5 = nexttile;
 plot(xB, yB, '-k', 'LineWidth', 2); hold on
-scatter(S.GS_20210606.xRD_m, S.GS_20210606.yRD_m, 40, 'r', 'filled', 'LineWidth',2);
+scatter(S.GS_20210606.xRD_inaccurate_m, S.GS_20210606.yRD_inaccurate_m, 40, 'r', 'filled', 'LineWidth',2);
 title('2021-06-06', 'FontSize',fontsize*.7, 'Units','normalized',...
     'Position',[.5, .65]);
 
@@ -189,7 +190,7 @@ redpurp = [204/255, 121/255, 167/255];
 bluegreen = [0, 158/255, 115/255];
 
 %% Visualisation
-f1 = figure;
+f1 = figureRH;
 
 plot(D, Z, 'k', 'LineWidth',3); hold on
 area(D, Z, 'BaseValue',-1.7, 'FaceColor',yellow)

@@ -5,23 +5,23 @@ clc
 
 [basePath, fontsize, cbf, PHZ] = eurecca_init;
 
+% Load survey info
+load DEMsurveys.mat
+
+% Load polygons
+pgons = getPgons;
+warning off
+
+% Define contour levels
+% contourLevels = [0.2, 1.85];  % Max Berning
+% contourLevels = [-.5, 3];  % old limits used
+contourLevels = [0.3, 2.3, 4.3, -1.6];  % 2021 Q4 insufficient spatial coverage
+
 % DEM survey information
 dataPathDEM = [basePath 'data' filesep 'elevation' filesep 'processed' filesep];
 DEMS = dir(fullfile(dataPathDEM,'PHZ*.mat'));
 
-load DEMsurveys.mat
-
-% Polygons
-pgons = getPgons;
-warning off
-
-% Define the elevation values for the contour lines
-% contourLevels = [0.2, 1.85];  % Max Berning
-% contourLevels = [-.5, 3];  % old limits used
-contourLevels = [0.3, PHZ.AHW, 4, -1.6];  % 2021 Q4 insufficient spatial coverage
-
-
-%% Load DEMs
+% Load DEMs
 wb = waitbar(0, 'Loading DEMs');
 for i = 1:numel(DEMS)
 
@@ -32,8 +32,7 @@ for i = 1:numel(DEMS)
 end
 close(wb)
 
-
-%% Crop DEMs (scope)
+% Crop DEMs to fit scope
 wb = waitbar(0, 'Cropping DEMs to fit scope');
 for i = 1:numel(DEMS)
 
@@ -53,7 +52,7 @@ close(wb)
 
 
 %% Display DEMs
-% figureRH
+% figure2
 % tiledlayout('flow', 'TileSpacing','tight')
 % 
 % wb = waitbar(0, 'Rendering DEMs');
@@ -81,7 +80,7 @@ close(wb)
 % close(wb)
 
 
-%% Initialise contour maps
+%% Initialise contour maps (foreshore)
 
 % Preallocation
 contourData = cell(size(DEMS));
@@ -90,7 +89,7 @@ x = cell(size(DEMS));
 y = cell(size(DEMS));
 indices = cell(size(DEMS));
 
-figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -103,7 +102,6 @@ for i = 1:numel(DEMS)
 
     nexttile
     [contourData{i}, objectProp{i}] = contourf(X, Y, Z, contourLevels(1:2), 'ShowText','off');
-    % clabel(contourData{i}, objectProp{i}, 'FontSize',15, 'Color','red')
     title(DEMsurveys.name(i))
     hold on
 
@@ -130,18 +128,18 @@ for i = 1:numel(DEMS)
         y{i}{k} = smoothdata(y{i}{k}, "lowess",50);
         plot(x{i}{k}, y{i}{k}, 'r', 'LineWidth',2)
     end
-    patch(pgons.south_beach(:,1), pgons.south_beach(:,2), 'b', 'FaceAlpha',.2, 'EdgeColor','b', 'LineWidth',3)
-    patch(pgons.spit_sea(:,1), pgons.spit_sea(:,2), 'y', 'FaceAlpha',.2, 'EdgeColor','y', 'LineWidth',3)
-    patch(pgons.hook(:,1), pgons.hook(:,2), 'g', 'FaceAlpha',.2, 'EdgeColor','g', 'LineWidth',3)
-    patch(pgons.lagoon(:,1), pgons.lagoon(:,2), 'm', 'FaceAlpha',.2, 'EdgeColor','m', 'LineWidth',3)
-    patch(pgons.ceres(:,1), pgons.ceres(:,2), 'k', 'FaceAlpha',.2, 'EdgeColor','k', 'LineWidth',3)
-    patch(pgons.gate(:,1), pgons.gate(:,2), 'w', 'FaceAlpha',.2, 'EdgeColor','w', 'LineWidth',3)
+    % patch(pgons.south_beach(:,1), pgons.south_beach(:,2), 'b', 'FaceAlpha',.2, 'EdgeColor','b', 'LineWidth',3)
+    % patch(pgons.spit_sea(:,1), pgons.spit_sea(:,2), 'y', 'FaceAlpha',.2, 'EdgeColor','y', 'LineWidth',3)
+    % patch(pgons.hook(:,1), pgons.hook(:,2), 'g', 'FaceAlpha',.2, 'EdgeColor','g', 'LineWidth',3)
+    % patch(pgons.lagoon(:,1), pgons.lagoon(:,2), 'w', 'FaceAlpha',.2, 'EdgeColor','w', 'LineWidth',3)
+    % patch(pgons.ceres(:,1), pgons.ceres(:,2), 'k', 'FaceAlpha',.2, 'EdgeColor','k', 'LineWidth',3)
+    % patch(pgons.gate(:,1), pgons.gate(:,2), 'm', 'FaceAlpha',.2, 'EdgeColor','m', 'LineWidth',3)
     % text(mean(pgons.south_beach(:,1)), mean(pgons.south_beach(:,2)), "1", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','b')
     % text(mean(pgons.spit_sea(:,1)), mean(pgons.spit_sea(:,2)), "2", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','y')
     % text(mean(pgons.hook(:,1)), mean(pgons.hook(:,2)), "3", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','g')
-    % text(mean(pgons.lagoon(:,1)), mean(pgons.lagoon(:,2)), "4", 'i = 1FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','m')
+    % text(mean(pgons.lagoon(:,1)), mean(pgons.lagoon(:,2)), "4", 'i = 1FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','w')
     % text(mean(pgons.ceres(:,1)), mean(pgons.ceres(:,2)), "5", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','k')
-    % text(mean(pgons.gate(:,1)), mean(pgons.gate(:,2)), "6", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','w')
+    % text(mean(pgons.gate(:,1)), mean(pgons.gate(:,2)), "6", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','m')
     hold off
 
     waitbar(i/numel(DEMS), wb, sprintf('Rendering contour maps: %d%%', floor(i/numel(DEMS)*100)))
@@ -231,11 +229,12 @@ close(wb)
 %% Display contour maps (zone 1: south_beach)
 
 % Preallocation
+poly1_array = cell(1, length(DEMS));
 perimeter1 = nan(size(DEMS));
 area1 = nan(size(DEMS));
 volume1 = nan(size(DEMS));
 
-f1 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -244,10 +243,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly1_array{i} = polyin;
         perimeter1(i) = perimeter(polyin);
         area1(i) = area(polyin);
         volume1(i) = sum(Z1{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly1_array{i} = poly1_array{i-1};
         perimeter1(i) = NaN;
         area1(i) = NaN;
         volume1(i) = NaN;
@@ -328,7 +329,7 @@ for i = 1:numel(DEMS)
     contourLine = contourLine(~cellfun('isempty', contourLine));
 
     % Check whether the lower contour line has sufficient coverage
-    if numel(contourLine{2}) < 1000
+    if length(contourLine{2}) < 1000
         fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has insufficient coverage\n']);
         continue
     end
@@ -336,8 +337,10 @@ for i = 1:numel(DEMS)
     % Reorder the contour lines to produce the correct polygon
     if length(contourLine) == 2
         contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{2})];
-    elseif length(contourLine) == 3
-        contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{2}); contourLine{3}];
+    % elseif length(contourLine) == 3
+    %     contourMask{i} = [contourLine{2}(1, :); contourLine{1}; contourLine{3}; flipud(contourLine{2})];
+    % elseif length(contourLine) == 4
+    %     contourMask{i} = [contourLine{2}(1, :); contourLine{1};  contourLine{3}; contourLine{4}; flipud(contourLine{2})];
     else
         fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has <2 contour lines\n']);
     end
@@ -365,11 +368,12 @@ close(wb)
 %% Display contour maps (zone 2: spit_sea)
 
 % Preallocation
+poly2_array = cell(1, length(DEMS));
 perimeter2 = nan(size(DEMS));
 area2 = nan(size(DEMS));
 volume2 = nan(size(DEMS));
 
-f2 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -378,10 +382,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly2_array{i} = polyin;
         perimeter2(i) = perimeter(polyin);
         area2(i) = area(polyin);
         volume2(i) = sum(Z2{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly2_array{i} = poly2_array{i-1};
         perimeter2(i) = NaN;
         area2(i) = NaN;
         volume2(i) = NaN;
@@ -427,7 +433,7 @@ y3 = cell(size(DEMS));
 contourMask = cell(size(DEMS));
 
 wb = waitbar(0, 'Cropping DEMs (zone 3)');
-for i = [1 12]%1:numel(DEMS)
+for i = 1:numel(DEMS)
     
     % Copy variables
     X3{i} = DEMS(i).data.DEM.X;
@@ -458,16 +464,26 @@ for i = [1 12]%1:numel(DEMS)
     % Only keep the longest three non-empty contour lines
     arrayLengths = cellfun(@length, contourLine);
     [sortedLengths, sortedIndices] = sort(arrayLengths, 'descend');
-    if i == 8  % Q2 2021
+    if i == 5 || i == 6  % Q3 2020 or Q4 2020
         contourLine = contourLine(sortedIndices([1, 3]));
+    elseif i == 8  % Q2 2021
+        contourLine = contourLine(sortedIndices(1:2));
     else
         contourLine = contourLine(sortedIndices(1:3));
     end
     contourLine = contourLine(~cellfun('isempty', contourLine));
+    
+    % % Initialize a logical mask to identify arrays with length >= 100
+    % mask = cellfun(@(x) length(x) >= 100, contourLine);
+    % 
+    % % Remove arrays with length < 100 using the mask
+    % contourLine = contourLine(mask);
 
     % Reorder the contour lines to produce the correct polygon
     if length(contourLine) == 1
         contourMask{i} = contourLine{1};
+    elseif length(contourLine) == 2 && i == 2
+        contourMask{i} = [contourLine{2}(end, :); contourLine{1}; contourLine{2}];
     elseif length(contourLine) == 2
         contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{2})];
     elseif length(contourLine) == 3
@@ -499,11 +515,12 @@ close(wb)
 %% Display contour maps (zone 3: hook)
 
 % Preallocation
+poly3_array = cell(1, length(DEMS));
 perimeter3 = nan(size(DEMS));
 area3 = nan(size(DEMS));
 volume3 = nan(size(DEMS));
 
-f3 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -512,10 +529,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly3_array{i} = polyin;
         perimeter3(i) = perimeter(polyin);
         area3(i) = area(polyin);
         volume3(i) = sum(Z3{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly3_array{i} = poly3_array{i-1};
         perimeter3(i) = NaN;
         area3(i) = NaN;
         volume3(i) = NaN;
@@ -546,7 +565,7 @@ for i = 1:numel(DEMS)
 end
 close(wb)
 
-clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPolygonC j polyin sortedIndices sortedLengths wb x3 X3 xpoly y3 Y3 ypoly Z3
+clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPolygonC j polyin3 sortedIndices sortedLengths wb x3 X3 xpoly y3 Y3 ypoly Z3
 close all
 
 
@@ -633,11 +652,12 @@ close(wb)
 %% Display contour maps (zone 4: lagoon)
 
 % Preallocation
+poly4_array = cell(1, length(DEMS));
 perimeter4 = nan(size(DEMS));
 area4 = nan(size(DEMS));
 volume4 = nan(size(DEMS));
 
-f4 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -646,10 +666,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly4_array{i} = polyin;
         perimeter4(i) = perimeter(polyin);
         area4(i) = area(polyin);
         volume4(i) = sum(Z4{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly4_array{i} = poly4_array{i-1};
         perimeter4(i) = NaN;
         area4(i) = NaN;
         volume4(i) = NaN;
@@ -729,21 +751,30 @@ for i = 1:numel(DEMS)
     % Only keep the longest three non-empty contour lines
     arrayLengths = cellfun(@length, contourLine);
     [sortedLengths, sortedIndices] = sort(arrayLengths, 'descend');
-    contourLine = contourLine(sortedIndices(1:3));
+    if i == 4  % Q2 2020
+        contourLine = contourLine(sortedIndices([1, 2, 4]));
+    else
+        contourLine = contourLine(sortedIndices(1:3));
+    end
     contourLine = contourLine(~cellfun('isempty', contourLine));
     
-    % Initialize a logical mask to identify arrays with length >= 400
-    mask = cellfun(@(x) length(x) >= 400, contourLine);
+    if i ~= 4
+    
+    % Initialize a logical mask to identify arrays with length >= 300
+    mask = cellfun(@(x) length(x) >= 300, contourLine);
 
-    % Remove arrays with length < 400 using the mask
+    % Remove arrays with length < 300 using the mask
     contourLine = contourLine(mask);
+
+    end
 
     % Reorder the contour lines to produce the correct polygon
     if length(contourLine) == 2
         contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{2})];
+    elseif length(contourLine) == 3 && i == 4
+        contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{3}); flipud(contourLine{2})];
     elseif length(contourLine) == 3
         contourMask{i} = [contourLine{3}(1, :); contourLine{1}; flipud(contourLine{2}); flipud(contourLine{3})];
-        % contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{3}); flipud(contourLine{2})];
     else
         fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has <2 contour lines\n']);
     end
@@ -771,11 +802,12 @@ close(wb)
 %% Display contour maps (zone 5: Ceres)
 
 % Preallocation
+poly5_array = cell(1, length(DEMS));
 perimeter5 = nan(size(DEMS));
 area5 = nan(size(DEMS));
 volume5 = nan(size(DEMS));
 
-f5 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -784,10 +816,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly5_array{i} = polyin;
         perimeter5(i) = perimeter(polyin);
         area5(i) = area(polyin);
         volume5(i) = sum(Z5{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly5_array{i} = poly5_array{i-1};
         perimeter5(i) = NaN;
         area5(i) = NaN;
         volume5(i) = NaN;
@@ -902,11 +936,12 @@ close all
 % %% Display contour maps (zone 6: Gate)
 % 
 % % Preallocation
+% poly6_array = cell(1, length(DEMS));
 % perimeter6 = nan(size(DEMS));
 % area6 = nan(size(DEMS));
 % volume6 = nan(size(DEMS));
 % 
-% f6 = figureRH;
+% figure2
 % tiledlayout('flow', 'TileSpacing','tight')
 % 
 % wb = waitbar(0, 'Rendering contour maps');
@@ -915,10 +950,12 @@ close all
 %     % Compute geometric quantities
 %     try 
 %         polyin = polyshape(contourMask{i});
+%         poly6_array{i} = polyin;
 %         perimeter6(i) = perimeter(polyin);
 %         area6(i) = area(polyin);
 %         volume6(i) = sum(Z6{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
 %     catch
+%         poly6_array{i} = poly6_array{i-1};
 %         perimeter6(i) = NaN;
 %         area6(i) = NaN;
 %         volume6(i) = NaN;
@@ -951,7 +988,7 @@ close all
 % 
 % clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPolygonC j polyin sortedIndices sortedLengths wb x6 X6 xpoly y6 Y6 ypoly Z6
 % close all
-
+% 
 
 %% Initiate contour maps (dry beach)
 
@@ -962,7 +999,7 @@ x = cell(size(DEMS));
 y = cell(size(DEMS));
 indices = cell(size(DEMS));
 
-figureRH
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -975,7 +1012,6 @@ for i = 1:numel(DEMS)
 
     nexttile
     [contourData{i}, objectProp{i}] = contourf(X, Y, Z, [contourLevels(2), contourLevels(3)], 'ShowText','off');
-    % clabel(contourData{i}, objectProp{i}, 'FontSize',15, 'Color','red')
     title(DEMsurveys.name(i))
     hold on
 
@@ -1015,6 +1051,9 @@ for i = 1:numel(DEMS)
 
 end
 close(wb)
+
+clearvars arrayLengths contourData contourX contourY data dataPathDEM i inScope k objectProp wb X Y Z
+close all
 
 
 %% Crop DEMs (zone 7: south_beach upper)
@@ -1094,11 +1133,12 @@ close(wb)
 %% Display contour maps (zone 7: south_beach upper)
 
 % Preallocation
+poly7_array = cell(1, length(DEMS));
 perimeter7 = nan(size(DEMS));
 area7 = nan(size(DEMS));
 volume7 = nan(size(DEMS));
 
-f7 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -1107,10 +1147,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly7_array{i} = polyin;
         perimeter7(i) = perimeter(polyin);
         area7(i) = area(polyin);
         volume7(i) = sum(Z7{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly7_array{i} = poly7_array{i-1};
         perimeter7(i) = NaN;
         area7(i) = NaN;
         volume7(i) = NaN;
@@ -1222,11 +1264,12 @@ close(wb)
 %% Display contour maps (zone 8: spit upper)
 
 % Preallocation
+poly8_array = cell(1, length(DEMS));
 perimeter8 = nan(size(DEMS));
 area8 = nan(size(DEMS));
 volume8 = nan(size(DEMS));
 
-f8 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -1235,10 +1278,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly8_array{i} = polyin;
         perimeter8(i) = perimeter(polyin);
         area8(i) = area(polyin);
         volume8(i) = sum(Z8{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly8_array{i} = poly8_array{i-1};
         perimeter8(i) = NaN;
         area8(i) = NaN;
         volume8(i) = NaN;
@@ -1315,14 +1360,20 @@ for i = 1:numel(DEMS)
     % Only keep the longest three non-empty contour lines
     arrayLengths = cellfun(@length, contourLine);
     [sortedLengths, sortedIndices] = sort(arrayLengths, 'descend');
-    contourLine = contourLine(sortedIndices(1:2));
+    contourLine = contourLine(sortedIndices(1:3));
     contourLine = contourLine(~cellfun('isempty', contourLine));
+
+    % Initialize a logical mask to identify arrays with length >= 500
+    mask = cellfun(@(x) length(x) >= 500, contourLine);
+
+    % Remove arrays with length < 500 using the mask
+    contourLine = contourLine(mask);
 
     % Reorder the contour lines to produce the correct polygon
     if length(contourLine) == 2
         contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{2})];
-    % elseif length(contourLine) == 3
-    %     contourMask{i} = [contourLine{3}(1, :); contourLine{1}; flipud(contourLine{2}); flipud(contourLine{3})];
+    elseif length(contourLine) == 3
+        contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{3}); flipud(contourLine{2})];
     else
         fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has <2 contour lines\n']);
     end
@@ -1350,11 +1401,12 @@ close(wb)
 %% Display contour maps (zone 9: NW_beach upper)
 
 % Preallocation
+poly9_array = cell(1, length(DEMS));
 perimeter9 = nan(size(DEMS));
 area9 = nan(size(DEMS));
 volume9 = nan(size(DEMS));
 
-f9 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -1363,10 +1415,12 @@ for i = 1:numel(DEMS)
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly9_array{i} = polyin;
         perimeter9(i) = perimeter(polyin);
         area9(i) = area(polyin);
         volume9(i) = sum(Z9{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly9_array{i} = poly9_array{i-1};
         perimeter9(i) = NaN;
         area9(i) = NaN;
         volume9(i) = NaN;
@@ -1397,8 +1451,8 @@ for i = 1:numel(DEMS)
 end
 close(wb)
 
-clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPolygonC j polyin sortedIndices sortedLengths wb x9 X9 xpoly y9 Y9 ypoly Z9
-close all
+% clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPolygonC j polyin sortedIndices sortedLengths wb x9 X9 xpoly y9 Y9 ypoly Z9
+% close all
 
 
 %% Initiate contour maps (below NAP)
@@ -1410,7 +1464,7 @@ x = cell(size(DEMS));
 y = cell(size(DEMS));
 indices = cell(size(DEMS));
 
-figureRH
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -1423,7 +1477,6 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
 
     nexttile
     [contourData{i}, objectProp{i}] = contourf(X, Y, Z, [contourLevels(4), contourLevels(1)], 'ShowText','off');
-    % clabel(contourData{i}, objectProp{i}, 'FontSize',15, 'Color','red')
     title(DEMsurveys.name(i))
     hold on
 
@@ -1440,7 +1493,7 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     arrayLengths = cellfun(@numel, contourX);
     
     % Use logical indexing to find the indices of significant contour lines
-    indices{i} = find(arrayLengths > 1000);
+    indices{i} = find(arrayLengths > 500);
     x{i} = contourX(indices{i});
     y{i} = contourY(indices{i});
 
@@ -1450,10 +1503,12 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
         y{i}{k} = smoothdata(y{i}{k}, "lowess",50);
         plot(x{i}{k}, y{i}{k}, 'r', 'LineWidth',2)
     end
-    % patch(pgons.south_beach(:,1), pgons.south_beach(:,2), 'b', 'FaceAlpha',.2, 'EdgeColor','b', 'LineWidth',3)
-    % patch(pgons.spit(:,1), pgons.spit(:,2), 'y', 'FaceAlpha',.2, 'EdgeColor','y', 'LineWidth',3)
-    % text(mean(pgons.south_beach(:,1)), mean(pgons.south_beach(:,2)), "6", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','b')
-    % text(mean(pgons.spit(:,1)), mean(pgons.spit(:,2)), "7", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','y')
+    patch(pgons.south_bathy(:,1), pgons.south_bathy(:,2), 'b', 'FaceAlpha',.2, 'EdgeColor','b', 'LineWidth',3)
+    patch(pgons.spit_bathy(:,1), pgons.spit_bathy(:,2), 'y', 'FaceAlpha',.2, 'EdgeColor','y', 'LineWidth',3)
+    patch(pgons.north_bathy(:,1), pgons.north_bathy(:,2), 'g', 'FaceAlpha',.2, 'EdgeColor','y', 'LineWidth',3)
+    patch(pgons.lagoon_bathy(:,1), pgons.lagoon_bathy(:,2), 'm', 'FaceAlpha',.2, 'EdgeColor','y', 'LineWidth',3)
+    % text(mean(pgons.south_bathy(:,1)), mean(pgons.south_bathy(:,2)), "6", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','b')
+    % text(mean(pgons.spit_bathy(:,1)), mean(pgons.spit_bathy(:,2)), "7", 'FontSize',fontsize, 'FontWeight','bold', 'HorizontalAlignment','center', 'Color','y')
     hold off
 
     waitbar(i/numel(DEMS), wb, sprintf('Rendering contour maps: %d%%', floor(i/numel(DEMS)*100)))
@@ -1463,7 +1518,7 @@ end
 close(wb)
 
 
-%% Crop DEMs (zone 10: platform)
+%% Crop DEMs (zone 10: south_beach bathy)
 
 % Preallocation
 X10 = cell(size(DEMS));
@@ -1484,7 +1539,7 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     y10{i} = y{i};
 
     % Create a logical mask for points within the polygon
-    inPolygon = inpoly2([X10{i}(:), Y10{i}(:)], pgons.platform);
+    inPolygon = inpoly2([X10{i}(:), Y10{i}(:)], pgons.south_bathy);
 
     % Apply area mask
     X10{i}(~inPolygon) = NaN;
@@ -1495,7 +1550,7 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     inPolygonC = cell(size(indices{i}));
     contourLine = cell(size(indices{i}));
     for j = 1:numel(indices{i})
-        inPolygonC{j} = inpoly2([x10{i}{j}', y10{i}{j}'], pgons.platform);
+        inPolygonC{j} = inpoly2([x10{i}{j}', y10{i}{j}'], pgons.south_bathy);
 
         x10{i}{j} = x10{i}{j}(inPolygonC{j});
         y10{i}{j} = y10{i}{j}(inPolygonC{j});
@@ -1540,14 +1595,15 @@ end
 close(wb)
 
 
-%% Display contour maps (zone 10: platform)
+%% Display contour maps (zone 10: south_beach bathy)
 
 % Preallocation
+poly10_array = cell(1, length(DEMS));
 perimeter10 = nan(size(DEMS));
 area10 = nan(size(DEMS));
 volume10 = nan(size(DEMS));
 
-f10 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -1556,10 +1612,12 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly10_array{i} = polyin;
         perimeter10(i) = perimeter(polyin);
         area10(i) = area(polyin);
         volume10(i) = sum(Z10{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly10_array{i} = poly10_array{i-1};
         perimeter10(i) = NaN;
         area10(i) = NaN;
         volume10(i) = NaN;
@@ -1594,7 +1652,7 @@ clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPol
 close all
 
 
-%% Crop DEMs (zone 11: lagoon_lower)
+%% Crop DEMs (zone 11: spit_beach bathy)
 
 % Preallocation
 X11 = cell(size(DEMS));
@@ -1615,7 +1673,7 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     y11{i} = y{i};
 
     % Create a logical mask for points within the polygon
-    inPolygon = inpoly2([X11{i}(:), Y11{i}(:)], pgons.lagoon_bathy);
+    inPolygon = inpoly2([X11{i}(:), Y11{i}(:)], pgons.spit_bathy);
 
     % Apply area mask
     X11{i}(~inPolygon) = NaN;
@@ -1626,7 +1684,7 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     inPolygonC = cell(size(indices{i}));
     contourLine = cell(size(indices{i}));
     for j = 1:numel(indices{i})
-        inPolygonC{j} = inpoly2([x11{i}{j}', y11{i}{j}'], pgons.lagoon_bathy);
+        inPolygonC{j} = inpoly2([x11{i}{j}', y11{i}{j}'], pgons.spit_bathy);
 
         x11{i}{j} = x11{i}{j}(inPolygonC{j});
         y11{i}{j} = y11{i}{j}(inPolygonC{j});
@@ -1636,13 +1694,19 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     % Only keep the longest three non-empty contour lines
     arrayLengths = cellfun(@length, contourLine);
     [sortedLengths, sortedIndices] = sort(arrayLengths, 'descend');
+    try
+        contourLine = contourLine(sortedIndices(1:2));
+    catch
+        fprintf(2, ['Error in iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), '\n']);
+        continue
+    end
     contourLine = contourLine(~cellfun('isempty', contourLine));
 
     % Reorder the contour lines to produce the correct polygon
-    if length(contourLine) == 1
-        contourMask{i} = contourLine{1};
+    if length(contourLine) == 2
+        contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{2})];
     else
-        fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has <1 contour lines\n']);
+        fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has <2 contour lines\n']);
     end
 
     % Create a logical mask for points within the contour polygon
@@ -1665,14 +1729,15 @@ end
 close(wb)
 
 
-%% Display contour maps (zone 11: lagoon_lower)
+%% Display contour maps (zone 11: spit_beach bathy)
 
 % Preallocation
+poly11_array = cell(1, length(DEMS));
 perimeter11 = nan(size(DEMS));
 area11 = nan(size(DEMS));
 volume11 = nan(size(DEMS));
 
-f11 = figureRH;
+figure2
 tiledlayout('flow', 'TileSpacing','tight')
 
 wb = waitbar(0, 'Rendering contour maps');
@@ -1681,10 +1746,12 @@ for i = [1, 5, 12, 14]  % Only surveys with bathymetry
     % Compute geometric quantities
     try 
         polyin = polyshape(contourMask{i});
+        poly11_array{i} = polyin;
         perimeter11(i) = perimeter(polyin);
         area11(i) = area(polyin);
         volume11(i) = sum(Z11{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
     catch
+        poly11_array{i} = poly11_array{i-1};
         perimeter11(i) = NaN;
         area11(i) = NaN;
         volume11(i) = NaN;
@@ -1719,6 +1786,268 @@ clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPol
 close all
 
 
+%% Crop DEMs (zone 12: north_beach bathy)
+
+% Preallocation
+X12 = cell(size(DEMS));
+Y12 = cell(size(DEMS));
+Z12 = cell(size(DEMS));
+x12 = cell(size(DEMS));
+y12 = cell(size(DEMS));
+contourMask = cell(size(DEMS));
+
+wb = waitbar(0, 'Cropping DEMs (zone 12)');
+for i = [1, 5, 12, 14]  % Only surveys with bathymetry
+    
+    % Copy variables
+    X12{i} = DEMS(i).data.DEM.X;
+    Y12{i} = DEMS(i).data.DEM.Y;
+    Z12{i} = DEMS(i).data.DEM.Z;
+    x12{i} = x{i};
+    y12{i} = y{i};
+
+    % Create a logical mask for points within the polygon
+    inPolygon = inpoly2([X12{i}(:), Y12{i}(:)], pgons.north_bathy);
+
+    % Apply area mask
+    X12{i}(~inPolygon) = NaN;
+    Y12{i}(~inPolygon) = NaN;
+    Z12{i}(~inPolygon) = NaN;
+
+    % Same for the contour lines
+    inPolygonC = cell(size(indices{i}));
+    contourLine = cell(size(indices{i}));
+    for j = 1:numel(indices{i})
+        inPolygonC{j} = inpoly2([x12{i}{j}', y12{i}{j}'], pgons.north_bathy);
+
+        x12{i}{j} = x12{i}{j}(inPolygonC{j});
+        y12{i}{j} = y12{i}{j}(inPolygonC{j});
+        contourLine{j} = [x12{i}{j}', y12{i}{j}'];
+    end
+
+    % Only keep the longest three non-empty contour lines
+    arrayLengths = cellfun(@length, contourLine);
+    [sortedLengths, sortedIndices] = sort(arrayLengths, 'descend');
+    try
+        contourLine = contourLine(sortedIndices(1:2));
+    catch
+        fprintf(2, ['Error in iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), '\n']);
+        continue
+    end
+    contourLine = contourLine(~cellfun('isempty', contourLine));
+
+    % Reorder the contour lines to produce the correct polygon
+    if length(contourLine) == 2
+        contourMask{i} = [contourLine{2}(1, :); contourLine{1}; flipud(contourLine{2})];
+    else
+        fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has <2 contour lines\n']);
+    end
+
+    % Create a logical mask for points within the contour polygon
+    try
+        betweenContours = inpoly2([X12{i}(:), Y12{i}(:)], contourMask{i});
+    catch
+        fprintf(2, ['Error in iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), '\n']);
+        continue
+    end
+
+    % Apply the mask
+    X12{i}(~betweenContours) = NaN;
+    Y12{i}(~betweenContours) = NaN;
+    Z12{i}(~betweenContours) = NaN;
+    
+    waitbar(i/numel(DEMS), wb, sprintf('Cropping DEMs (zone 12): %d%%', floor(i/numel(DEMS)*100)))
+    pause(0.1)
+
+end
+close(wb)
+
+
+%% Display contour maps (zone 12: north_beach bathy)
+
+% Preallocation
+poly12_array = cell(1, length(DEMS));
+perimeter12 = nan(size(DEMS));
+area12 = nan(size(DEMS));
+volume12 = nan(size(DEMS));
+
+figure2
+tiledlayout('flow', 'TileSpacing','tight')
+
+wb = waitbar(0, 'Rendering contour maps');
+for i = [1, 5, 12, 14]  % Only surveys with bathymetry
+
+    % Compute geometric quantities
+    try 
+        polyin = polyshape(contourMask{i});
+        poly12_array{i} = polyin;
+        perimeter12(i) = perimeter(polyin);
+        area12(i) = area(polyin);
+        volume12(i) = sum(Z12{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
+    catch
+        poly12_array{i} = poly12_array{i-1};
+        perimeter12(i) = NaN;
+        area12(i) = NaN;
+        volume12(i) = NaN;
+
+        fprintf(2, ['Error in iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), '\n']);
+        continue
+    end
+
+    % Visualise the area of interest
+    nexttile
+    contourf(X12{i}, Y12{i}, Z12{i}, [contourLevels(4), contourLevels(2)], 'ShowText','off'); hold on
+    plot(polyin, "FaceAlpha",0, "LineWidth",3, "EdgeColor",'r')
+
+    [xpoly,ypoly] = centroid(polyin);
+    text(xpoly-300, ypoly+100, ['P = ', num2str(perimeter12(i), '%.2e'), ' m\newline' ...
+        'A = ', num2str(area12(i), '%.2e'), ' m^2\newline' ...
+        'V = ', num2str(volume12(i), '%.2e'), ' m^3'], "FontSize",fontsize/2)
+
+    title(DEMsurveys.name(i))
+    cmocean('delta')
+    clim([-8, 8])
+    axis off equal
+    view(46, 90)
+
+    waitbar(i/numel(DEMS), wb, sprintf('Rendering contour maps: %d%%', floor(i/numel(DEMS)*100)))
+    pause(0.1)
+
+end
+close(wb)
+
+clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPolygonC j polyin sortedIndices sortedLengths wb x12 X12 xpoly y12 Y12 ypoly Z12
+close all
+
+
+%% Crop DEMs (zone 13: lagoon_lower)
+
+% Preallocation
+X13 = cell(size(DEMS));
+Y13 = cell(size(DEMS));
+Z13 = cell(size(DEMS));
+x13 = cell(size(DEMS));
+y13 = cell(size(DEMS));
+contourMask = cell(size(DEMS));
+
+wb = waitbar(0, 'Cropping DEMs (zone 13)');
+for i = [1, 5, 12, 14]  % Only surveys with bathymetry
+    
+    % Copy variables
+    X13{i} = DEMS(i).data.DEM.X;
+    Y13{i} = DEMS(i).data.DEM.Y;
+    Z13{i} = DEMS(i).data.DEM.Z;
+    x13{i} = x{i};
+    y13{i} = y{i};
+
+    % Create a logical mask for points within the polygon
+    inPolygon = inpoly2([X13{i}(:), Y13{i}(:)], pgons.lagoon_bathy);
+
+    % Apply area mask
+    X13{i}(~inPolygon) = NaN;
+    Y13{i}(~inPolygon) = NaN;
+    Z13{i}(~inPolygon) = NaN;
+
+    % Same for the contour lines
+    inPolygonC = cell(size(indices{i}));
+    contourLine = cell(size(indices{i}));
+    for j = 1:numel(indices{i})
+        inPolygonC{j} = inpoly2([x13{i}{j}', y13{i}{j}'], pgons.lagoon_bathy);
+
+        x13{i}{j} = x13{i}{j}(inPolygonC{j});
+        y13{i}{j} = y13{i}{j}(inPolygonC{j});
+        contourLine{j} = [x13{i}{j}', y13{i}{j}'];
+    end
+
+    % Only keep the longest three non-empty contour lines
+    arrayLengths = cellfun(@length, contourLine);
+    [sortedLengths, sortedIndices] = sort(arrayLengths, 'descend');
+    contourLine = contourLine(~cellfun('isempty', contourLine));
+
+    % Reorder the contour lines to produce the correct polygon
+    if length(contourLine) == 1
+        contourMask{i} = contourLine{1};
+    else
+        fprintf(2, ['Iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), ' has <1 contour lines\n']);
+    end
+
+    % Create a logical mask for points within the contour polygon
+    try
+        betweenContours = inpoly2([X13{i}(:), Y13{i}(:)], contourMask{i});
+    catch
+        fprintf(2, ['Error in iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), '\n']);
+        continue
+    end
+
+    % Apply the mask
+    X13{i}(~betweenContours) = NaN;
+    Y13{i}(~betweenContours) = NaN;
+    Z13{i}(~betweenContours) = NaN;
+    
+    waitbar(i/numel(DEMS), wb, sprintf('Cropping DEMs (zone 13): %d%%', floor(i/numel(DEMS)*100)))
+    pause(0.1)
+
+end
+close(wb)
+
+
+%% Display contour maps (zone 13: lagoon_lower)
+
+% Preallocation
+poly13_array = cell(1, length(DEMS));
+perimeter13 = nan(size(DEMS));
+area13 = nan(size(DEMS));
+volume13 = nan(size(DEMS));
+
+figure2
+tiledlayout('flow', 'TileSpacing','tight')
+
+wb = waitbar(0, 'Rendering contour maps');
+for i = [1, 5, 12, 14]  % Only surveys with bathymetry
+
+    % Compute geometric quantities
+    try 
+        polyin = polyshape(contourMask{i});
+        poly13_array{i} = polyin;
+        perimeter13(i) = perimeter(polyin);
+        area13(i) = area(polyin);
+        volume13(i) = sum(Z13{i}(:)-contourLevels(4),'omitmissing');  % With respect to base level platform
+    catch
+        poly13_array{i} = poly13_array{i-1};
+        perimeter13(i) = NaN;
+        area13(i) = NaN;
+        volume13(i) = NaN;
+
+        fprintf(2, ['Error in iteration ', num2str(i), ': ', char(DEMsurveys.name(i)), '\n']);
+        continue
+    end
+
+    % Visualise the area of interest
+    nexttile
+    contourf(X13{i}, Y13{i}, Z13{i}, [contourLevels(4), contourLevels(2)], 'ShowText','off'); hold on
+    plot(polyin, "FaceAlpha",0, "LineWidth",3, "EdgeColor",'r')
+
+    [xpoly,ypoly] = centroid(polyin);
+    text(xpoly-300, ypoly+100, ['P = ', num2str(perimeter13(i), '%.2e'), ' m\newline' ...
+        'A = ', num2str(area13(i), '%.2e'), ' m^2\newline' ...
+        'V = ', num2str(volume13(i), '%.2e'), ' m^3'], "FontSize",fontsize/2)
+
+    title(DEMsurveys.name(i))
+    cmocean('delta')
+    clim([-8, 8])
+    axis off equal
+    view(46, 90)
+
+    waitbar(i/numel(DEMS), wb, sprintf('Rendering contour maps: %d%%', floor(i/numel(DEMS)*100)))
+    pause(0.1)
+
+end
+close(wb)
+
+clearvars arrayLengths betweenContours contourLine contourMask i inPolygon inPolygonC j polyin sortedIndices sortedLengths wb x13 X13 xpoly y13 Y13 ypoly Z13
+close all
+
+
 %% Store variables in structure
 Perimeter.SouthBeach = perimeter1;
 Perimeter.SpitBeach = perimeter2;
@@ -1729,9 +2058,10 @@ Perimeter.Ceres = perimeter5;
 Perimeter.SouthUpper = perimeter7;
 Perimeter.SpitUpper = perimeter8;
 Perimeter.NorthUpper = perimeter9;
-Perimeter.Platform = perimeter10;
-Perimeter.LagoonBathy = perimeter11;
-Perimeter.ContourLvls = contourLevels;
+Perimeter.SouthBathy = perimeter10;
+Perimeter.SpitBathy = perimeter11;
+Perimeter.NorthBathy = perimeter12;
+Perimeter.LagoonBathy = perimeter13;
 
 Area.SouthBeach = area1;
 Area.SpitBeach = area2;
@@ -1742,29 +2072,10 @@ Area.Ceres = area5;
 Area.SouthUpper = area7;
 Area.SpitUpper = area8;
 Area.NorthUpper = area9;
-
-% Preallocate arrays
-sumArray = zeros(size(area1));
-nanCountArray = zeros(size(area1));
-
-% Loop through each array in the structure
-fieldNames = fieldnames(Area);
-for i = 1:numel(fieldNames)
-    % Access the current array
-    currentArray = Area.(fieldNames{i});
-
-    % Calculate the sum of rows for the current array
-    sumArray = sumArray + currentArray;
-
-    % Count the NaN values in the current array
-    nanCountArray = nanCountArray + isnan(currentArray);
-
-end
-Area.total = sumArray;
-Area.numNaNs = nanCountArray;
-Area.Platform = area10;
-Area.LagoonBathy = area11;
-Area.ContourLvls = contourLevels;
+Area.SouthBathy = area10;
+Area.SpitBathy = area11;
+Area.NorthBathy = area12;
+Area.LagoonBathy = area13;
 
 Volume.SouthBeach = volume1;
 Volume.SpitBeach = volume2;
@@ -1775,29 +2086,24 @@ Volume.Ceres = volume5;
 Volume.SouthUpper = volume7;
 Volume.SpitUpper = volume8;
 Volume.NorthUpper = volume9;
+Volume.SouthBathy = volume10;
+Volume.SpitBathy = volume11;
+Volume.NorthBathy = volume12;
+Volume.LagoonBathy = volume13;
 
-% Preallocate arrays
-sumArray = zeros(size(volume1));
-nanCountArray = zeros(size(volume1));
-
-% Loop through each array in the structure
-fieldNames = fieldnames(Volume);
-for i = 1:numel(fieldNames)
-    % Access the current array
-    currentArray = Volume.(fieldNames{i});
-
-    % Calculate the sum of rows for the current array
-    sumArray = sumArray + currentArray;
-
-    % Count the NaN values in the current array
-    nanCountArray = nanCountArray + isnan(currentArray);
-
-end
-Volume.total = sumArray;
-Volume.numNaNs = nanCountArray;
-Volume.Platform = volume10;
-Volume.LagoonBathy = volume11;
-Volume.ContourLvls = contourLevels;
+Polyshape.SouthBeach = poly1_array;
+Polyshape.SpitBeach = poly2_array;
+Polyshape.Hook = poly3_array;
+Polyshape.Lagoon = poly4_array;
+Polyshape.Ceres = poly5_array;
+% Polyshape.Gate = poly6_array;
+Polyshape.SouthUpper = poly7_array;
+Polyshape.SpitUpper = poly8_array;
+Polyshape.NorthUpper = poly9_array;
+Polyshape.SouthBathy = poly10_array;
+Polyshape.SpitBathy = poly11_array;
+Polyshape.NorthBathy = poly12_array;
+Polyshape.LagoonBathy = poly13_array;
 
 level1_string = strrep(num2str(contourLevels(1)), '.', '');
 level2_string = strrep(num2str(contourLevels(2)), '.', '');
@@ -1806,7 +2112,7 @@ level4_string = strrep(num2str(contourLevels(4)), '.', '');
 
 save([basePath 'results' filesep 'metrics' filesep...
     'NAP_' level1_string '_' level2_string '_' level3_string '_' level4_string],...
-    "Perimeter", "Area", "Volume")
+    "Perimeter", "Area", "Volume", "Polyshape", "contourLevels")
 
 disp('Metrics stored!');
 

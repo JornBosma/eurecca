@@ -1,4 +1,4 @@
-function [basePath, fontsize, cbf, PHZ] = eurecca_init
+function [basePath, fontsize, cbf, PHZ, SEDMEX] = eurecca_init
 
 % define global variables
 % global basePath
@@ -16,7 +16,7 @@ addpath(genpath([basePath 'bin']))
 addpath(genpath([basePath 'docs']))
 
 % set default settings
-fontsize = 22;
+fontsize = 30;
 set(groot, 'DefaultAxesFontSize', fontsize)
 % set(groot, 'DefaultTextInterpreter', 'latex')
 % set(groot, 'DefaultAxesTickLabelInterpreter', 'latex')
@@ -39,6 +39,32 @@ cbf.yellow = [240/255, 228/255, 66/255];
 cbf.blue = [0/255, 114/255, 178/255];
 cbf.vermilion = [213/255, 94/255, 0/255];
 cbf.redpurp = [204/255, 121/255, 167/255];
+% not colourblind-friendly
+cbf.qual12 = ["#a6cee3"; ...
+        "#1f78b4"; ...
+        "#b2df8a"; ...
+        "#33a02c"; ...
+        "#fb9a99"; ...
+        "#e31a1c"; ...
+        "#fdbf6f"; ...
+        "#ff7f00"; ...
+        "#cab2d6"; ...
+        "#6a3d9a"; ...
+        "#ffff99"; ...
+        "#b15928"];
+cbf.custom12 = ...
+   [1.000000000000000   0.500000000000000   0.800000000000000; ...
+    0.992156862745098	0.749019607843137	0.435294117647059; ...
+    0.000000000000000   1.000000000000000   1.000000000000000; ...
+    0.792156862745098	0.698039215686275	0.839215686274510; ...
+    1.000000000000000   0.498039215686275	0.000000000000000; ...
+    0.698039215686275	0.874509803921569	0.541176470588235; ...
+    1.000000000000000	1.000000000000000	0.000000000000000; ...
+    0.890196078431373	0.101960784313725	0.109803921568627; ...
+    0.415686274509804	0.239215686274510	0.603921568627451; ...
+    0.694117647058824	0.349019607843137	0.156862745098039; ...
+    0.121568627450980	0.470588235294118	0.705882352941177; ...
+    0.200000000000000	0.627450980392157	0.172549019607843];
 
 % tidal datums wrt NAP @ PHZ
 PHZ.NAP = 0; % local reference datum [m]
@@ -46,24 +72,24 @@ PHZ.MHWS = 0.81; % mean high water spring [m] (visually determined from waterinf
 PHZ.MLWS = -1.07; % mean low water spring [m] (visually determined from waterinfo)
 
 % tidal datums during SEDMEX: Woerdman et al., 2022
-PHZ.MHW = 0.68; % mean high water [m]
-PHZ.MLW = -0.57; % mean low water [m]
-PHZ.MWL = 0.16; % mean water level [m]
-PHZ.MaxWL = 1.34; % maximum water level [m]
-PHZ.MinWL = -1.07; % minimum water level [m]
-PHZ.MSTR = 1.77; % mean spring tidal range [m]
-PHZ.MNTR = 0.92; % mean neap tidal range [m]
-PHZ.MTR = 1.25; % mean neap tidal range [m]
-PHZ.MaxTR = 1.77; % maximum tidal range [m]
-PHZ.MinTR = 0.92; % minimum tidal range [m]
+SEDMEX.MHW = 0.68; % mean high water [m]
+SEDMEX.MLW = -0.57; % mean low water [m]
+SEDMEX.MWL = 0.16; % mean water level [m]
+SEDMEX.MaxWL = 1.34; % maximum water level [m]
+SEDMEX.MinWL = -1.07; % minimum water level [m]
+SEDMEX.MSTR = 1.77; % mean spring tidal range [m]
+SEDMEX.MNTR = 0.92; % mean neap tidal range [m]
+SEDMEX.MTR = 1.25; % mean neap tidal range [m]
+SEDMEX.MaxTR = 1.77; % maximum tidal range [m]
+SEDMEX.MinTR = 0.92; % minimum tidal range [m]
 
 % tidal datums (slotgemiddelden 2011): HHNK & Witteveen+Bos, 2016
 PHZ.DHW = 2.95; % decennial (1/10y) high water level [m+NAP]
 PHZ.BHW = 2.4; % biennial (1/2y) high water level [m+NAP]
 PHZ.AHW = 2.25; % annual (1/1y) high water level [m+NAP]
-% PHZ.MHW = 0.64; % mean high water level [m+NAP]
+PHZ.MHW = 0.64; % mean high water level [m+NAP]
 PHZ.MSL = 0.04; % mean sea level [m+NAP]
-% PHZ.MLW = -0.69; % mean low water level [m+NAP]
+PHZ.MLW = -0.69; % mean low water level [m+NAP]
 PHZ.LAT = -1.17; % lowest astronomical tide [m+NAP]
 
 % axis limits and ticks

@@ -6,7 +6,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, ~] = eurecca_init;
+[~, fontsize, ~, ~] = eurecca_init;
 
 % colourblind-friendly colour palette
 orange = [230/255, 159/255, 0];
@@ -26,7 +26,7 @@ GS_20211007 = readtable(dataPath, opts);
 
 % prepare data
 sieveSizes = [8000, 4000, 2000, 1000, 710, 500, 425, 355, 300, 250, 180, 125, 63, 0];
-massRetained = GS_20211007{2, 16:end}; % first sample
+massRetained = GS_20211007{2, 16:end}; % second sample
 
 % calculate total mass
 totalMass = sum(massRetained);
@@ -69,16 +69,16 @@ D10 = interp1(normalizedMass(1:end-3)*100, sieveSizes(1:end-3), 90, 'pchip');
 % text(145, 90, ['D$_{10}$ = ',num2str(D10, 3),' $\mu$m'], 'FontSize',fontsize)
 % text(250, 50, ['D$_{50}$ = ',num2str(D50, 3),' $\mu$m'], 'FontSize',fontsize)
 % text(900, 10, ['D$_{90}$ = ',num2str(D90, 4),' $\mu$m'], 'FontSize',fontsize)
-text(145, 90, ['d_{10} = ',num2str(D10, 3),' \mum'], 'FontSize',fontsize) % tex
-text(250, 50, ['d_{50} = ',num2str(D50, 3),' \mum'], 'FontSize',fontsize) % tex
-text(850, 10, ['d_{90} = ',num2str(D90, 4),' \mum'], 'FontSize',fontsize) % tex
+text(145, 90, ['d_{10} = ',num2str(D10, 3),' μm'], 'FontSize',fontsize) % tex
+text(250, 50, ['d_{50} = ',num2str(D50, 3),' μm'], 'FontSize',fontsize) % tex
+text(850, 10, ['d_{90} = ',num2str(D90, 4),' μm'], 'FontSize',fontsize) % tex
 
 ax1.XScale = 'log';
 xlim(ax1, [min(sieveSizes) max(sieveSizes)])
 
 % xlabel('particle diameter ($\mu$m)')
 % ylabel('cumulative mass retained ($\%$)')
-xlabel('particle diameter [\mum]') % tex
+xlabel('particle diameter [μm]') % tex
 ylabel('cumulative mass retained [%]') % tex
 
 grid on
@@ -117,7 +117,7 @@ ax2.FontSize = fontsize*.9;
 
 % xlabel('particle diameter ($\mu$m)', 'FontSize',fontsize*.8)
 % ylabel('class weight ($\%$)', 'FontSize',fontsize*.8)
-xlabel('particle diameter [\mum]', 'FontSize',fontsize*.9) % tex
+xlabel('particle diameter [μm]', 'FontSize',fontsize*.9) % tex
 ylabel('class weight [%]', 'FontSize',fontsize*.9) % tex
 
 axis padded

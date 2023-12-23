@@ -6,7 +6,7 @@ clc
 [~, fontsize, ~, ~] = eurecca_init;
 
 % load DEMs
-A = load('PHZ_2019_Q0','-mat');
+A = load('PHZ_2019_Q2','-mat');
 B = load('PHZ_2022_Q4','-mat');
 
 % load polygons

@@ -2,7 +2,7 @@ function [] = Narrow(fontsize)
 
 % North arrow
 ta = annotation('textarrow', [.78 .80], [.595 .615], 'String', 'N');
-ta.FontSize = fontsize/1.3;
+ta.FontSize = fontsize;
 ta.Interpreter = 'latex';
 ta.LineWidth = 6;
 ta.HeadStyle = 'hypocycloid';

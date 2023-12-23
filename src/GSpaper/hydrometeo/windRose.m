@@ -35,11 +35,11 @@ Options1989 = WindRoseOptions(startDate1989, endDate1989, fontsize);
 [f1, ~, ~, ~, ~, ~] = WindRose(DeKooy1989.DD, DeKooy1989.FF/10, Options1989);
 
 % plot coastline orientations
-line([cos(coastAngleN)*.1, cos(coastAngleN)], [sin(coastAngleN)*.1, sin(coastAngleN)], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'DisplayName','N beach')
-line([-cos(coastAngleN), -cos(coastAngleN)*.1], [-sin(coastAngleN), -sin(coastAngleN)*.1], 'Color',cbf.vermilion, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
+line([cos(coastAngleN)*.1, cos(coastAngleN)], [sin(coastAngleN)*.1, sin(coastAngleN)], 'Color','k', 'LineStyle','--', 'LineWidth',4, 'DisplayName','N beach')
+line([-cos(coastAngleN), -cos(coastAngleN)*.1], [-sin(coastAngleN), -sin(coastAngleN)*.1], 'Color','k', 'LineStyle','--', 'LineWidth',4, 'HandleVisibility','off')
 
-line([cos(coastAngleS)*.1, cos(coastAngleS)], [sin(coastAngleS)*.1, sin(coastAngleS)], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'DisplayName','S beach')
-line([-cos(coastAngleS), -cos(coastAngleS)*.1], [-sin(coastAngleS), -sin(coastAngleS)*.1], 'Color',cbf.blue, 'LineStyle',':', 'LineWidth',3, 'HandleVisibility','off')
+line([cos(coastAngleS)*.1, cos(coastAngleS)], [sin(coastAngleS)*.1, sin(coastAngleS)], 'Color','k', 'LineStyle',':', 'LineWidth',4, 'DisplayName','S beach')
+line([-cos(coastAngleS), -cos(coastAngleS)*.1], [-sin(coastAngleS), -sin(coastAngleS)*.1], 'Color','k', 'LineStyle',':', 'LineWidth',4, 'HandleVisibility','off')
 
 hold off
 

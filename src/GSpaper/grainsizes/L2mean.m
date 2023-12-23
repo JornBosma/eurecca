@@ -310,3 +310,22 @@ ylim([1 9])
 xlabel('µm')
 yticks([])
 
+
+%% Quick statistics
+
+M1 = mean(GS_20210920.Mean_mu, "omitmissing");
+M2 = mean(GS_20210928.Mean_mu, "omitmissing");
+M3 = mean(GS_20211001.Mean_mu, "omitmissing");
+M4 = mean(GS_20211007.Mean_mu, "omitmissing");
+M5 = mean(GS_20211015.Mean_mu, "omitmissing");
+
+Mtot = mean([M1, M2, M3, M4, M5]);
+
+S1 = mean(GS_20210920.Sorting, "omitmissing");
+S2 = mean(GS_20210928.Sorting, "omitmissing");
+S3 = mean(GS_20211001.Sorting, "omitmissing");
+S4 = mean(GS_20211007.Sorting, "omitmissing");
+S5 = mean(GS_20211015.Sorting, "omitmissing");
+
+Stot = mean([S1, S2, S3, S4, S5]);
+
