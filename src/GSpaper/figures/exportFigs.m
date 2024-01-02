@@ -8,8 +8,8 @@ locMDPI = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figure
 
 %% Figure 2
 exportgraphics(f1, [locResults 'WindRoses' filesep 'wind_rose_1989.png'])
-exportgraphics(f2, [locResults 'WindRoses' filesep 'wind_rose_2019.png'])
-exportgraphics(f3, [locResults 'WindRoses' filesep 'wind_rose_SEDMEX.png'])
+% exportgraphics(f2, [locResults 'WindRoses' filesep 'wind_rose_2019.png'])
+% exportgraphics(f3, [locResults 'WindRoses' filesep 'wind_rose_SEDMEX.png'])
 
 
 %% Figure 3
@@ -18,7 +18,8 @@ exportgraphics(f1, [locResults 'sediments' filesep 'exsample.png'])
 
 %% Figure 4
 exportgraphics(f1, [locMDPI 'conditions_LT.png'])
-exportgraphics(f2, [locMDPI 'conditions_ST.png'])
+exportgraphics(f2, [locResults 'hydrometeo' filesep 'conditions_ST.png'])
+% exportgraphics(f2, [locResults 'hydrometeo' filesep 'conditions_ST_lgnd.png'])
 
 
 %% Figure 6

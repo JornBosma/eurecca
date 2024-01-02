@@ -4,6 +4,7 @@ clear
 clc
 
 [~, fontsize, ~, PHZ, SEDMEX] = eurecca_init;
+% fontsize = 22; % ultra-wide screen
 
 % Load cross-shore tracks
 dataPathTracks = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor'...
@@ -14,7 +15,7 @@ trackInfo = ncinfo(dataPathTracks);
 % Assign track variables
 x = ncread(dataPathTracks, 'x'); % xRD [m]
 y = ncread(dataPathTracks, 'y'); % yRD [m]
-z = ncread(dataPathTracks, 'z'); % bed level [m+NAP]
+z = ncread(dataPathTracks, 'z'); % bed level [NAP+m]
 d = ncread(dataPathTracks, 'd'); % cross-shore distance [m]
 ID = ncread(dataPathTracks, 'ID'); % profile ID (days since 2020-10-16 00:00:00)
 transect = ncread(dataPathTracks, 'transect'); % tansect number (Python counting)
@@ -71,7 +72,7 @@ view(48.1, 90)
 cb = colorbar;
 cb.Location = 'northoutside';
 set(cb, 'position', [.24 .64 .46 .015])
-cb.Label.String = 'bed level (m+NAP)';
+cb.Label.String = 'bed level (NAP+m)';
 cb.FontSize = fontsize;
 clim([-8, 8])
 % colormap(crameri('bukavu', 'pivot',0))
@@ -85,7 +86,7 @@ h = get(ax,'Children');
 set(ax,'Children',[h(2) h(1)])
 
 % North arrow
-Narrow(fontsize)
+Narrow(40)
 
 % MHW & MLW contours
 contour(C.DEM.X, C.DEM.Y, C.DEM.Z, [PHZ.MLW, PHZ.MHW], '-k', 'ShowText','off', 'LineWidth',2)
@@ -103,7 +104,7 @@ view(48.1, 90)
 cb = colorbar;
 cb.Location = 'northoutside';
 set(cb, 'position', [.24 .64 .46 .015])
-cb.Label.String = 'bed level (m+NAP)';
+cb.Label.String = 'bed level (NAP+m)';
 cb.FontSize = fontsize;
 clim([-8, 8])
 % colormap(crameri('bukavu', 'pivot',0))
@@ -117,7 +118,7 @@ h = get(ax,'Children');
 set(ax,'Children',[h(2) h(1)])
 
 % North arrow
-Narrow(fontsize)
+Narrow(40)
 
 % MHW & MLW contours
 contour(D.DEM.X, D.DEM.Y, D.DEM.Z, [PHZ.MLW, PHZ.MHW], '-k', 'ShowText','off', 'LineWidth',2)
@@ -158,7 +159,7 @@ hatch(p, [15 10 1], 'k');
 % end
 
 % North arrow
-Narrow(fontsize)
+Narrow(40)
 
 % MHW & MLW contours
 contour(D.DEM.X, D.DEM.Y, D.DEM.Z, [PHZ.MLW, PHZ.MHW], '-k', 'ShowText','off', 'LineWidth',2)

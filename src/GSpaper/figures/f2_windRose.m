@@ -4,6 +4,7 @@ clear
 clc
 
 [~, fontsize, cbf, ~] = eurecca_init;
+% fontsize = 26; % ultra-wide screen
 
 % plot coastline orientations
 coastAngleNdeg = 50; % coastline angle northern beach [deg North]
@@ -33,14 +34,14 @@ Options1989 = WindRoseOptions(startDate1989, endDate1989, fontsize);
 
 % generate wind rose
 [f1, ~, ~, ~, ~, ~] = WindRose(DeKooy1989.DD, DeKooy1989.FF/10, Options1989);
+f1.Position = [1849	213	1164 964];
 
 % plot coastline orientations
-line([cos(coastAngleN)*.1, cos(coastAngleN)], [sin(coastAngleN)*.1, sin(coastAngleN)], 'Color','k', 'LineStyle','--', 'LineWidth',4, 'DisplayName','N beach')
-line([-cos(coastAngleN), -cos(coastAngleN)*.1], [-sin(coastAngleN), -sin(coastAngleN)*.1], 'Color','k', 'LineStyle','--', 'LineWidth',4, 'HandleVisibility','off')
-
 line([cos(coastAngleS)*.1, cos(coastAngleS)], [sin(coastAngleS)*.1, sin(coastAngleS)], 'Color','k', 'LineStyle',':', 'LineWidth',4, 'DisplayName','S beach')
 line([-cos(coastAngleS), -cos(coastAngleS)*.1], [-sin(coastAngleS), -sin(coastAngleS)*.1], 'Color','k', 'LineStyle',':', 'LineWidth',4, 'HandleVisibility','off')
 
+line([cos(coastAngleN)*.1, cos(coastAngleN)], [sin(coastAngleN)*.1, sin(coastAngleN)], 'Color','k', 'LineStyle','--', 'LineWidth',4, 'DisplayName','Spit')
+line([-cos(coastAngleN), -cos(coastAngleN)*.1], [-sin(coastAngleN), -sin(coastAngleN)*.1], 'Color','k', 'LineStyle','--', 'LineWidth',4, 'HandleVisibility','off')
 hold off
 
 %% Monitoring period: 2019-2022 (3 years) hourly record

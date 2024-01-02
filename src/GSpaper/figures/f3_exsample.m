@@ -4,22 +4,28 @@ clear
 clc
 
 [~, fontsize, cbf, ~, ~] = eurecca_init;
+% fontsize = 26; % ultra-wide screen
 
-% folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep];
-folderPath = '/Users/jwb/Downloads';
+folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep];
 
 
 %% Load sediment data
-% dataPath = [folderPath 'grainsizes' filesep 'GS_20201202.csv'];
-dataPath = [folderPath filesep 'GS_20201202.csv'];
+dataPath = [folderPath 'grainsizes' filesep 'GS_20201202.csv'];
+% dataPath = [folderPath 'grainsizes' filesep 'GS_20221026.csv'];
 
 opts = detectImportOptions(dataPath);
 opts = setvaropts(opts,'Date_ddMMyyyy','InputFormat','dd/MM/yyyy');
 
+% Option 1
 GS_20201202 = readtable(dataPath, opts);
 sieveSizes = [8000, 4000, 2800, 2000, 1700, 1400, 1180, 1000, 850, 710,...
     600, 500, 425, 355, 300, 250, 212, 180, 150, 125, 90, 75, 63, 45, 0];
 massRetained = GS_20201202{23, 16:end};  % T08S01
+
+% Option 2
+% GS_20221026 = readtable(dataPath, opts);
+% sieveSizes = [8000, 4000, 2000, 1000, 710, 500, 425, 355, 300, 250, 180, 125, 63, 0];
+% massRetained = GS_20221026{1, 16:end};
 
 
 %% Computations
@@ -41,12 +47,12 @@ plot(ax1, sieveSizes, normalizedMass*100, '-', 'Color',cbf.redpurp,...
 scatter(ax1, sieveSizes, normalizedMass*100, 150, 'MarkerEdgeColor',cbf.blue,...
     'MarkerFaceColor',cbf.blue, 'Marker','square')
 
-D90 = interp1(normalizedMass(1:end)*100, sieveSizes(1:end), 90, 'pchip');
-D50 = interp1(normalizedMass(1:end)*100, sieveSizes(1:end), 50, 'pchip');
-D10 = interp1(normalizedMass(1:end)*100, sieveSizes(1:end), 10, 'pchip');
-text(250, 85, ['D_{90} = ',num2str(D90, 4),' μm'], 'FontSize',fontsize*.9)
-text(100, 45, ['D_{50} = ',num2str(D50, 3),' μm'], 'FontSize',fontsize*.9)
-text(60, 5, ['D_{10} = ',num2str(D10, 3),' μm'], 'FontSize',fontsize*.9)
+D90 = interp1(normalizedMass(1:end-2)*100, sieveSizes(1:end-2), 90, 'pchip');
+D50 = interp1(normalizedMass(1:end-2)*100, sieveSizes(1:end-2), 50, 'pchip');
+D10 = interp1(normalizedMass(1:end-2)*100, sieveSizes(1:end-2), 10, 'pchip');
+text(280, 85, ['D_{90} = ',num2str(D90, 4),' μm'], 'FontSize',fontsize*.9)
+text(120, 45, ['D_{50} = ',num2str(D50, 3),' μm'], 'FontSize',fontsize*.9)
+text(80, 15, ['D_{10} = ',num2str(D10, 3),' μm'], 'FontSize',fontsize*.9)
 
 line([D90, D90], [20, 90], 'Color','k', 'LineStyle','--', 'LineWidth',2)
 line([D50, D50], [0, 50], 'Color','k', 'LineStyle','--', 'LineWidth',2)

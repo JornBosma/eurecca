@@ -19,6 +19,27 @@ Area = orderfields(Area, C);
 Volume = orderfields(Volume, C);
 Polyshape = orderfields(Polyshape, C);
 
+% Drop unreliable measurements from final survey
+Perimeter.SouthBathy(end) = NaN;
+Perimeter.SpitBathy(end) = NaN;
+Perimeter.NorthBathy(end) = NaN;
+Perimeter.LagoonBathy(end) = NaN;
+
+Area.SouthBathy(end) = NaN;
+Area.SpitBathy(end) = NaN;
+Area.NorthBathy(end) = NaN;
+Area.LagoonBathy(end) = NaN;
+
+Volume.SouthBathy(end) = NaN;
+Volume.SpitBathy(end) = NaN;
+Volume.NorthBathy(end) = NaN;
+Volume.LagoonBathy(end) = NaN;
+
+Polyshape.SouthBathy(end) = {[]};
+Polyshape.SpitBathy(end) = {[]};
+Polyshape.NorthBathy(end) = {[]};
+Polyshape.LagoonBathy(end) = {[]};
+
 % Load survey info
 load DEMsurveys.mat
 

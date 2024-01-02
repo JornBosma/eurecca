@@ -66,31 +66,33 @@ cbf.custom12 = ...
     0.121568627450980	0.470588235294118	0.705882352941177; ...
     0.200000000000000	0.627450980392157	0.172549019607843];
 
-% tidal datums wrt NAP @ PHZ
-PHZ.NAP = 0; % local reference datum [m]
-PHZ.MHWS = 0.81; % mean high water spring [m] (visually determined from waterinfo)
-PHZ.MLWS = -1.07; % mean low water spring [m] (visually determined from waterinfo)
+% tidal datums wrt NAP @ PHZ (waterinfo)
+PHZ.NAP = 0; % local reference datum [NAP+m]
+PHZ.HWS = 0.81; % typical high water spring level [NAP+m] (visually determined from waterinfo)
+PHZ.LWS = -1.07; % typical low water spring level [NAP+m] (visually determined from waterinfo)
+PHZ.HWlim = 1.95; % upper limit normal water-level range [NAP+m]
+PHZ.LWlim = -1.17;  % upper limit normal water-level range [NAP+m]
 
 % tidal datums during SEDMEX: Woerdman et al., 2022
-SEDMEX.MHW = 0.68; % mean high water [m]
-SEDMEX.MLW = -0.57; % mean low water [m]
-SEDMEX.MWL = 0.16; % mean water level [m]
-SEDMEX.MaxWL = 1.34; % maximum water level [m]
-SEDMEX.MinWL = -1.07; % minimum water level [m]
-SEDMEX.MSTR = 1.77; % mean spring tidal range [m]
-SEDMEX.MNTR = 0.92; % mean neap tidal range [m]
-SEDMEX.MTR = 1.25; % mean neap tidal range [m]
-SEDMEX.MaxTR = 1.77; % maximum tidal range [m]
-SEDMEX.MinTR = 0.92; % minimum tidal range [m]
+SEDMEX.MHW = 0.68; % mean high water [NAP+m]
+SEDMEX.MLW = -0.57; % mean low water [NAP+m]
+SEDMEX.MWL = 0.16; % mean water level [NAP+m]
+SEDMEX.MaxWL = 1.34; % maximum water level [NAP+m]
+SEDMEX.MinWL = -1.07; % minimum water level [NAP+m]
+SEDMEX.MSTR = 1.77; % mean spring tidal range [NAP+m]
+SEDMEX.MNTR = 0.92; % mean neap tidal range [NAP+m]
+SEDMEX.MTR = 1.25; % mean neap tidal range [NAP+m]
+SEDMEX.MaxTR = 1.82; % maximum tidal range [NAP+m]
+SEDMEX.MinTR = 0.55; % minimum tidal range [NAP+m]
 
 % tidal datums (slotgemiddelden 2011): HHNK & Witteveen+Bos, 2016
-PHZ.DHW = 2.95; % decennial (1/10y) high water level [m+NAP]
-PHZ.BHW = 2.4; % biennial (1/2y) high water level [m+NAP]
-PHZ.AHW = 2.25; % annual (1/1y) high water level [m+NAP]
-PHZ.MHW = 0.64; % mean high water level [m+NAP]
-PHZ.MSL = 0.04; % mean sea level [m+NAP]
-PHZ.MLW = -0.69; % mean low water level [m+NAP]
-PHZ.LAT = -1.17; % lowest astronomical tide [m+NAP]
+PHZ.DHW = 2.95; % decennial (1/10y) high water level [NAP+m]
+PHZ.BHW = 2.4; % biennial (1/2y) high water level [NAP+m]
+PHZ.AHW = 2.25; % annual (1/1y) high water level [NAP+m]
+PHZ.MHW = 0.64; % mean high water level [NAP+m]
+PHZ.MSL = 0.04; % mean sea level [NAP+m]
+PHZ.MLW = -0.69; % mean low water level [NAP+m]
+PHZ.LAT = -1.17; % lowest astronomical tide [NAP+m]
 
 % axis limits and ticks
 PHZ.xLim = [1.148e+05, 1.1805e+05]; % PHZD

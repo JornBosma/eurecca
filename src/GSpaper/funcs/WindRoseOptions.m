@@ -9,7 +9,7 @@ Options.AngleEast      = 90;
 Options.Labels         = {'N','NE','E','SE','S','SW','W','NW'};
 Options.LegendType     = 2;
 Options.FreqLabelAngle = 75;
-Options.nFreq          = 4;
+Options.nFreq          = 3;
 Options.nDirections    = 16;
 Options.min_radius     = .1;
 Options.vWinds         = [0 3 6 9 12 15];
@@ -17,7 +17,7 @@ Options.vWinds         = [0 3 6 9 12 15];
 
 Options.TextFontname   = 'Arial';
 Options.TitleString    = ['De Kooy: ', char(startDate, 'MMM yyyy'), ' - ', char(endDate, 'MMM yyyy')];
-Options.LabLegend      = 'wind speed (m s^{-1})';
+Options.LabLegend      = 'U (m s^{-1})';
 Options.LegendVariable = 'u';
 Options.CMap           = mycolormap;
 Options.Gap            = .2;
@@ -36,7 +36,7 @@ Options.AxesFontSize = fontsize;
 Options.AxesFontAngle = 'normal';
 
 % Options.TitleColor = [1 0.7 0.7];
-Options.TitleFontSize = fontsize*1.2;
+Options.TitleFontSize = fontsize;
 Options.TitleFontWeight = 'normal';
 % Options.TitleFontName = 'Jokerman';
 

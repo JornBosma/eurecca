@@ -3,14 +3,14 @@ close all
 clear
 clc
 
-[~, ~, cbf, PHZ, SEDMEX] = eurecca_init;
+[~, fontsize, cbf, PHZ, SEDMEX] = eurecca_init;
+% fontsize = 30; % ultra-wide screen
 
 folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep];
 locsX = {'L2C2', 'L2C3', 'L2C3.5', 'L2C4', 'L2C4.5', 'L2C5W', 'L2C5E', 'L2C6'};
 locsY = {'S', 'SL', 'L3.5', 'L4', 'T', 'L6'};
 idxSedi = [2155 2166 2171 2176 2181 2186 2196 2209];
 
-fontsize = 30;
 
 %% Cross-shore profiles
 dataPath{6} = [folderPath 'topobathy' filesep 'transects' filesep 'PHZD.nc'];
@@ -96,10 +96,13 @@ f1 = figure('Position',[1722, 709, 1719, 628]);
 
 hold on
 p = nan(length(survey));
-valAlpha = nan(size(survey));
+% valAlpha = nan(size(survey));
+valCol = nan(length(survey), 3);
 for n = 1:length(survey)
-    valAlpha(n) = (1/length(survey))+(n-1)*(1/length(survey));
-    p(n) = plot(d, Z(:,n), 'LineWidth',3, 'Color',[cbf.orange, valAlpha(n)]);
+    % valAlpha(n) = (1/length(survey))+(n-1)*(1/length(survey));
+    valCol(n,:) = repmat(.8 - (n-1)*(1/length(survey)), 1, 3);
+    % p(n) = plot(d, Z(:,n), 'LineWidth',3, 'Color',[cbf.orange, valAlpha(n)]);
+    p(n) = plot(d, Z(:,n), 'LineWidth',3, 'Color',valCol(n,:));
 end
 hold off
 
@@ -113,7 +116,7 @@ xlim([-30, 20])
 ylim([-1.7, 1.7])
 
 xlabel('cross-shore distance (m)')
-ylabel('bed level (m +NAP)')
+ylabel('bed level (NAP+m)')
 legend(string(surveyDates(survey)), 'Location','southwest')
 
 % newcolors = crameri('roma');
