@@ -4,6 +4,7 @@ clear
 clc
 
 [~, fontsize, ~, PHZ, ~] = eurecca_init;
+% fontsize = 30; % ultra-wide screen
 
 folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep...
     'DataDescriptor' filesep 'grainsizes' filesep];
@@ -24,36 +25,6 @@ for n = 1:length(fileList)
     T = readtable(dataPath{1}, opts);
     S.(fileNam) = T;
 end
-
-
-%% Apply mask
-A = load('PHZ_2022_Q2','-mat');
-
-pgns = getPgons;
-
-mask_scope = inpolygon(A.DEM.X, A.DEM.Y, pgns.scope(:,1), pgns.scope(:,2));
-A.DEM.Z(~mask_scope) = NaN;
-
-contourMatrixB = contourc(A.DEM.X(1,:), A.DEM.Y(:,1), A.DEM.Z, [0 0]);
-x = contourMatrixB(1, 2:end);
-y = contourMatrixB(2, 2:end);
-x(x<min(A.DEM.X(1,:))) = NaN;
-y(y<min(A.DEM.Y(:,1))) = NaN;
-
-
-%% Horizontal sample locations
-f1 = figureRH;
-
-plot(x, y, '-k', 'LineWidth', 2); hold on
-scatter(S.GS_20211008.xRD_m([1, 5, 9, 14, 19, 24]), S.GS_20211008.yRD_m([1, 5, 9, 14, 19, 24]), 200, 'r', 'filled', 'LineWidth',2);
-scatter(S.GS_20211009.xRD_m([1, 6, 11, 16]), S.GS_20211009.yRD_m([1, 6, 11, 16]), 200, 'r', 'filled', 'LineWidth',2);
-% title('2021-10-08/9', 'FontSize',fontsize*.7, 'Units','normalized',...
-%     'Position',[.5, .65]);
-
-xlim(PHZ.xLim);
-ylim(PHZ.yLim);
-axis off vis3d
-view(46, 90);
 
 
 %% Load sediment data
@@ -99,7 +70,7 @@ clear Track_Number Sample_Number numbers name row dataPath opts GS_20211008 GS_2
 
 
 %% Area-wide (mean) 8/9 Oct 2021
-f2 = figure('Position',[730, 1846, 1279, 391]);
+f1 = figure('Position',[1905, 682, 1279, 391]);
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(13,[4 5])
@@ -109,7 +80,7 @@ clim([300, 1400])
 
 h1.Title = [];
 h1.XDisplayData = flipud(h1.XDisplayData);
-h1.XDisplayLabels = flipud(h1.XDisplayLabels);
+h1.XDisplayLabels = NaN(size(flipud(h1.XDisplayLabels)));
 h1.YDisplayLabels = {'+1.00 m', '+0.75 m', '+0.50 m', '+0.25 m', '+0.00 m'};
 h1.XLabel = '';
 h1.YLabel = '';
@@ -122,7 +93,7 @@ h1.MissingDataLabel = 'no data';
 
 nexttile(6,[2 1])
 % text(0, .5, '2021-10-08/09', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
-text(0, .5, 'M_{G} (µm)', 'FontSize',fontsize*.8, 'FontWeight','normal', 'EdgeColor','none', 'Margin',6)
+text(.2, .4, 'M_{G} (µm)', 'FontSize',fontsize*.8, 'FontWeight','normal', 'EdgeColor','none', 'Margin',6)
 axis off
 
 heatdata = rot90(h1.ColorData, 2);
@@ -149,7 +120,7 @@ yticks([])
 
 
 %% Area-wide (std) 8/9 Oct 2021
-f3 = figure('Position',[730, 1846, 1279, 391]);
+f2 = figure('Position',[1905, 211, 1279, 391]);
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(13,[4 5])
@@ -172,7 +143,7 @@ h2.MissingDataLabel = 'no data';
 
 nexttile(6,[2 1])
 % text(0, .5, '2021-10-08/09', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
-text(0, .5, '\sigma_{G} (µm)', 'FontSize',fontsize*.8, 'FontWeight','normal', 'EdgeColor','none', 'Margin',6)
+text(.4, .4, '\sigma_{G}', 'FontSize',fontsize*.8, 'FontWeight','normal', 'EdgeColor','none', 'Margin',6)
 axis off
 
 heatdata = rot90(h2.ColorData, 2);
@@ -186,7 +157,6 @@ errorbar(1.5:10.5, meanS, stdS, '-ok', 'LineWidth',3)
 yline(mean(meanS, 'omitmissing'), '--k', 'LineWidth',2)
 xlim([1 11])
 ylim([1.5 3.2])
-% ylabel('M_{G} (µm)')
 xticks([])
 
 nexttile(18,[4 1])
@@ -194,6 +164,68 @@ errorbar(meanT, 1.5:5.5, stdT, 'horizontal', '-ok', 'LineWidth',3)
 xline(mean(meanT, 'omitmissing'), '--k', 'LineWidth',2)
 ylim([1 6])
 xlim([1.5 3.2])
-% xlabel('M_{G} (µm)')
 yticks([])
+
+
+%% Apply mask
+A = load('PHZ_2022_Q2','-mat');
+
+pgns = getPgons;
+
+mask_scope = inpolygon(A.DEM.X, A.DEM.Y, pgns.scope(:,1), pgns.scope(:,2));
+A.DEM.Z(~mask_scope) = NaN;
+
+contourMatrixB = contourc(A.DEM.X(1,:), A.DEM.Y(:,1), A.DEM.Z, [0 0]);
+x = contourMatrixB(1, 2:end);
+y = contourMatrixB(2, 2:end);
+x(x<min(A.DEM.X(1,:))) = NaN;
+y(y<min(A.DEM.Y(:,1))) = NaN;
+
+loclabels = string(flipud(h2.XDisplayLabels));
+loclabels = [loclabels(5:end); loclabels(1:4)];
+
+%% Horizontal sample locations
+X = [S.GS_20211008.xRD_m([1, 5, 9, 14, 19, 24]); S.GS_20211009.xRD_m([1, 6, 11, 16])];
+Y = [S.GS_20211008.yRD_m([1, 5, 9, 14, 19, 24]); S.GS_20211009.yRD_m([1, 6, 11, 16])];
+
+f3 = figureRH;
+
+hold on
+plot(x, y, '-k', 'LineWidth', 2)
+scatter(X, Y);
+
+% Specify the size of the rectangle
+width = 20;   % Width of the rectangle
+height = 60;  % Height of the rectangle
+angle = 42;   % Rotation angle in degrees
+
+% Loop through each data point
+for i = 1:length(X)
+    % Coordinates of the rectangle's corners
+    rectX = [-width/2, width/2, width/2, -width/2];
+    rectY = [-height/2, -height/2, height/2, height/2];
+    
+    % Rotation matrix
+    R = [cosd(angle) -sind(angle); sind(angle) cosd(angle)];
+    
+    % Rotate and translate the rectangle
+    rect = R * [rectX; rectY];
+    rect(1, :) = rect(1, :) + X(i);
+    rect(2, :) = rect(2, :) + Y(i);
+    
+    % Draw the rotated rectangle
+    patch(rect(1, :), rect(2, :), 'r');
+end
+hold off
+
+text(X+50, Y-80, loclabels(1:end), 'FontSize',fontsize*.7)
+
+xlim(PHZ.xLim);
+ylim(PHZ.yLim);
+
+% axis off vis3d
+% view(46, 90);
+
+axis off equal
+view(38.6, 90)
 

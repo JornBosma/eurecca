@@ -6,6 +6,7 @@ clear
 clc
 
 [basePath, fontsize, cbf, PHZ, SEDMEX] = eurecca_init;
+% fontsize = 30; % ultra-wide screen
 
 % Load metrics for different segments
 dataPath = [basePath 'results' filesep 'metrics' filesep];
@@ -87,6 +88,9 @@ shading flat
 
 axis off equal
 view(48.1, 90)
+
+% axis off vis3d
+% view(55.4, 90)
 
 % Invert the order of the polyshapes
 ax = gca;
@@ -220,7 +224,7 @@ percentage_dA = round((slopeA' ./ TTvolume{1, 1:15}) * 100, 1);
 
 
 %% Visualisation: volume wrt first survey (line plots)
-f2 = figure;
+f2 = figure("Position",[2071 294 940 819]);
 tiledlayout(3,1, "TileSpacing","compact")
 
 % Dry beach

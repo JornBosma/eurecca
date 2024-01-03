@@ -34,9 +34,9 @@ exportgraphics(f3, [locMDPI 'DoD_22-19.png'])
 
 %% Figure 8a
 exportgraphics(f1, [locResults 'morphology' filesep  'V_segments.png'])
-% exportgraphics(f1, [locResults 'morphology' filesep  'V_segments_lgnd.png'])
+exportgraphics(f1, [locResults 'morphology' filesep  'V_segments_lgnd.png'])
 exportgraphics(f2, [locResults 'morphology' filesep  'dV_lines.png'])
-% exportgraphics(f2, [locResults 'morphology' filesep  'dV_lines_lgnd.png'])
+exportgraphics(f2, [locResults 'morphology' filesep  'dV_lines_lgnd.png'])
 exportgraphics(f3, [locResults 'morphology' filesep  'hook_dev.png'])
 
 
@@ -45,9 +45,9 @@ exportgraphics(f1, [locResults 'morphology' filesep  'segment_polygons.png'])
 
 
 %% Figure 9
-exportgraphics(f1, [locResults 'sediments' filesep  'sample_locs.png'])
-exportgraphics(f2, [locResults 'sediments' filesep  'M_20211008.png'])
-exportgraphics(f3, [locResults 'sediments' filesep  'S_20211008.png'])
+exportgraphics(f1, [locResults 'sediments' filesep  'M_20211008.png'])
+exportgraphics(f2, [locResults 'sediments' filesep  'S_20211008.png'])
+exportgraphics(f3, [locResults 'sediments' filesep  'sample_locs.png'])
 
 
 %% currents
