@@ -65,6 +65,9 @@ GS_2021.Sample_Number = Sample_Number;
 % Remove all characters after the last number in each name
 GS_2021.Sample_Identity = regexprep(GS_2021.Sample_Identity, '[^0-9]*$', '');
 
+% Create new column Mean_mm
+GS_2021.Mean_mm = GS_2021.Mean_mu/1e3;
+
 % Clear temp vars
 clear Track_Number Sample_Number numbers name row dataPath opts GS_20211008 GS_20211009
 
@@ -74,18 +77,19 @@ f1 = figure('Position',[1905, 682, 1279, 391]);
 tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
 
 nexttile(13,[4 5])
-h1 = heatmap(GS_2021, 'Sample_Identity', 'Sample_Number', 'ColorVariable','Mean_mu');
+h1 = heatmap(GS_2021, 'Sample_Identity', 'Sample_Number', 'ColorVariable','Mean_mm');
 colormap(h1, crameri('lajolla'))
-clim([300, 1400])
+clim([.3, 1.4])
 
 h1.Title = [];
 h1.XDisplayData = flipud(h1.XDisplayData);
-h1.XDisplayLabels = NaN(size(flipud(h1.XDisplayLabels)));
+% h1.XDisplayLabels = NaN(size(flipud(h1.XDisplayLabels)));
+h1.XDisplayLabels = flipud(h1.XDisplayLabels);
 h1.YDisplayLabels = {'+1.00 m', '+0.75 m', '+0.50 m', '+0.25 m', '+0.00 m'};
 h1.XLabel = '';
 h1.YLabel = '';
 h1.FontSize = fontsize*.8;
-h1.CellLabelFormat = '%0.0f';
+h1.CellLabelFormat = '%0.2f';
 h1.ColorbarVisible = 'off';
 h1.GridVisible = 'off';
 h1.MissingDataColor = 'w';
@@ -93,7 +97,7 @@ h1.MissingDataLabel = 'no data';
 
 nexttile(6,[2 1])
 % text(0, .5, '2021-10-08/09', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
-text(.2, .4, 'M_{G} (µm)', 'FontSize',fontsize*.8, 'FontWeight','normal', 'EdgeColor','none', 'Margin',6)
+text(.2, .4, 'M_{G} (mm)', 'FontSize',fontsize*.8, 'FontWeight','bold', 'EdgeColor','none', 'Margin',6)
 axis off
 
 heatdata = rot90(h1.ColorData, 2);
@@ -106,7 +110,7 @@ nexttile(1,[2 5])
 errorbar(1.5:10.5, meanS, stdS, '-ok', 'LineWidth',3)
 yline(mean(meanS, 'omitmissing'), '--k', 'LineWidth',2)
 xlim([1 11])
-ylim([250 1150])
+ylim([.25 1.15])
 % ylabel('M_{G} (µm)')
 xticks([])
 
@@ -114,7 +118,7 @@ nexttile(18,[4 1])
 errorbar(meanT, 1.5:5.5, stdT, 'horizontal', '-ok', 'LineWidth',3)
 xline(mean(meanT, 'omitmissing'), '--k', 'LineWidth',2)
 ylim([1 6])
-xlim([250 1150])
+xlim([.25 1.15])
 % xlabel('M_{G} (µm)')
 yticks([])
 
@@ -143,7 +147,7 @@ h2.MissingDataLabel = 'no data';
 
 nexttile(6,[2 1])
 % text(0, .5, '2021-10-08/09', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
-text(.4, .4, '\sigma_{G}', 'FontSize',fontsize*.8, 'FontWeight','normal', 'EdgeColor','none', 'Margin',6)
+text(.4, .4, '\sigma_{G}', 'FontSize',fontsize*.8, 'FontWeight','bold', 'EdgeColor','none', 'Margin',6)
 axis off
 
 heatdata = rot90(h2.ColorData, 2);

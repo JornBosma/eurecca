@@ -3,13 +3,11 @@
 
 locResults = [basePath 'results' filesep 'figures' filesep];
 locMDPI = '/Users/jwb/Library/CloudStorage/Dropbox/Apps/Overleaf/MDPI_PHZ/Figures/';
-% locMDPI = 'C:\Users\4156366\Dropbox\Apps\Overleaf\MDPI_PHZ\Figures\';
+% locMDPI = 'C:\Users\4156366\Dropbox\Apps\Overleaf\MDPI_PHZ\Figures\';  % UU-computer
 
 
 %% Figure 2
 exportgraphics(f1, [locResults 'WindRoses' filesep 'wind_rose_1989.png'])
-% exportgraphics(f2, [locResults 'WindRoses' filesep 'wind_rose_2019.png'])
-% exportgraphics(f3, [locResults 'WindRoses' filesep 'wind_rose_SEDMEX.png'])
 
 
 %% Figure 3
@@ -18,37 +16,46 @@ exportgraphics(f1, [locResults 'sediments' filesep 'exsample.png'])
 
 %% Figure 4
 exportgraphics(f1, [locMDPI 'conditions_LT.png'])
+
+
+%% Figure 5
 exportgraphics(f2, [locResults 'hydrometeo' filesep 'conditions_ST.png'])
 % exportgraphics(f2, [locResults 'hydrometeo' filesep 'conditions_ST_lgnd.png'])
 
 
 %% Figure 6
-exportgraphics(f1, [locMDPI 'L2sedilocs.png'])
-
-
-%% Figure 7
 exportgraphics(f1, [locMDPI 'DEM_2019_Q2.png'])
-exportgraphics(f2, [locMDPI 'DEM_2022_Q2.png'])
+% exportgraphics(f2, [locMDPI 'DEM_2022_Q2.png'])
 exportgraphics(f3, [locMDPI 'DoD_22-19.png'])
 
 
-%% Figure 8a
-exportgraphics(f1, [locResults 'morphology' filesep  'V_segments.png'])
-exportgraphics(f1, [locResults 'morphology' filesep  'V_segments_lgnd.png'])
-exportgraphics(f2, [locResults 'morphology' filesep  'dV_lines.png'])
-exportgraphics(f2, [locResults 'morphology' filesep  'dV_lines_lgnd.png'])
-exportgraphics(f3, [locResults 'morphology' filesep  'hook_dev.png'])
+%% Figure 7
+exportgraphics(f1, [locResults 'morphology' filesep 'V_segments.png'])
+% exportgraphics(f1, [locResults 'morphology' filesep 'V_segments_lgnd.png'])
+exportgraphics(f2, [locResults 'morphology' filesep 'dV_lines.png'])
+% exportgraphics(f2, [locResults 'morphology' filesep 'dV_lines_lgnd.png'])
+exportgraphics(f3, [locResults 'morphology' filesep 'hook_dev.png'])
 
 
-%% Figure 8b
-exportgraphics(f1, [locResults 'morphology' filesep  'segment_polygons.png'])
+%% Figure 8
+exportgraphics(f1, [locResults 'sediments' filesep 'M_20211008.png'])
+exportgraphics(f2, [locResults 'sediments' filesep 'S_20211008.png'])
+exportgraphics(f3, [locResults 'sediments' filesep 'sample_locs.png'])
 
 
 %% Figure 9
-exportgraphics(f1, [locResults 'sediments' filesep  'M_20211008.png'])
-exportgraphics(f2, [locResults 'sediments' filesep  'S_20211008.png'])
-exportgraphics(f3, [locResults 'sediments' filesep  'sample_locs.png'])
+exportgraphics(f1, [locResults 'sediments' filesep 'L2_sedilocs.png'])
+exportgraphics(f2, [locResults 'sediments' filesep 'M_20210920.png'])
+exportgraphics(f3, [locResults 'sediments' filesep 'S_20210920.png'])
+exportgraphics(f4, [locResults 'sediments' filesep 'M_20210928.png'])
+exportgraphics(f5, [locResults 'sediments' filesep 'S_20210928.png'])
+exportgraphics(f6, [locResults 'sediments' filesep 'M_20211007.png'])
+exportgraphics(f7, [locResults 'sediments' filesep 'S_20211007.png'])
 
+
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
 
 %% currents
 exportgraphics(f1, [locResults 'umag_eta.png'])
@@ -112,4 +119,9 @@ exportgraphics(f1, [locResults 'sediments' filesep 'sampleLocs.png'])
 %% deltaV
 exportgraphics(f1, [locMDPI 'dV_line.png'])
 
+
+%% wind roses
+exportgraphics(f1, [locResults 'WindRoses' filesep 'wind_rose_1989.png'])
+exportgraphics(f2, [locResults 'WindRoses' filesep 'wind_rose_2019.png'])
+exportgraphics(f3, [locResults 'WindRoses' filesep 'wind_rose_SEDMEX.png'])
 
