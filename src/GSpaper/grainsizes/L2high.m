@@ -62,7 +62,7 @@ xticks([])
 
 nexttile(12,[5 1])
 plot(GS_20211009.zNAP_m(1:5), 1.5:5.5, '-ok', 'LineWidth',3)
-xline(PHZ.MSL, '-k', 'MSL', 'LabelVerticalAlignment','middle',...
+xline(PHZ.MeanSL, '-k', 'MSL', 'LabelVerticalAlignment','middle',...
     'LabelHorizontalAlignment','left', 'FontSize',fontsize, 'LineWidth',2)
 xlim([-.5 1.5])
 ylim([1 6])
@@ -123,7 +123,7 @@ xticks([])
 
 nexttile(12,[5 1])
 plot(GS_20201203.zNAP_m(1:10), 1.5:10.5, '-ok', 'LineWidth',3)
-xline(PHZ.MSL, '-k', 'MSL', 'LabelVerticalAlignment','middle',...
+xline(PHZ.MeanSL, '-k', 'MSL', 'LabelVerticalAlignment','middle',...
     'LabelHorizontalAlignment','left', 'FontSize',fontsize, 'LineWidth',2)
 xlim([-1.5 2.5])
 ylim([1 11])

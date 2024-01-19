@@ -39,18 +39,42 @@ exportgraphics(f3, [locResults 'morphology' filesep 'hook_dev.png'])
 
 %% Figure 8
 exportgraphics(f1, [locResults 'sediments' filesep 'M_20211008.png'])
-exportgraphics(f2, [locResults 'sediments' filesep 'S_20211008.png'])
-exportgraphics(f3, [locResults 'sediments' filesep 'sample_locs.png'])
+exportgraphics(f2, [locMDPI 'S_20211008.png'])
+exportgraphics(f3, [locMDPI 'Sk_20211008.png'])
+exportgraphics(f4, [locMDPI 'K_20211008.png'])
+exportgraphics(f5, [locResults 'sediments' filesep 'M_20221026.png'])
+exportgraphics(f6, [locResults 'sediments' filesep 'M_diff.png'])
+exportgraphics(f7, [locResults 'sediments' filesep 'sample_locs.png'])
+
+
+%% Figure 8 hydro
+exportgraphics(f1, [locResults 'hydrometeo' filesep 'Hm0_OSSI_140.png'])
+exportgraphics(f2, [locResults 'hydrometeo' filesep 'U_rose_ADV_075.png'])
 
 
 %% Figure 9
-exportgraphics(f1, [locResults 'sediments' filesep 'L2_sedilocs.png'])
-exportgraphics(f2, [locResults 'sediments' filesep 'M_20210920.png'])
-exportgraphics(f3, [locResults 'sediments' filesep 'S_20210920.png'])
-exportgraphics(f4, [locResults 'sediments' filesep 'M_20210928.png'])
-exportgraphics(f5, [locResults 'sediments' filesep 'S_20210928.png'])
-exportgraphics(f6, [locResults 'sediments' filesep 'M_20211007.png'])
-exportgraphics(f7, [locResults 'sediments' filesep 'S_20211007.png'])
+exportgraphics(f1, [locMDPI 'L2_sample_locs.png'])
+exportgraphics(f2, [locMDPI 'L2_samples.png'])
+
+
+%% Figure 9 appendix
+exportgraphics(f2a, [locResults 'sediments' filesep 'M_20210920.png'])
+exportgraphics(f2b, [locResults 'sediments' filesep 'S_20210920.png'])
+exportgraphics(f2c, [locResults 'sediments' filesep 'Sk_20210920.png'])
+exportgraphics(f2d, [locResults 'sediments' filesep 'K_20210920.png'])
+exportgraphics(f3a, [locResults 'sediments' filesep 'M_20210928.png'])
+exportgraphics(f3b, [locResults 'sediments' filesep 'S_20210928.png'])
+exportgraphics(f3c, [locResults 'sediments' filesep 'Sk_20210928.png'])
+exportgraphics(f3d, [locResults 'sediments' filesep 'K_20210928.png'])
+exportgraphics(f4a, [locResults 'sediments' filesep 'M_20211007.png'])
+exportgraphics(f4b, [locResults 'sediments' filesep 'S_20211007.png'])
+exportgraphics(f4c, [locResults 'sediments' filesep 'Sk_20211007.png'])
+exportgraphics(f4d, [locResults 'sediments' filesep 'K_20211007.png'])
+
+
+%% Figure 10
+exportgraphics(f1, [locMDPI 'M_scraper.png'])
+exportgraphics(f2, [locResults 'sediments' filesep 'S_scraper.png'])
 
 
 %%

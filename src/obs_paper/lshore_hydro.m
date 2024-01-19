@@ -3,9 +3,9 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, ~] = eurecca_init;
+[~, fontsize, ~, ~, ~] = eurecca_init;
 
-dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'Data Descriptor'];
+dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep 'hydrodynamics' filesep];
 
 % colourblind-friendly colour palette
 orange = [230/255, 159/255, 0];
@@ -24,28 +24,28 @@ locs = {'L6', 'L5', 'L4', 'L3', 'L2', 'L1'};
 
 for n = 1:length(adv_locs)
     % if n == 5
-    %     ADVpath{n} = [filesep 'ADV' filesep adv_locs{n} 'SONTEK1' filesep 'tailored' filesep];
+    %     ADVpath{n} = ['ADV' filesep adv_locs{n} 'SONTEK1' filesep 'tailored' filesep];
     %     adv_info{n} = ncinfo([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc']);
     %     adv_t{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 't'); % minutes since 2021-09-10 19:00:00
     %     U{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 'umag');
     %     Hm0{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 'Hm0');
     %     adv_hab{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'SONTEK1.nc'], 'h');
     % else
-        ADVpath{n} = [filesep 'ADV' filesep adv_locs{n} 'VEC' filesep 'tailored_loose' filesep];
-        adv_info{n} = ncinfo([dataPath ADVpath{n} adv_locs{n} 'VEC.nc']);
-        adv_t{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 't'); % minutes since 2021-09-10 19:00:00
-        U{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'umag');
-        Hm0{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'Hm0');
-        adv_hab{n} = ncread([dataPath ADVpath{n} adv_locs{n} 'VEC.nc'], 'elev');
+        ADVpath{n} = [dataPath 'ADV' filesep adv_locs{n} 'VEC' filesep 'tailored_' adv_locs{n} 'VEC.nc'];
+        adv_info{n} = ncinfo(ADVpath{n});
+        adv_t{n} = ncread(ADVpath{n}, 't'); % minutes since 2021-09-10 19:00:00
+        U{n} = ncread(ADVpath{n}, 'umag');
+        Hm0{n} = ncread(ADVpath{n}, 'Hm0');
+        adv_hab{n} = ncread(ADVpath{n}, 'zi');
     % end
 end
 
 for n = 1:length(ossi_locs)
-    OSSIpath{n} = [filesep 'OSSI' filesep ossi_locs{n} 'OSSI' filesep 'tailored' filesep];
-    ossi_info{n} = ncinfo([dataPath OSSIpath{n} ossi_locs{n} 'OSSI.nc']);
-    ossi_t{n} = ncread([dataPath OSSIpath{n} ossi_locs{n} 'OSSI.nc'], 't'); % minutes since 2021-09-10 19:00:00
-    h{n} = ncread([dataPath OSSIpath{n} ossi_locs{n} 'OSSI.nc'], 'd');
-    Hm01{n} = ncread([dataPath OSSIpath{n} ossi_locs{n} 'OSSI.nc'], 'Hm0');
+    OSSIpath{n} = [dataPath 'pressuresensors' filesep ossi_locs{n} 'OSSI' filesep 'tailored_' ossi_locs{n} 'OSSI.nc'];
+    ossi_info{n} = ncinfo(OSSIpath{n});
+    ossi_t{n} = ncread(OSSIpath{n}, 't'); % minutes since 2021-09-10 19:00:00
+    h{n} = ncread(OSSIpath{n}, 'd');
+    Hm01{n} = ncread(OSSIpath{n}, 'Hm0');
 end
 
 tv{1} = datetime('2021-09-11 00:10:00') + minutes(adv_t{1}); % L6C1 (til 18-Oct-2021 10:00:00)

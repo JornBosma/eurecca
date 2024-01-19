@@ -6,7 +6,7 @@ clc
 [~, fontsize, ~, PHZ] = eurecca_init;
 
 folderPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor' filesep];
-locsY = {'S', 'SL', 'L3.5', 'L4', 'T', 'L6'};
+locsY = {'SL', 'S', 'L3.5', 'L4', 'T', 'L6'};
 
 
 %% GS_20210921

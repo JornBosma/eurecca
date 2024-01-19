@@ -77,9 +77,9 @@ TTmhw = TTwater; % extract data above MHW threshold during SEDMEX
 TTmlw = TTwater; % extract data below MLW threshold during SEDMEX
 TTmw = TTwater; % time series with values inside the bandwidth
 
-TTmhw.eta(TTwater.eta <= SEDMEX.MHW) = NaN;
-TTmlw.eta(TTwater.eta >= SEDMEX.MLW) = NaN;
-TTmw.eta(TTwater.eta > SEDMEX.MHW | TTwater.eta < SEDMEX.MLW) = NaN;
+TTmhw.eta(TTwater.eta <= SEDMEX.MeanHW) = NaN;
+TTmlw.eta(TTwater.eta >= SEDMEX.MeanLW) = NaN;
+TTmw.eta(TTwater.eta > SEDMEX.MeanHW | TTwater.eta < SEDMEX.MeanLW) = NaN;
 
 
 %% Visualisation: 2019-2022
@@ -154,8 +154,8 @@ dataPath = [filesep 'Volumes' filesep 'T7 Shield' filesep 'DataDescriptor'...
     filesep 'hydrodynamics' filesep 'ADV' filesep 'L2C10VEC' filesep' 'tailored_L2C10VEC.nc'];
 
 info = ncinfo(dataPath);
-t_minutes = ncread(dataPath, 't'); % minutes since 2021-09-10 00:00:00
-t = datetime('2021-09-10 00:00:00','InputFormat','yyyy-MM-dd HH:mm:ss')+minutes(t_minutes);
+t_seconds = ncread(dataPath, 't'); % minutes since 2021-09-10 00:00:00
+t = datetime('2021-09-01 00:00:00','InputFormat','yyyy-MM-dd HH:mm:ss')+seconds(t_seconds);
 eta = ncread(dataPath, 'zs'); % water depth [m]
 umag = ncread(dataPath, 'umag'); % velocity magnitude [m/s]
 ucm = ncread(dataPath, 'ucm'); % mean cross-shore velocity magnitude [m/s]
@@ -163,7 +163,7 @@ ulm = ncread(dataPath, 'ulm'); % mean cross-shore velocity magnitude [m/s]
 Hm0 = ncread(dataPath, 'Hm0'); % significant wave height [m]
 puvdir = ncread(dataPath, 'puvdir'); % wave propagation direction [deg]
 
-puvdir(puvdir < 45 | puvdir > 45+180) = NaN; % remove impossible wave angles
+% puvdir(puvdir < 45 | puvdir > 45+180) = NaN; % remove impossible wave angles
 
 % for n = 1:length(puvdir)
 %     if puvdir(n)+180 > 360
@@ -245,8 +245,8 @@ plot(TTmhw.DateTime, TTmhw.eta, 'Color',cbf.vermilion, 'LineWidth',2)
 plot(TTmlw.DateTime, TTmlw.eta, 'Color',cbf.vermilion, 'LineWidth',2); hold off
 ylabel('η (NAP+m)')
 
-yline(SEDMEX.MHW, '--', 'MHW', 'LineWidth',2, 'FontSize',fontsize*.8)
-yline(SEDMEX.MLW, '--', 'MLW', 'LineWidth',2, 'FontSize',fontsize*.8, 'LabelVerticalAlignment','bottom')
+yline(SEDMEX.MeanHW, '--', 'MHW', 'LineWidth',2, 'FontSize',fontsize*.8)
+yline(SEDMEX.MeanLW, '--', 'MLW', 'LineWidth',2, 'FontSize',fontsize*.8, 'LabelVerticalAlignment','bottom')
 % text(SEDMEXtime(2)+hours(4),PHZ.HWS, '<-HWS', 'FontSize',fontsize)
 % text(SEDMEXtime(2)+hours(4),PHZ.LWS, '<-LWS', 'FontSize',fontsize)
 

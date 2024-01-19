@@ -3,7 +3,7 @@ close all
 clear
 clc
 
-[~, ~, ~, ~, fontsize, ~] = eurecca_init;
+[~, fontsize, cbf, ~, ~] = eurecca_init;
 
 % water levels @ PHZ
 MHWS = 0.81; % mean high water spring [m]
@@ -77,9 +77,9 @@ f0 = figure;
 tiledlayout(4,1, 'TileSpacing','compact')
 
 ax1 = nexttile;
-plot(TToud.Time, TToud.eta_m, 'Color',blue); hold on
-plot(TToud.Time(TToud.eta_m>threshold1), TToud.eta_m(TToud.eta_m>threshold1), '.', 'MarkerSize',1, 'Color',orange)
-plot(TToud.Time(TToud.eta_m<threshold2), TToud.eta_m(TToud.eta_m<threshold2), '.', 'MarkerSize',1, 'Color',orange)
+plot(TToud.Time, TToud.eta_m, 'Color',cbf.blue); hold on
+plot(TToud.Time(TToud.eta_m>threshold1), TToud.eta_m(TToud.eta_m>threshold1), '.', 'MarkerSize',1, 'Color',cbf.orange)
+plot(TToud.Time(TToud.eta_m<threshold2), TToud.eta_m(TToud.eta_m<threshold2), '.', 'MarkerSize',1, 'Color',cbf.orange)
 text(datetime('03-Jan-2023'),MHWS, 'MHWS', 'FontSize',fontsize)
 text(datetime('03-Jan-2023'),MLWS, 'MLWS', 'FontSize',fontsize)
 for n = 1:length(SurveyDates)

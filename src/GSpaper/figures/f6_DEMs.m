@@ -79,7 +79,7 @@ clim([-8, 8])
 % cmocean('delta')
 colormap(sandyToMarineBlueColormap(256, true));
 
-% black background
+% Black background
 ax.SortMethod = 'childorder';
 patch(ax, pgns.site(:,1), pgns.site(:,2), 'k', 'EdgeColor','k', 'LineWidth',3)
 h = get(ax,'Children');
@@ -89,7 +89,11 @@ set(ax,'Children',[h(2) h(1)])
 Narrow(40)
 
 % MHW & MLW contours
-contour(C.DEM.X, C.DEM.Y, C.DEM.Z, [PHZ.MLW, PHZ.MHW], '-k', 'ShowText','off', 'LineWidth',2)
+contour(C.DEM.X, C.DEM.Y, C.DEM.Z, [PHZ.MeanLW, PHZ.MeanHW], '-k', 'ShowText','off', 'LineWidth',2)
+
+% Add relief shadow
+light
+% light("Style","local","Position",[116284 559202 100]);
 
 
 %% Visualisation: second DEM
@@ -111,7 +115,7 @@ clim([-8, 8])
 % cmocean('delta')
 colormap(sandyToMarineBlueColormap(256, true));
 
-% black background
+% Black background
 ax.SortMethod = 'childorder';
 patch(ax, pgns.site(:,1), pgns.site(:,2), 'k', 'EdgeColor','k', 'LineWidth',3)
 h = get(ax,'Children');
@@ -121,7 +125,10 @@ set(ax,'Children',[h(2) h(1)])
 Narrow(40)
 
 % MHW & MLW contours
-contour(D.DEM.X, D.DEM.Y, D.DEM.Z, [PHZ.MLW, PHZ.MHW], '-k', 'ShowText','off', 'LineWidth',2)
+contour(D.DEM.X, D.DEM.Y, D.DEM.Z, [PHZ.MeanLW, PHZ.MeanHW], '-k', 'ShowText','off', 'LineWidth',2)
+
+% Add relief shadow
+light
 
 
 %% Visualisation: DoD
@@ -162,5 +169,5 @@ hatch(p, [15 10 1], 'k');
 Narrow(40)
 
 % MHW & MLW contours
-contour(D.DEM.X, D.DEM.Y, D.DEM.Z, [PHZ.MLW, PHZ.MHW], '-k', 'ShowText','off', 'LineWidth',2)
+contour(D.DEM.X, D.DEM.Y, D.DEM.Z, [PHZ.MeanLW, PHZ.MeanHW], '-k', 'ShowText','off', 'LineWidth',2)
 
