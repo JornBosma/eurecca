@@ -30,7 +30,7 @@ surveyDates.Format = 'dd MMM yyyy';
 % Data selection
 track = 2; % L2
 % survey = [15 18 19 24 27];
-survey = [15 18 19 20 21 24];
+survey = [15 18 19 20 21 24 27];
 % survey = 15:24;
 
 Z = NaN(length(z), length(survey));
@@ -38,6 +38,8 @@ for n = 1:length(survey)
     Z(:,n) = z(:, survey(n), track);
     Z(:,n) = movmean(Z(:,n), length(survey));
 end
+
+xpos = d(idxSedi);
 
 
 %% L2 profile development
@@ -56,15 +58,15 @@ for n = 1:length(survey)
 end
 hold off
 
-newcolors = crameri('-acton', length(survey));
+newcolors = crameri('-roma', length(survey));
 colororder(newcolors)
 
 xline(d(idxSedi), '-', sampleIDs, 'FontSize',fontsize, 'LabelHorizontalAlignment','center')
 
 % Tide levels over considered period
-yline(.731, '-.', 'MHW', 'FontSize',fontsize, 'Color',cbf.skyblue, 'LineWidth',3)
-yline(.192, '-.', 'MSL', 'FontSize',fontsize, 'Color',cbf.skyblue, 'LineWidth',3)  
-yline(-.535, '-.', 'MLW', 'FontSize',fontsize, 'Color',cbf.skyblue, 'LineWidth',3)
+yline(.731, '-.', 'MHW', 'FontSize',fontsize, 'Color',cbf.grey, 'LineWidth',3)
+yline(.192, '-.', 'MSL', 'FontSize',fontsize, 'Color',cbf.grey, 'LineWidth',3)  
+yline(-.535, '-.', 'MLW', 'FontSize',fontsize, 'Color',cbf.grey, 'LineWidth',3)
 
 xlim([-30, 20])
 ylim([-1.7, 1.7])
@@ -195,13 +197,33 @@ for i = 1:length(GS_tables)
     end
 end
 
+GS_Mean_mean = mean(GS_Mean, 2);
+GS_Sorting_mean = mean(GS_Sorting, 2);
+
+dGS_Mean = NaN(height(GS_Mean), width(GS_Mean)-1);
+GS_Mean_grad = NaN(height(GS_Mean), width(GS_Mean)-1);
+dXpos = diff(xpos);
+
+for i = 1:height(GS_Mean)
+    % Calculate differences
+    dGS_Mean(i,:) = diff(GS_Mean{i,:});
+    
+    % Compute gradient
+    GS_Mean_grad(i,:) = dGS_Mean(i,:) ./ dXpos';
+end
+
+GS_Mean_grad = GS_Mean_grad*1e3;  % Convert unit from mm to mu
+GS_Mean_grad_mean_x = mean(GS_Mean_grad, 2);
+GS_Mean_gradient = [GS_Mean_grad, GS_Mean_grad_mean_x];
+GS_Mean_grad_mean_t = mean(GS_Mean_gradient, 1);
+GS_Mean_gradient = [GS_Mean_gradient; GS_Mean_grad_mean_t];
+GS_Mean_gradient = round(GS_Mean_gradient);
+
 
 %% Visualisation
 axs = gobjects(size(GS_tables));
 ax_left = gobjects(size(GS_tables));
 ax_right = gobjects(size(GS_tables));
-
-xpos = [1 3:7 9 11];
 
 f2 = figure(Position=[1832, 1, 1279, 628]);
 tl = tiledlayout(3, 2, 'TileSpacing','tight');
@@ -212,7 +234,7 @@ for i = 1:length(GS_tables)
 
     yyaxis left
     errorbar(xpos, GS_Mean{i,:}, GS_Mean_Std{i,:}, '-ok', 'LineWidth',3)
-    yline(mean(GS_Mean{i,:}), '--k', 'LineWidth',1)
+    yline(GS_Mean_mean.mean(i), '--k', 'LineWidth',1)
     ylim([0 3])
     ax_left(i) = gca;
     ax_left(i).YColor = 'black';
@@ -222,11 +244,11 @@ for i = 1:length(GS_tables)
     if i == 2 || i == 4
         yticklabels('')
     end
-    text(1.4, 2.5, ['(n = ', mat2str(GS_Count{i,1}), ')'], 'Fontsize',fontsize*.6)
+    text(xpos(1)+.6, 2.5, ['(n = ', mat2str(GS_Count{i,1}), ')'], 'Fontsize',fontsize*.6)
 
     yyaxis right
     errorbar(xpos, GS_Sorting{i,:}, GS_Sorting_Std{i,:}, '-or', 'LineWidth',3)
-    yline(mean(GS_Sorting{i,:}), '--r', 'LineWidth',1)
+    yline(GS_Sorting_mean.mean(i), '--r', 'LineWidth',1)
     ylim([1 4])
     ax_right(i) = gca;
     ax_right(i).YColor = 'red';
@@ -240,6 +262,6 @@ xticklabels(axs, sampleIDs)
 xticklabels(axs(1:3), '')
 yticklabels(axs([1, 3]), '')
 
-xlim(axs, [0, 12])
+xlim(axs, [xpos(1)-1, xpos(end)+1])
 grid(axs, 'on')
 

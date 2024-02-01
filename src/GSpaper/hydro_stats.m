@@ -32,10 +32,12 @@ Oudeschild = table2timetable(Oudeschild);
 %% Water levels over period P
 
 % Define period
-P = L2_sampling_period;
+P = monitoring_period;
 
 % Select data within period of interest
 tidal_elevation_data = Oudeschild.eta(Oudeschild.DateTime >...
+    P(1) & Oudeschild.DateTime < P(2));
+time_axis = Oudeschild.DateTime(Oudeschild.DateTime >...
     P(1) & Oudeschild.DateTime < P(2));
 
 % Calculate Mean Water Level
@@ -96,11 +98,12 @@ disp('__________________________________________________________')
 
 % Plotting (Optional)
 figureRH;
-plot(tidal_elevation_data);
+plot(time_axis, tidal_elevation_data);
 hold on;
-plot([1 length(tidal_elevation_data)], [mean_water_level mean_water_level], 'k--', 'LineWidth', 2);
-plot(high_tide_indices, high_tides, 'r^', 'MarkerFaceColor', 'r'); % High tides
-plot(low_tide_indices, low_tides, 'bv', 'MarkerFaceColor', 'b'); % Low tides
+% plot(time_axis, [mean_water_level mean_water_level], 'k--', 'LineWidth', 2);
+plot(time_axis(high_tide_indices), high_tides, 'r^', 'MarkerFaceColor', 'r'); % High tides
+plot(time_axis(low_tide_indices), low_tides, 'bv', 'MarkerFaceColor', 'b'); % Low tides
+yline(mean_water_level, 'k--', 'LineWidth', 2)
 hold off;
 xlabel('Time');
 ylabel('Tidal Elevation');

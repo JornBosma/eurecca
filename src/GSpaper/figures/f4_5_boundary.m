@@ -87,9 +87,9 @@ TTmw.eta(TTwater.eta > SEDMEX.MeanHW | TTwater.eta < SEDMEX.MeanLW) = NaN;
 % tiledlayout(3,1, 'TileSpacing','tight')
 % 
 % ax1 = nexttile;
-% plot(TTmw.DateTime, TTmw.eta, 'Color',cbf.blue); hold on
-% plot(TThw.DateTime, TThw.eta, 'Color',cbf.vermilion)
-% plot(TTlw.DateTime, TTlw.eta, 'Color',cbf.vermilion)
+% plot(TTmw.DateTime, TTmw.eta, 'Color','k'); hold on
+% plot(TThw.DateTime, TThw.eta, 'Color','r')
+% plot(TTlw.DateTime, TTlw.eta, 'Color','r')
 % ylabel('η (NAP+m)')
 % 
 % text(datetime('03-Jan-2023'),PHZ.HWS, 'HWS', 'FontSize',fontsize)
@@ -99,11 +99,11 @@ TTmw.eta(TTwater.eta > SEDMEX.MeanHW | TTwater.eta < SEDMEX.MeanLW) = NaN;
 % end
 % 
 % ax2 = nexttile;
-% plot(TTwind.DateTime, TTwind.spd, 'Color',cbf.blue)
+% plot(TTwind.DateTime, TTwind.spd, 'Color','k')
 % ylabel('U_{wind} (m s^{-1})')
 % 
 % ax3 = nexttile;
-% scatter(TTwind.DateTime, TTwind.dir, 6, cbf.blue, 'filled')
+% scatter(TTwind.DateTime, TTwind.dir, 6, 'k', 'filled')
 % ylabel('\theta_{wind} (\circ)')
 % ylim([0 360])
 % yticks(0:90:360)
@@ -123,7 +123,7 @@ TTmw.eta(TTwater.eta > SEDMEX.MeanHW | TTwater.eta < SEDMEX.MeanLW) = NaN;
 f1 = figure('Position',[1722, 709, 1719, 628]);
 plot(TTmws.DateTime, TTmws.eta, 'Color',cbf.blue); hold on
 plot(TThws.DateTime, TThws.eta, 'Color',cbf.vermilion)
-plot(TTlws.DateTime, TTlws.eta, 'Color',cbf.vermilion)
+plot(TTlws.DateTime, TTlws.eta, 'Color',cbf.blue)
 ylabel('η (NAP+m)')
 
 text(datetime('03-Jan-2023'),PHZ.HWS, 'HWS', 'FontSize',fontsize)
@@ -180,7 +180,7 @@ TT_L2C10 = table2timetable(T_L2C10);
 TTh_L2C10 = TT_L2C10; % extract data above mean+1std threshold during SEDMEX
 TTl_L2C10 = TT_L2C10; % extract data below mean+1std threshold during SEDMEX
 
-Hm0_threshold = mean(TT_L2C10.Hm0,'omitmissing')+std(TT_L2C10.Hm0,'omitmissing');
+Hm0_threshold = mean(TT_L2C10.Hm0,'omitmissing')+2*std(TT_L2C10.Hm0,'omitmissing');
 TTh_L2C10.Hm0(TT_L2C10.Hm0 <= Hm0_threshold) = NaN;
 TTl_L2C10.Hm0(TT_L2C10.Hm0 > Hm0_threshold) = NaN;
 
@@ -190,59 +190,59 @@ f2 = figureRH;
 tiledlayout(6,1, 'TileSpacing','loose')
 
 ax1 = nexttile;
-plot(TTwind.DateTime, TTwind.spd, 'Color',cbf.blue, 'LineWidth',2)
+plot(TTwind.DateTime, TTwind.spd, 'Color','k', 'LineWidth',2)
 ylabel('U_{wind} (m s^{-1})')
 
 ax2 = nexttile;
-scatter(TTwind.DateTime, TTwind.dir, 20, cbf.blue, 'filled'); hold on
+scatter(TTwind.DateTime, TTwind.dir, 20, 'k', 'filled'); hold on
 
-yline(45, '-', 'Color',cbf.vermilion, 'LineWidth',1) % longshore wind (northeastward)
-yline(45+90, '-', 'Color',cbf.vermilion, 'LineWidth',1) % onshore wind
-yline(45+180, '-', 'Color',cbf.vermilion, 'LineWidth',1) % longshore wind (southwestward)
-cross = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45+135, 45+135], [45+45, 45+45]], cbf.vermilion, 'FaceAlpha',0.1, 'LineStyle','none');
-longS = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45+180, 45+180], [45+135, 45+135]], cbf.redpurp, 'FaceAlpha',0.1, 'LineStyle','none');
-longN = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45, 45], [45+45, 45+45]], cbf.redpurp, 'FaceAlpha',0.1, 'LineStyle','none'); hold off
+% yline(45, '-', 'Color',cbf.redpurp, 'LineWidth',1) % longshore wind (northeastward)
+yline(45+90, '-', 'Color','r', 'LineWidth',1) % onshore wind
+% yline(45+180, '-', 'Color',cbf.redpurp, 'LineWidth',1) % longshore wind (southwestward)
+cross = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45+135, 45+135], [45+45, 45+45]], cbf.redpurp, 'FaceAlpha',0.1, 'LineStyle','none');
+longS = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45+180, 45+180], [45+135, 45+135]], cbf.vermilion, 'FaceAlpha',0.1, 'LineStyle','none');
+longN = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45, 45], [45+45, 45+45]], cbf.vermilion, 'FaceAlpha',0.1, 'LineStyle','none'); hold off
 
 ylabel('\theta_{wind} (\circ)')
 ylim([0 360])
 yticks(0:90:360)
 
-% legend([cross,longS],{'onshore','longshore'}, 'Location','northeastoutside', 'NumColumns',2)
+legend([cross,longS],{'onshore','longshore'}, 'Location','northeastoutside', 'NumColumns',2)
 
 ax3 = nexttile;
 hold on
-plot(TT_L2C10.t, TTl_L2C10.Hm0, 'Color',cbf.blue, 'LineWidth',2)
-plot(TT_L2C10.t, TTh_L2C10.Hm0, 'Color',cbf.vermilion, 'LineWidth',2)
+plot(TT_L2C10.t, TTl_L2C10.Hm0, 'Color','k', 'LineWidth',2)
+plot(TT_L2C10.t, TTh_L2C10.Hm0, 'Color','r', 'LineWidth',2)
 hold off
-yline(Hm0_threshold, '--', '         \mu+\sigma', 'LineWidth',2,...
+yline(Hm0_threshold, '--', '         \mu+2\sigma', 'LineWidth',2,...
     'FontSize',fontsize, 'LabelHorizontalAlignment','left')
 ylabel('H_{m0} (m)')
 yticks(0:.2:.6)
 
 ax4 = nexttile;
-scatter(TT_L2C10.t, TT_L2C10.puvdir, 10, cbf.blue, 'filled'); hold on
+scatter(TT_L2C10.t, TT_L2C10.puvdir, 10, 'k', 'filled'); hold on
 
-% yline(45, '-', 'Color',cbf.vermilion, 'LineWidth',1) % longshore wind (northeastward)
-yline(45+90, '-', 'Color',cbf.vermilion, 'LineWidth',1) % onshore wind
-% yline(45+180, '-', 'Color',cbf.vermilion, 'LineWidth',1) % longshore wind (southwestward)
-cross = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45+135, 45+135], [45+45, 45+45]], cbf.vermilion, 'FaceAlpha',0.1, 'LineStyle','none');
-% longS = fill([SEDMEX, fliplr(SEDMEX)], [[45+180, 45+180], [45+135, 45+135]], cbf.redpurp, 'FaceAlpha',0.1, 'LineStyle','none');
-% longN = fill([SEDMEX, fliplr(SEDMEX)], [[45, 45], [45+45, 45+45]], cbf.redpurp, 'FaceAlpha',0.1, 'LineStyle','none'); hold off
+% yline(45, '-', 'Color','r', 'LineWidth',1) % longshore wind (northeastward)
+yline(45+90, '-', 'Color','r', 'LineWidth',1) % onshore wind
+% yline(45+180, '-', 'Color','r', 'LineWidth',1) % longshore wind (southwestward)
+cross = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45+135, 45+135], [45+45, 45+45]], cbf.redpurp, 'FaceAlpha',0.1, 'LineStyle','none');
+longS = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45+180, 45+180], [45+135, 45+135]], cbf.vermilion, 'FaceAlpha',0.1, 'LineStyle','none');
+longN = fill([SEDMEXtime, fliplr(SEDMEXtime)], [[45, 45], [45+45, 45+45]], cbf.vermilion, 'FaceAlpha',0.1, 'LineStyle','none'); hold off
 
 ylabel('\theta_{wave} (\circ)')
 ylim([45 225])
 yticks(0:90:360)
 
 ax5 = nexttile;
-plot(TT_L2C10.t, TT_L2C10.ulm, 'Color',cbf.blue, 'LineWidth',2); hold on
-plot(TT_L2C10.t, TT_L2C10.ucm, 'Color',cbf.orange, 'LineWidth',2); hold off
+plot(TT_L2C10.t, TT_L2C10.ulm, 'Color','k', 'LineWidth',2); hold on
+plot(TT_L2C10.t, TT_L2C10.ucm, 'Color','r', 'LineWidth',2); hold off
 ylabel('U_{mag} (m s^{-1})')
-% legend('longshore', 'cross-shore', 'Location','northeastoutside', 'NumColumns',2)
+legend('longshore', 'cross-shore', 'Location','northeastoutside', 'NumColumns',2)
 
 ax6 = nexttile;
-plot(TTmw.DateTime, TTmw.eta, 'Color',cbf.blue, 'LineWidth',2); hold on
-plot(TTmhw.DateTime, TTmhw.eta, 'Color',cbf.vermilion, 'LineWidth',2)
-plot(TTmlw.DateTime, TTmlw.eta, 'Color',cbf.vermilion, 'LineWidth',2); hold off
+plot(TTmw.DateTime, TTmw.eta, 'Color','k', 'LineWidth',2); hold on
+plot(TTmhw.DateTime, TTmhw.eta, 'Color','r', 'LineWidth',2)
+plot(TTmlw.DateTime, TTmlw.eta, 'Color','k', 'LineWidth',2); hold off
 ylabel('η (NAP+m)')
 
 yline(SEDMEX.MeanHW, '--', 'MHW', 'LineWidth',2, 'FontSize',fontsize*.8)
@@ -257,5 +257,34 @@ xtickformat('MMM dd')
 xtickangle(45)
 grid([ax1 ax2 ax3 ax4 ax5 ax6],'on')
 linkaxes([ax1 ax2 ax3 ax4 ax5 ax6], 'x')
+zoom xon
+
+
+%% Visualisation: UCM6
+sampling_dates = [datetime('20-Sep-2021'), datetime('28-Sep-2021'),...
+    datetime('01-Oct-2021'), datetime('07-Oct-2021'), datetime('15-Oct-2021')];
+
+sampling_window = [sampling_dates', sampling_dates'];
+for i = 1:length(sampling_dates)
+    sampling_window(i,:) = [sampling_dates(i)+hours(8), sampling_dates(i)+hours(19)];
+end
+
+f2 = figure("Position",[1953, 1063, 1488, 274]);
+hold on
+plot(TT_L2C10.t, TTl_L2C10.Hm0, 'Color','k', 'LineWidth',2)
+plot(TT_L2C10.t, TTh_L2C10.Hm0, 'Color','r', 'LineWidth',2)
+xregion(sampling_window(:,1), sampling_window(:,2))
+hold off
+yline(Hm0_threshold, '--', '         \mu+2\sigma', 'LineWidth',2,...
+    'FontSize',fontsize, 'LabelHorizontalAlignment','left')
+ylabel('H_{m0} (m)')
+yticks(0:.2:.6)
+
+xlim([SEDMEXtime(1), SEDMEXtime(2)])
+xticks(SEDMEXtime(1):days(2):SEDMEXtime(2))
+xticklabels([])
+xtickformat('MMM dd')
+xtickangle(45)
+grid('on')
 zoom xon
 

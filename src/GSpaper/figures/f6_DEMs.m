@@ -35,6 +35,30 @@ B = load('PHZ_2022_Q2','-mat');
 % Load polygons
 pgns = getPgons;
 
+
+%% Locations
+L2C1 = [117158, 559855];  % L2C1KELLER
+L2C2 = [117193, 559822];  % L2C2VEC
+L2C4 = [117197, 559818];  % L2C4VEC
+L2C10 = [117235, 559781]; % L2C10VEC
+
+L1C1 = [117421,	560054];  % L1C1VEC
+L2C5 = [117198, 559815];  % L2C5SONTEK1
+L3C1 = [116839, 559536];  % L3C1VEC
+L4C1 = [116103,	558945];  % L4C1VEC
+L5C1 = [115670,	558604];  % L5C1VEC
+L6C1 = [115402,	558225];  % L6C1VEC
+
+L1C2 = [117445, 560045];  % L1C2OSSI
+L2C9 = [117222, 559793];  % L2C9OSSI
+L4C3 = [116125, 558917];  % L4C3OSSI
+L5C2 = [115716, 558560];  % L5C2OSSI
+L6C2 = [115470, 558176];  % L6C2OSSI
+
+OSSI = [L6C2; L5C2; L4C3; L2C9; L1C2];
+OSSI_names = {"L6", "L5", "L4", "L2", "L1"};
+
+
 %% Computations #1
 mask = inpolygon(A.DEM.X, A.DEM.Y, pgns.site(:, 1), pgns.site(:, 2));
 
@@ -73,7 +97,7 @@ cb = colorbar;
 cb.Location = 'northoutside';
 set(cb, 'position', [.24 .64 .46 .015])
 cb.Label.String = 'bed level (NAP+m)';
-cb.FontSize = fontsize;
+cb.FontSize = 26;
 clim([-8, 8])
 % colormap(crameri('bukavu', 'pivot',0))
 % cmocean('delta')
@@ -95,6 +119,14 @@ contour(C.DEM.X, C.DEM.Y, C.DEM.Z, [PHZ.MeanLW, PHZ.MeanHW], '-k', 'ShowText','o
 light
 % light("Style","local","Position",[116284 559202 100]);
 
+% Instrument locations
+scatter(OSSI(:,1), OSSI(:,2), 150, 'filled', 'MarkerEdgeColor','k', 'MarkerFaceColor','r')
+text(OSSI([1:2 5],1)+40, OSSI([1:2 5],2)+20, OSSI_names([1:2 5]), 'FontSize',fontsize*.8)
+text(OSSI(3:4,1)+60, OSSI(3:4,2)-30, OSSI_names(3:4), 'FontSize',fontsize*.8)
+
+scatter(L3C1(1), L3C1(2), 150, 'filled', 'MarkerEdgeColor','k', 'MarkerFaceColor','m')
+text(L3C1(1)+60, L3C1(2)-80, 'L3', 'FontSize',fontsize*.8)
+
 
 %% Visualisation: second DEM
 f2 = figureRH;
@@ -109,7 +141,7 @@ cb = colorbar;
 cb.Location = 'northoutside';
 set(cb, 'position', [.24 .64 .46 .015])
 cb.Label.String = 'bed level (NAP+m)';
-cb.FontSize = fontsize;
+cb.FontSize = 26;
 clim([-8, 8])
 % colormap(crameri('bukavu', 'pivot',0))
 % cmocean('delta')
@@ -144,7 +176,7 @@ cb = colorbar;
 cb.Location = 'northoutside';
 set(cb, 'position', [.24 .64 .46 .015])
 cb.Label.String = 'bed-level change (m)';
-cb.FontSize = 22;
+cb.FontSize = 26;
 clim([-2, 2])
 colormap(crameri('bam', 'pivot',0))
 

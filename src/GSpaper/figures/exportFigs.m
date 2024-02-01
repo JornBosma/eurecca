@@ -25,15 +25,13 @@ exportgraphics(f2, [locResults 'hydrometeo' filesep 'conditions_ST.png'])
 
 %% Figure 6
 exportgraphics(f1, [locMDPI 'DEM_2019_Q2.png'])
-% exportgraphics(f2, [locMDPI 'DEM_2022_Q2.png'])
+exportgraphics(f2, [locMDPI 'DEM_2022_Q2.png'])
 exportgraphics(f3, [locMDPI 'DoD_22-19.png'])
 
 
 %% Figure 7
 exportgraphics(f1, [locResults 'morphology' filesep 'V_segments.png'])
-% exportgraphics(f1, [locResults 'morphology' filesep 'V_segments_lgnd.png'])
 exportgraphics(f2, [locResults 'morphology' filesep 'dV_lines.png'])
-% exportgraphics(f2, [locResults 'morphology' filesep 'dV_lines_lgnd.png'])
 exportgraphics(f3, [locResults 'morphology' filesep 'hook_dev.png'])
 
 
@@ -44,12 +42,26 @@ exportgraphics(f3, [locMDPI 'Sk_20211008.png'])
 exportgraphics(f4, [locMDPI 'K_20211008.png'])
 exportgraphics(f5, [locResults 'sediments' filesep 'M_20221026.png'])
 exportgraphics(f6, [locResults 'sediments' filesep 'M_diff.png'])
-exportgraphics(f7, [locResults 'sediments' filesep 'sample_locs.png'])
+exportgraphics(f7, [locResults 'sediments' filesep 'S_diff.png'])
+exportgraphics(f8, [locResults 'sediments' filesep 'sample_locs.png'])
+
+
+%% Figure 8 (UCM6)
+locUCM = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/Events/UCM/Winter_2024/figs/';
+
+exportgraphics(f1, [locUCM 'M_20211008.png'])
+exportgraphics(f2, [locUCM 'S_20211008.png'])
+exportgraphics(f3, [locUCM 'Sk_20211008.png'])
+exportgraphics(f4, [locUCM 'K_20211008.png'])
+exportgraphics(f5, [locUCM 'M_20221026.png'])
+exportgraphics(f6, [locUCM 'M_diff.png'])
+exportgraphics(f7, [locUCM 'S_diff.png'])
+exportgraphics(f8, [locUCM 'sample_locs.png'])
 
 
 %% Figure 8 hydro
-exportgraphics(f1, [locResults 'hydrometeo' filesep 'Hm0_OSSI_140.png'])
-exportgraphics(f2, [locResults 'hydrometeo' filesep 'U_rose_ADV_075.png'])
+exportgraphics(f1, [locMDPI 'Hm0_OSSI_140.png'])
+exportgraphics(f2, [locMDPI 'U_rose_ADV_075.png'])
 
 
 %% Figure 9

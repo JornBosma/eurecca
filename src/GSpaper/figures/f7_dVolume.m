@@ -78,8 +78,11 @@ clearvars PHZ2 mask_site mask_scope contourMatrix
 
 
 %% Visualisation: beach segmentation
+filename = '/Users/jwb/Library/CloudStorage/OneDrive-UniversiteitUtrecht/Events/UCM/Winter_2024/PHZ.gif';
+delayTime = 1; % Delay time in seconds between frames
+
 f1 = figureRH;
-f1.Theme = "light";
+f1.Color = "white";
 
 plot(x, y, '-k', 'LineWidth', 2); hold on
 surf(PHZ1.DEM.X, PHZ1.DEM.Y, PHZ1.DEM.Z)
@@ -87,7 +90,7 @@ colormap(repmat(light_grey, 64, 1))
 shading flat
 
 axis off equal
-view(48.1, 90)
+% view(48.1, 90)
 
 % axis off vis3d
 % view(55.4, 90)
@@ -98,10 +101,21 @@ ax.SortMethod = "childorder";
 
 for i = 1:numel(segments)
 
-    % waitforbuttonpress
+    waitforbuttonpress
 
     plot(Polyshape.(segments{i}){12}, "FaceColor",cbf.custom12(i,:)', "FaceAlpha",1, "EdgeColor","none", "LineWidth",1)
     
+    % Capture the plot as an image
+    frame = getframe(gcf);
+    im = frame2im(frame);
+    [imind,cm] = rgb2ind(im,256);
+
+    % Write to the GIF File
+    % if i == 1
+    %     imwrite(imind,cm,filename,'gif', 'Loopcount',inf, 'DelayTime', delayTime);
+    % else
+    %     imwrite(imind,cm,filename,'gif','WriteMode','append', 'DelayTime', delayTime);
+    % end
 end
 plot(x, y, '-k', 'LineWidth',2, 'HandleVisibility','off')
 hold off
@@ -195,9 +209,9 @@ timeDiffs = TTvolume.Date-TTvolume.Date(1);
 yearsElapsed = years(timeDiffs);
 
 % Perform linear regression, handling NaN values in y-data
-pV = nan(15, 2);
-pA = nan(15, 2);
-for i = 1:15
+pV = nan(16, 2);
+pA = nan(16, 2);
+for i = 1:16
 
     % Extract the current column's y-data
     volumeData = TTvolume{:, i+16};
@@ -218,64 +232,71 @@ end
 slopeV = round(pV(:, 1));
 slopeA = round(pA(:, 1));
 
+% Correct for total
+slopeV(end) = sum(slopeV(13:15));
+slopeA(end) = sum(slopeA(13:15));
+
 % Calculating percentage change
-percentage_dV = round((slopeV' ./ TTvolume{1, 1:15}) * 100, 1);
-percentage_dA = round((slopeA' ./ TTvolume{1, 1:15}) * 100, 1);
+percentage_dV = round((slopeV' ./ TTvolume{1, 1:16}) * 100, 1);
+percentage_dA = round((slopeA' ./ TTvolume{1, 1:16}) * 100, 1);
 
 
 %% Visualisation: volume wrt first survey (line plots)
-f2 = figure("Position",[2071 294 940 819]);
+f2 = figure("Position",[2071 294 1370 1043]);
 tiledlayout(3,1, "TileSpacing","compact")
 
 % Dry beach
 ax(1) = nexttile; hold on
+title("Dry beach (2.3 m \leq z < 4.3 m)", "FontSize",fontsize)
 
-plot(TTvolume.Date, TTvolume.dSouthUpper, '-', 'Color',cbf.custom12(1,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dSpitUpper, '-', 'Color',cbf.custom12(2,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dNorthUpper, '-', 'Color',cbf.custom12(3,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dTotDry, '-k', 'LineWidth',5)
+plot(TTvolume.Date, TTvolume.dSouthUpper, '-o', 'Color',cbf.custom12(1,:)', 'LineWidth',4, 'MarkerSize',8)
+plot(TTvolume.Date, TTvolume.dSpitUpper, '-o', 'Color',cbf.custom12(2,:)', 'LineWidth',4, 'MarkerSize',8)
+plot(TTvolume.Date, TTvolume.dNorthUpper, '-o', 'Color',cbf.custom12(3,:)', 'LineWidth',4, 'MarkerSize',8)
+plot(TTvolume.Date, TTvolume.dTotDry, '-ok', 'LineWidth',5, 'MarkerSize',8)
 
-yline(0)
+yline(0, 'HandleVisibility','off')
 hold off
+
+legend('South', 'Spit', 'North', 'Total', "Location","eastoutside", "FontSize",fontsize)
 
 % Beachface
 ax(2) = nexttile; hold on
+title("High intertidal & run-up zone (0.3 m \leq z < 2.3 m)", "FontSize",fontsize)
 
-plot(TTvolume.Date, TTvolume.dSouthBeach, '-', 'Color',cbf.custom12(4,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dSpitBeach, '-', 'Color',cbf.custom12(5,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dHook, '-', 'Color',cbf.custom12(6,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dLagoon, '-', 'Color',cbf.custom12(7,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dCeres, '-', 'Color',cbf.custom12(8,:)', 'LineWidth',4)
-plot(TTvolume.Date, TTvolume.dTotInt, '-k', 'LineWidth',5)
-plot(TTvolume.Date([1 3]), TTvolume.dTotInt([1 3]), '--k', 'LineWidth',5)
-plot(TTvolume.Date([5 8]), TTvolume.dTotInt([5 8]), '--k', 'LineWidth',5)
-plot(TTvolume.Date([9 11]), TTvolume.dTotInt([9 11]), '--k', 'LineWidth',5)
-plot(TTvolume.Date([9 11]), TTvolume.dSouthBeach([9 11]), '--', 'Color',cbf.custom12(4,:)', 'LineWidth',4)
-plot(TTvolume.Date([9 11]), TTvolume.dSpitBeach([9 11]), '--', 'Color',cbf.custom12(5,:)', 'LineWidth',4)
-plot(TTvolume.Date([1 3]), TTvolume.dCeres([1 3]), '--', 'Color',cbf.custom12(8,:)', 'LineWidth',4)
-plot(TTvolume.Date([5 8]), TTvolume.dCeres([5 8]), '--', 'Color',cbf.custom12(8,:)', 'LineWidth',4)
+noNaN = ~isnan(TTvolume.dSouthBeach);
+plot(TTvolume.Date(noNaN), TTvolume.dSouthBeach(noNaN), '-o', 'Color',cbf.custom12(4,:)', 'LineWidth',4, 'MarkerSize',8)
+noNaN = ~isnan(TTvolume.dSpitBeach);
+plot(TTvolume.Date(noNaN), TTvolume.dSpitBeach(noNaN), '-o', 'Color',cbf.custom12(5,:)', 'LineWidth',4, 'MarkerSize',8)
+noNaN = ~isnan(TTvolume.dHook);
+plot(TTvolume.Date(noNaN), TTvolume.dHook(noNaN), '-o', 'Color',cbf.custom12(6,:)', 'LineWidth',4, 'MarkerSize',8)
+noNaN = ~isnan(TTvolume.dLagoon);
+plot(TTvolume.Date(noNaN), TTvolume.dLagoon(noNaN), '-o', 'Color',cbf.custom12(7,:)', 'LineWidth',4, 'MarkerSize',8)
+noNaN = ~isnan(TTvolume.dCeres);
+plot(TTvolume.Date(noNaN), TTvolume.dCeres(noNaN), '-o', 'Color',cbf.custom12(8,:)', 'LineWidth',4, 'MarkerSize',8)
+noNaN = ~isnan(TTvolume.dTotInt);
+plot(TTvolume.Date(noNaN), TTvolume.dTotInt(noNaN), '-ok', 'LineWidth',5, 'MarkerSize',8)
 
-yline(0)
+yline(0, 'HandleVisibility','off')
 hold off
 
 ylabel('\DeltaV (m^{3})')
+legend('South', 'Spit', 'Hook', 'Lagoon', 'Ceres', 'Total', "Location","eastoutside", "FontSize",fontsize)
 
 % Platform
 ax(3) = nexttile; hold on
+title("Low intertidal & subtidal zone (–1.6 m \leq z < 0.3 m)", "FontSize",fontsize)
 
 noNaN = ~isnan(TTvolume.dSouthBathy);
-plot(TTvolume.Date(noNaN), TTvolume.dSouthBathy(noNaN), '-', 'Color',cbf.custom12(9,:)', 'LineWidth',4)
-plot(TTvolume.Date(noNaN), TTvolume.dSpitBathy(noNaN), '-', 'Color',cbf.custom12(10,:)', 'LineWidth',4)
-plot(TTvolume.Date(noNaN), TTvolume.dNorthBathy(noNaN), '-', 'Color',cbf.custom12(11,:)', 'LineWidth',4)
-plot(TTvolume.Date(noNaN), TTvolume.dLagoonBathy(noNaN), '-', 'Color',cbf.custom12(12,:)', 'LineWidth',4)
-plot(TTvolume.Date(noNaN), TTvolume.dTotBathy(noNaN), '-k', 'LineWidth',5)
+plot(TTvolume.Date(noNaN), TTvolume.dSouthBathy(noNaN), '-o', 'Color',cbf.custom12(9,:)', 'LineWidth',4, 'MarkerSize',8)
+plot(TTvolume.Date(noNaN), TTvolume.dSpitBathy(noNaN), '-o', 'Color',cbf.custom12(10,:)', 'LineWidth',4, 'MarkerSize',8)
+plot(TTvolume.Date(noNaN), TTvolume.dNorthBathy(noNaN), '-o', 'Color',cbf.custom12(11,:)', 'LineWidth',4, 'MarkerSize',8)
+plot(TTvolume.Date(noNaN), TTvolume.dLagoonBathy(noNaN), '-o', 'Color',cbf.custom12(12,:)', 'LineWidth',4, 'MarkerSize',8)
+plot(TTvolume.Date(noNaN), TTvolume.dTotBathy(noNaN), '-ok', 'LineWidth',5, 'MarkerSize',8)
 
 yline(0, "HandleVisibility","off")
 hold off
 
-% legend('south', 'spit', 'hook/north', 'lagoon', 'Ceres', 'total',...
-%     'FontSize',fontsize', 'Orientation','horizontal', 'Position',[0.1942,0.9396,0.69663,0.039823])
-% legend('SouthBathy', 'SpitBathy', 'NorthBathy', 'LagoonBathy', 'Total', "Location","eastoutside", "FontSize",fontsize*.8)
+lgnd = legend('South', 'Spit', 'North', 'Lagoon', 'Total', "FontSize",fontsize, "Position",[0.8847 0.1254 0.1036 0.1735]);
 
 % Group settings
 xtickformat(ax, "MM/''yy")
@@ -295,6 +316,21 @@ clearvars noNaN ax
 % cbf.custom122 = crameri('-roma', height(DEMsurveys));
 % cbf.custom122 = cmocean('tarn', height(DEMsurveys));
 
+greens = [0 0.1000 0;
+    0.0653 0.1644 0.0593;
+    0.1306 0.2288 0.1186;
+    0.1959 0.2932 0.1778;
+    0.2612 0.3576 0.2371;
+    0.3265 0.4220 0.2964;
+    0.3918 0.4864 0.3557;
+    0.4572 0.5508 0.4149;
+    0.5225 0.6152 0.4742;
+    0.5878 0.6796 0.5335;
+    0.6531 0.7440 0.5928;
+    0.7184 0.8084 0.6520;
+    0.7837 0.8728 0.7113;
+    0.8490 0.9373 0.7706];
+
 alpha_values = linspace(0.2, 1, height(DEMsurveys));
 
 segment = string(segments(6));
@@ -305,8 +341,7 @@ f3.Theme = "light";
 
 hold on
 for i = 1:height(DEMsurveys)
-    plot(Polyshape.(segment){i}, "FaceAlpha",0, "EdgeColor",cbf.custom12(6,:),...
-        "EdgeAlpha",alpha_values(i), "LineWidth",4)
+    plot(Polyshape.(segment){i}, "FaceColor",greens(i,:), "FaceAlpha",.2, "EdgeColor",'k', "LineWidth",3)
 
     axis off equal
     view(48.1, 90)

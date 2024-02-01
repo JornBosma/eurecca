@@ -206,13 +206,22 @@ end
 x = 1:numel(Mean_z);
 y = flipud(Mean_z);
 
-p = polyfit(x(2:end-2), y(2:end-2), 1);
-yfit = polyval(p, x(2:end-2));
+x_select = x(2:end-2);
+y_select = y(2:end-2);
+y_select = y_select';
 
-figureRH;
+p = polyfit(x_select, y_select, 1);
+y_fit = polyval(p, x_select);
+residuals = y_select - y_fit;
+std_residuals = std(residuals, 'omitmissing');
+rmse = sqrt(mean(residuals.^2, 'omitmissing'));
+
+
+%% Visualisation
+f1 = figure("Position",[1722 709 1719 628]);
 yyaxis left
 scatter(x, y, 200, 'filled'); hold on
-plot(x(2:end-2), yfit, '-', 'LineWidth',4); hold off
+plot(x(2:end-2), y_fit, '-', 'LineWidth',4); hold off
 ylabel('mean M_G (mm)')
 
 yyaxis right

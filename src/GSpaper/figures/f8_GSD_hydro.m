@@ -28,8 +28,9 @@ locs_extended_adv2{7} = 'L1';
 locs_extended_ossi = locs(1:3);
 locs_extended_ossi{4} = '';
 locs_extended_ossi{5} = '';
-locs_extended_ossi{6} = 'L2';
-locs_extended_ossi{7} = 'L1';
+locs_extended_ossi{6} = '';
+locs_extended_ossi{7} = 'L2';
+locs_extended_ossi{8} = 'L1';
 
 
 %% Load ADV data
@@ -151,20 +152,20 @@ set(gca, 'TickLength', [0 0]);  % Hide x-tick lines
 % Preallocate a 1x6 array of Axes objects
 ax = gobjects(1, size(U_clean, 2));
 
-f2 = figure2;
-tiledlayout(1, 6, "TileSpacing","none");
+% f2 = figureRH;
+f2 = figure(Position=[1961 414 1480 923]);
+tiledlayout(2, 3, "TileSpacing","none");
 for i = 1:size(U_clean, 2)
     ax(i) = nexttile; plot([],[]);
-    Options = CurrentRoseOptions(fontsize);
-    % WindRose(Uang_clean(:,i), U_clean(:,i), 'axes',gca, 'cmap','parula', 'legendtype',0);
-    WindRose(Uang_clean(:,i), U_clean(:,i), Options);
-    % camroll(-46)  % Rotate diagrams to match contour map orientation
+    Options = CurrentRoseOptions(24);
+    % WindRose(Uang_clean(:,i), U_clean(:,i), 'axes',gca, 'cmap',crameri('-roma'), 'legendtype',0);
+    WindRose(Uang_clean(:,i), U_clean(:,i), Options)
+    camroll(-46)  % Rotate diagrams to match contour map orientation
 end
 % legend(ax(2), 'off')
 % legend(ax(3), 'off')
 % legend(ax(5), 'off')
 % legend(ax(6), 'off')
-
 
 
 %% Load OSSI data
@@ -191,14 +192,14 @@ zoom xon
 
 
 %% Box plot: longshore distribution time-average wave height
-Hm0_box = [Hm0(:,1:3), NaN(length(Hm0),2), Hm0(:,4:5)];
+Hm0_box = [Hm0(:,1:3), NaN(length(Hm0),3), Hm0(:,4:5)];
 
-f1 = figure('Position',[1401 844 2040 493]);
-boxchart(Hm0_box, 'MarkerStyle','none')  % no outliers
+f1 = figure('Position',[1722 892 1719 445]);
+boxchart(Hm0_box, 'MarkerStyle','none', 'BoxWidth',.2)  % no outliers
 set(gca,'xticklabel',[])
 ylabel('H_{m0} (m)')
 ylim([0 .42])
-get(gca, 'XTick')
+get(gca, 'XTick');
 xticklabels(locs_extended_ossi)
 set(gca, 'TickLength', [0 0]);  % Hide x-tick lines
 

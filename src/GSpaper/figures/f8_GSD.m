@@ -381,9 +381,10 @@ xlim([.25 1.15])
 yticks([])
 
 
-%% Calculate difference map
-GS_diff = GS_2021;
-GS_diff.Mean_mm = GS_2022.Mean_mm - GS_2021.Mean_mm;
+%% Calculate difference maps
+GS_diff = GS_2022;
+GS_diff{:, 3:15} = GS_diff{:, 3:15}-GS_2021{:, 3:15};
+GS_diff.Mean_mm = GS_diff.Mean_mu/1e3;
 
 
 %% Area-wide (mean) 26 Oct 2022 - 8/9 Oct 2021
@@ -440,6 +441,60 @@ xlim([-.6 .6])
 yticks([])
 
 
+%% Area-wide (std) 26 Oct 2022 - 8/9 Oct 2021
+f7 = figure('Position',[1910, 4, 1279, 391]);
+tiledlayout(6, 6, 'TileSpacing','tight', 'Padding','compact')
+
+nexttile(13,[4 5])
+h7 = heatmap(GS_diff, 'Sample_Identity', 'Sample_Number', 'ColorVariable','Sorting');
+colormap(h7, crameri('bam'))
+% clim([-.5, .8])
+
+h7.Title = [];
+h7.XDisplayData = flipud(h7.XDisplayData);
+% h4.XDisplayLabels = NaN(size(flipud(h1.XDisplayLabels)));
+h7.XDisplayLabels = flipud(h7.XDisplayLabels);
+h7.YDisplayLabels = {'+1.00 m', '+0.75 m', '+0.50 m', '+0.25 m', '+0.00 m'};
+h7.XLabel = '';
+h7.YLabel = '';
+h7.FontSize = fontsize*.8;
+h7.CellLabelFormat = '%0.2f';
+h7.ColorbarVisible = 'off';
+h7.GridVisible = 'off';
+h7.MissingDataColor = 'w';
+h7.MissingDataLabel = 'no data';
+
+nexttile(6,[2 1])
+% text(0, .5, '2022-10-26', 'FontSize',fontsize, 'FontWeight','bold', 'EdgeColor','k', 'Margin',6)
+text(.3, .4, '\Delta\sigma_{G}', 'FontSize',fontsize*.8, 'FontWeight','bold', 'EdgeColor','none', 'Margin',6)
+axis off
+
+heatdata = rot90(h7.ColorData, 2);
+meanS = mean(heatdata, 1, 'omitmissing');
+stdS = std(heatdata, 0, 1, 'omitmissing');
+meanT = mean(heatdata, 2, 'omitmissing');
+stdT = std(heatdata, 0, 2, 'omitmissing');
+
+noNaN = ~isnan(meanS);
+x = 1.5:10.5;
+
+nexttile(1,[2 5])
+errorbar(x(noNaN), meanS(noNaN), stdS(noNaN), '-ok', 'LineWidth',3)
+yline(mean(meanS, 'omitmissing'), '--k', 'LineWidth',2)
+xlim([1 11])
+ylim([-1 .8])
+% ylabel('M_{G} (µm)')
+xticks([])
+
+nexttile(18,[4 1])
+errorbar(meanT, 1.5:5.5, stdT, 'horizontal', '-ok', 'LineWidth',3)
+xline(mean(meanT, 'omitmissing'), '--k', 'LineWidth',2)
+ylim([1 6])
+xlim([-1 .8])
+% xlabel('M_{G} (µm)')
+yticks([])
+
+
 %% Apply mask
 A = load('PHZ_2022_Q2','-mat');
 % B = load('PHZ_2020_Q3','-mat');
@@ -461,7 +516,7 @@ y_1 = contourMatrixC(2, 2:end);
 x_1(x_1<min(A.DEM.X(1,:))) = NaN;
 y_1(y_1<min(A.DEM.Y(:,1))) = NaN;
 
-loclabels = string(flipud(h6.XDisplayLabels));
+loclabels = string(flipud(h7.XDisplayLabels));
 loclabels = [loclabels(5:end); loclabels(1:4)];
 
 %% Horizontal sample locations
@@ -477,7 +532,7 @@ L2C2 = [117193, 559822];  % L2C2VEC
 L2C4 = [117197, 559818];  % L2C4VEC
 L2C9 = [117222, 559793];  % L2C9OSSI
 L2C10 = [117235, 559781]; % L2C10VEC
-L3C1 = [116839, 558946];  % L3C1VEC
+L3C1 = [116839, 559536];  % L3C1VEC
 L4C3 = [116125, 558917];  % L4C3OSSI
 L5C2 = [115716, 558560];  % L5C2OSSI
 L6C2 = [115470, 558176];  % L6C2OSSI
@@ -487,7 +542,7 @@ OSSI_names = {"L6", "L5", "L4", "L2", "L1"};
 
 
 %% Visualisation
-f7 = figureRH;
+f8 = figureRH;
 
 hold on
 % plot(x_0, y_0, '-k', 'LineWidth', 2)
