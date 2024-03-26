@@ -1,0 +1,95 @@
+sedmexInit;
+global basePath;
+
+bed_shear_stresses=load("bed_shear_stresses.mat");
+
+Tc=bed_shear_stresses.Tc;
+Tw=bed_shear_stresses.Tw;
+Tcw=bed_shear_stresses.Tcw;
+
+
+%% perc_above critical bed shear
+%combined current exceedence
+Te_10=[0.18 0.25];
+Te_50=[0.28 0.79];
+Te_90=[1.22 3.42];
+
+Tc_perc_above=perc_above(Tc);
+Tw_perc_above=perc_above(Tw);
+Tcw_perc_above=perc_above(Tcw);
+
+
+%% grainsize mobility
+windoctdekooy = importfile([basePath, 'dataRaw\windKNMI\wind_oct_dekooy.txt']);
+winddata(:,2)=windoctdekooy.speed;
+winddata(:,3)=windoctdekooy.direction;
+
+calm= find(winddata(:,2)<=7.1);
+storm= find(winddata(:,2)>=7.1);
+
+Tc_calm_perc_above= perc_above_condition(Tc,calm);
+Tc_storm_perc_above= perc_above_condition(Tc,storm);
+Tw_calm_perc_above= perc_above_condition(Tw,calm);
+Tw_storm_perc_above= perc_above_condition(Tw,storm);
+Tcw_calm_perc_above= perc_above_condition(Tcw,calm);
+Tcw_storm_perc_above= perc_above_condition(Tcw,storm);
+
+
+
+%%
+current=[10^-2:0.001: 1];
+wave= [10^-2:0.001:1];
+
+shields_w(:,:,1)=Tw(:,:,1)./((2650-1025)*9.81*(557*10^-6));
+shields_w(:,:,2)=Tw(:,:,2)./((2650-1025)*9.81*(1334*10^-6));
+shields_c(:,:,1)=Tc(:,:,1)./((2650-1025)*9.81*(557*10^-6));
+shields_c(:,:,2)=Tc(:,:,2)./((2650-1025)*9.81*(1334*10^-6));
+
+Marker = {'o','+','*','x','s','p','^','d'};
+lg = 1/255*[0,104,87];
+label={'L1', 'L3', 'L4', 'L5', 'L6'};
+set(gcf, 'position',[100 50 1200 700],'color','white')
+
+figure(1);tiledlayout(1,2,'Padding','compact','TileSpacing','tight')
+nexttile
+    for i = 1:5
+    p1(i)= plot(Tc(calm,i,1),Tw(calm,i,1),strcat(Marker{i}),'markersize',5);hold on
+    plot(Tc(storm,i,1),Tw(storm,i,1),strcat(Marker{i}),'markersize',5);hold on
+    end
+
+plot([10^-5:0.001: 0.28], 0.28-[10^-5:0.001 : 0.28],'y','LineWidth',1.3); hold on  
+plot(0.28-[10^-5:0.001: 0.28], [10^-5:0.001 : 0.28],'y','LineWidth',1.3); hold on 
+
+set(gca,'YScale','log','XScale','log')
+axis equal
+refline(1,0);
+% xlim([10^-4 10^1]); ylim([10^-4 10^1]);
+xlabel('\tau_c');   ylabel('\tau_w');
+legend(p1,label,'Location','east'); legend box off
+set(gca,'FontSize',12, 'FontWeight','bold')
+title('D_{50} = 557\mum');
+
+
+nexttile
+    for i = 1:5
+    p1(i)= plot(Tc(calm,i,2),Tw(calm,i,2),strcat(Marker{i}),'markersize',5);hold on
+    plot(Tc(storm,i,2),Tw(storm,i,2),strcat(Marker{i}),'markersize',5);hold on
+    end
+    
+plot([10^-4:0.001: 0.79], 0.79-[10^-4:0.001 : 0.79],'y--','LineWidth',1.3); hold on  
+plot(0.79-[10^-4:0.001: 0.79], [10^-4:0.001 : 0.79],'y--','LineWidth',1.3); hold on 
+    
+set(gca,'YScale','log','XScale','log')
+axis equal
+p2=refline(1,0);
+% xlim([10^-4 10^1]); ylim([10^-4 10^1]);
+% xline(0.007,'--r','waves only','LabelHorizontalAlignment','left',LabelOrientation='horizontal');
+% yline(0.007, '--r','currents only','LabelVerticalAlignment','bottom');
+xlabel('\tau_c');   ylabel('\tau_w');
+legend(p1,label,'Location','east'); legend box off
+set(gca,'FontSize',12, 'FontWeight','bold')
+title('D_{50} = 1334\mum');
+
+
+saveas(figure(1),[basePath '\analysis\bed_shear\figures\rel_importance.fig']);
+saveas(figure(1),[basePath '\analysis\bed_shear\figures\rel_importance.png']);
